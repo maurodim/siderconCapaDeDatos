@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleHdr" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<parameter name="numeroHdr" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select detalle_hdr.cliente,detalle_hdr.orden as contador,detalle_hdr.numero_cli,detalle_hdr.observaciones,detalle_hdr.comprobante,detalle_hdr.importe,detalle_hdr.vuelto,detalle_hdr.empresa,(select hdr.totalMonto from hdr where hdr.numero=$P{numeroHdr})as totalMonto,(select hdr.totalVuelto from hdr where hdr.numero=$P{numeroHdr} ) as totalVuelto from detalle_hdr where hdr=$P{numeroHdr} group by cliente,numero_cli order by orden]]>
+	</queryString>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="contador" class="java.lang.Integer"/>
+	<field name="numero_cli" class="java.lang.String"/>
+	<field name="observaciones" class="java.lang.String"/>
+	<field name="comprobante" class="java.lang.String"/>
+	<field name="importe" class="java.lang.String"/>
+	<field name="vuelto" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="totalMonto" class="java.lang.Double"/>
+	<field name="totalVuelto" class="java.lang.Double"/>
+	<variable name="importeVuelto" class="java.lang.Double"/>
+	<variable name="items" class="java.lang.Integer" resetType="Column" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[new Integer($V{items}++)]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="0" width="53" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="0" width="100" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="0" width="36" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="0" width="72" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[comprobante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="50" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="55" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[vuelto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="0" width="109" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="0" width="53" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( ($F{numero_cli}=="null") ? " " : $F{numero_cli} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="100" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="0" width="36" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="50" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="0" width="55" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{vuelto}.compareTo("null") ? $F{vuelto} : " " )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="485" y="0" width="110" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="228" y="0" width="72" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="39" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="117">
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="300" y="15" width="50" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalMonto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="430" y="15" width="55" height="20"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalVuelto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="0" width="50" height="15"/>
+				<textElement>
+					<font size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="56" height="15"/>
+				<textElement>
+					<font size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[VUELTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="97" width="192" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RINDIO:____________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="77" width="192" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GASTOS_____________________]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

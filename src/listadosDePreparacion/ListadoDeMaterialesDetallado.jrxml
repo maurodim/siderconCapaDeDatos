@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListadoDeMaterialesDetallado" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="105"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\Administrador\\Mis documentos\\NetBeansProjects\\SiderconCapaDatos\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="kG" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.vehiculo,left(pedidos_carga1.entrega,10)as entrega,pedidos_carga1.RAZON_SOC,pedidos_carga1.revision,if(pedidos_carga1.LEYENDA_1 = "null",'',pedidos_carga1.LEYENDA_1) as LEYENDA_1,pedidos_carga1.LEYENDA_2,if(pedidos_carga1.LEYENDA_3="null",'',pedidos_carga1.LEYENDA_3)as LEYENDA_3,(select clientes.DOMICILIO from clientes where clientes.COD_CLIENT like pedidos_carga1.COD_CLIENT and clientes.RAZON_SOCI like pedidos_carga1.RAZON_SOC LIMIT 0,1)as domicilio,(select clientes.LOCALIDAD from clientes where clientes.COD_CLIENT like pedidos_carga1.COD_CLIENT and clientes.RAZON_SOCI like pedidos_carga1.RAZON_SOC LIMIT 0,1)as localidad,pedidos_carga1.listado,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombUni from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="vehiculo" class="java.lang.Integer"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="revision" class="java.lang.Integer"/>
+	<field name="LEYENDA_1" class="java.lang.String"/>
+	<field name="LEYENDA_2" class="java.lang.String"/>
+	<field name="LEYENDA_3" class="java.lang.String"/>
+	<field name="domicilio" class="java.lang.String"/>
+	<field name="localidad" class="java.lang.String"/>
+	<field name="listado" class="java.lang.Integer"/>
+	<field name="nombUni" class="java.lang.String"/>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="188" y="0" width="248" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIDERCON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="20" width="248" height="20"/>
+				<textElement/>
+				<text><![CDATA[Hierros - Caños - Chapas - Perfiles]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total Kg. :]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="316" y="10" width="239" height="60"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="10" width="294" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["LISTADO DE PREPARACION DE CARGA Nº "+$P{numeroListado}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="0" width="40" height="10"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="0" width="80" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="5" y="91" width="551" height="1"/>
+			</line>
+			<line>
+				<reportElement x="5" y="71" width="551" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="0" y="50" width="235" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Fecha y Hora de Impresion :"+new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="48" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{kG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="40" width="218" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["FECHA DE REPARTO :"+$F{entrega}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="326" y="20" width="218" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["VEHICULO :"+$F{nombUni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="72" width="181" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DETALLADO REVISION :"+$F{revision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº DE PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="92" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="10"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="10"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="344" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEYENDA_1}]]></textFieldExpression>
+				<patternExpression><![CDATA[( $F{LEYENDA_1}=="null"?$F{LEYENDA_1} : "" )]]></patternExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="30" width="544" height="59"/>
+				<subreportParameter name="numeroPedido">
+					<subreportParameterExpression><![CDATA[$F{NRO_PEDIDO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="numeroListado">
+					<subreportParameterExpression><![CDATA[$F{listado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="leyenda1"/>
+				<subreportParameter name="leyenda2"/>
+				<subreportParameter name="leyenda3"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetalladoDePedidos.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="10" width="344" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEYENDA_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="20" width="344" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEYENDA_3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="10" width="100" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilio}]]></textFieldExpression>
+				<patternExpression><![CDATA[( $F{domicilio}=="null" ? $F{domicilio} : "")]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="20" width="100" height="10"/>
+				<textElement textAlignment="Left">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{localidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5" splitType="Stretch">
+			<line>
+				<reportElement x="-11" y="0" width="544" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<summary>
+		<band height="66">
+			<staticText>
+				<reportElement x="5" y="0" width="278" height="66"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preparación de carga:
+
+Recibió:_________________     Hora:_____________
+
+Finalizó:_________________   Hora:______________
+]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

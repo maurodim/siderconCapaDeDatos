@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformePorHdr" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="224"/>
+	<parameter name="fechaDesde" class="java.util.Date"/>
+	<parameter name="fechaHasta" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select hdr.numero,hdr.pesoCarga,hdr.kmInicio,hdr.kmFinal,hdr.kmFinal-hdr.kmInicio as kmRecorridos,time(hdr.horaFinal)as horaF,time(hdr.horaInicio)as horaI,timediff(hdr.horaFinal,hdr.horaInicio)as diferencia,hdr.fechaEntrega,(select count(*) from detalle_hdr where detalle_hdr.hdr=hdr.numero)as cantidad from hdr where fechaImpresion between $P{fechaDesde} and $P{fechaHasta}]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="pesoCarga" class="java.lang.Double"/>
+	<field name="kmInicio" class="java.lang.Integer"/>
+	<field name="kmFinal" class="java.lang.Integer"/>
+	<field name="kmRecorridos" class="java.lang.Long"/>
+	<field name="horaF" class="java.sql.Time"/>
+	<field name="horaI" class="java.sql.Time"/>
+	<field name="diferencia" class="java.sql.Time"/>
+	<field name="fechaEntrega" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<variable name="totalKm" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{kmRecorridos}]]></variableExpression>
+	</variable>
+	<variable name="totalHr" class="java.sql.Time" calculation="Sum">
+		<variableExpression><![CDATA[$F{diferencia}]]></variableExpression>
+	</variable>
+	<variable name="totalKGS" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{pesoCarga}]]></variableExpression>
+	</variable>
+	<variable name="totalVisitas" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cantidad}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="595" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INFORME POR HOJA DE RUTA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34">
+			<staticText>
+				<reportElement x="0" y="0" width="52" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nº HDR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="70" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kgs Entregados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="0" width="57" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Km Recorrido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="0" width="57" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo de Recorrido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="0" width="65" height="34" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantid. Visitas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="0" width="65" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[km Llegada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="0" width="60" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[km Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="0" width="46" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Llegada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="0" width="62" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="0" width="61" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Salida]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<textField>
+				<reportElement x="0" y="0" width="52" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="0" width="62" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaEntrega}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="460" y="0" width="70" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pesoCarga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="0" width="60" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kmInicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="65" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kmFinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="57" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kmRecorridos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm" isBlankWhenNull="true">
+				<reportElement x="175" y="0" width="46" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm" isBlankWhenNull="true">
+				<reportElement x="114" y="0" width="61" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm" isBlankWhenNull="true">
+				<reportElement x="346" y="0" width="57" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="0" width="65" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="305">
+			<textField pattern="###0;-###0">
+				<reportElement x="52" y="210" width="62" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalVisitas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="52" y="87" width="62" height="48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalHr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="135" width="62" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalKm}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="52" y="169" width="62" height="41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalKGS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="52" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="52" height="31"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde Fecha :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="51" width="52" height="36"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta Fecha :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="87" width="52" height="48"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Tiempo recorrido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="135" width="52" height="34"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Km recorridos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="169" width="52" height="41"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kg Entregados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="210" width="52" height="36"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Visitas Realizadas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="20" width="62" height="31"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechaDesde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="51" width="62" height="36"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechaHasta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

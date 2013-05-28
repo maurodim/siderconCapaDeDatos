@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<CONFIGURACION>
+    <coneccion id="1">
+        <nombre>Coneccion Server</nombre>
+        <url>jdbc:mysql://192.168.0.111/sidercon</url>
+        <driver>com.mysql.jdbc.Driver</driver>
+        <usuario>hdr</usuario>
+        <clave>daniel</clave>
+    </coneccion>
+    <coneccion id="2">
+        <nombre>Coneccion Tango BU</nombre>
+        <url>jdbc:sqlserver://SERVERTANGO;databaseName=BU2</url>
+        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+        <usuario>Axoft</usuario>
+        <clave>Axoft</clave>
+    </coneccion>
+    <coneccion id="3">
+        <nombre>Coneccion Tango SD</nombre>
+        <url>jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON</url>
+        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+        <usuario>Axoft</usuario>
+        <clave>Axoft</clave>
+    </coneccion>
+    <coneccion id="4">
+        <nombre>Coneccion Tango SD_SRL</nombre>
+        <url>jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON_SRL</url>
+        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+        <usuario>Axoft</usuario>
+        <clave>Axoft</clave>
+    </coneccion>
+</CONFIGURACION>

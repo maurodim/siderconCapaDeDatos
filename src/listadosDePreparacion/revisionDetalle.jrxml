@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDetalle" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="97"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroDePedido" class="java.lang.String"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="numeroRevision" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select *,((select pesos.peso from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC)* CANT_PEDID)as pesoIndividual,(if(pedidos_carga1.COD_ARTIC ="30030011",'',if(pedidos_carga1.COD_ARTIC="30030010",'',(select sum(pedidoscantidadtotales.total) from pedidoscantidadtotales where pedidoscantidadtotales.NRO_PEDIDO like pedidos_carga1.NRO_PEDIDO and pedidoscantidadtotales.COD_ARTIC like pedidos_carga1.COD_ARTIC group by COD_ARTIC)-pedidos_carga1.CANT_PEDID)))as cantidadAntigua,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos,(select datos.UMV from datos where datos.COD_ARTICULO = pedidos_carga1.COD_ARTIC)AS medida from pedidos_carga1 where NRO_PEDIDO =$P{numeroDePedido} and listado=$P{numeroListado} and CANT_PEDID > 0.00]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="TALON_PEDI" class="java.lang.String"/>
+	<field name="TALON_FACT" class="java.lang.Double"/>
+	<field name="FEC_PEDIDO" class="java.sql.Timestamp"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="BONIFIC" class="java.lang.Double"/>
+	<field name="COND_VENTA" class="java.lang.Double"/>
+	<field name="COD_VENDED" class="java.lang.String"/>
+	<field name="COD_DEPóSI" class="java.lang.String"/>
+	<field name="LISTA_PREC" class="java.lang.Double"/>
+	<field name="COD_TRANSP" class="java.lang.String"/>
+	<field name="TIPO_ASIEN" class="java.lang.String"/>
+	<field name="FEC_ENTREG" class="java.sql.Timestamp"/>
+	<field name="COTIZ" class="java.lang.String"/>
+	<field name="MONEDA" class="java.lang.String"/>
+	<field name="EXPORTADO" class="java.lang.String"/>
+	<field name="N_REMITO" class="java.lang.String"/>
+	<field name="NRO_SUCUR" class="java.lang.Double"/>
+	<field name="LEYENDA_1" class="java.lang.String"/>
+	<field name="LEYENDA_2" class="java.lang.String"/>
+	<field name="LEYENDA_3" class="java.lang.String"/>
+	<field name="LEYENDA_4" class="java.lang.String"/>
+	<field name="LEYENDA_5" class="java.lang.String"/>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ADIC" class="java.lang.String"/>
+	<field name="CANT_PEDID" class="java.lang.Double"/>
+	<field name="CANT_FACT" class="java.lang.Double"/>
+	<field name="CANT_DESC" class="java.lang.Double"/>
+	<field name="PRECIO" class="java.lang.Double"/>
+	<field name="BONIFRENGL" class="java.lang.Double"/>
+	<field name="IMPORTE" class="java.lang.Double"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="condicion" class="java.lang.Integer"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<field name="terminado" class="java.sql.Timestamp"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="reparto" class="java.lang.Integer"/>
+	<field name="proceso" class="java.lang.Integer"/>
+	<field name="pago" class="java.lang.String"/>
+	<field name="enviar" class="java.lang.Integer"/>
+	<field name="listado" class="java.lang.Integer"/>
+	<field name="revision" class="java.lang.Integer"/>
+	<field name="hdr1" class="java.lang.Integer"/>
+	<field name="motivo_anulacion" class="java.lang.String"/>
+	<field name="vehiculo" class="java.lang.Integer"/>
+	<field name="peso" class="java.lang.Double"/>
+	<field name="fletero" class="java.lang.Integer"/>
+	<field name="archivoListado" class="java.lang.String"/>
+	<field name="archivoHdr" class="java.lang.String"/>
+	<field name="saldoCliente" class="java.lang.Double"/>
+	<field name="actualizacionPesos" class="java.lang.Integer"/>
+	<field name="actualizacionSaldo" class="java.lang.Integer"/>
+	<field name="entregaConv" class="java.sql.Date"/>
+	<field name="numeroOriginal" class="java.lang.Integer"/>
+	<field name="repetidoEnListado" class="java.lang.Integer"/>
+	<field name="zona" class="java.lang.Integer"/>
+	<field name="alerta" class="java.lang.Integer"/>
+	<field name="itemRecibido" class="java.sql.Timestamp"/>
+	<field name="smmd" class="java.lang.Integer"/>
+	<field name="pesoIndividual" class="java.lang.Double"/>
+	<field name="cantidadAntigua" class="java.lang.String"/>
+	<field name="repetidos" class="java.lang.String"/>
+	<field name="medida" class="java.lang.String"/>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement x="56" y="0" width="201" height="12"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="0" width="47" height="12"/>
+				<textElement textAlignment="Left">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="56" height="12"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD ARTICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="0" width="57" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="0" width="59" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de Orden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="40" height="12"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mat repetido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="56" y="0" width="201" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="257" y="0" width="24" height="12"/>
+				<textElement textAlignment="Left">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANT_PEDID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="56" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="57" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pesoIndividual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="0" width="59" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{orden_num}==0 ? " " : $F{orden_num} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="40" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{repetidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="23" height="12"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
