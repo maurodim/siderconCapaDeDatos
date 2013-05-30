@@ -25,7 +25,19 @@ public class RevisionDeListados implements Revisionar{
     private String codigoDeArticulo;
     private Double cantidad;
     private Double cantidadNueva;
+    private String codigoPedido;
+    private static Integer numeroDeListadoAnterior;
+    //private String campoNumero="numero";
+            
 
+    public String getCodigoPedido() {
+        return codigoPedido;
+    }
+
+    public void setCodigoPedido(String codigoPedido) {
+        this.codigoPedido = codigoPedido;
+    }
+    
     public RevisionDeListados() {
      this.codigoDeArticulo = "";
         this.cantidad = 0.00;
@@ -201,6 +213,96 @@ public class RevisionDeListados implements Revisionar{
         }
         
         return listadoRev;
+    }
+
+    @Override
+    public Boolean chequearCambioDeListado(ArrayList carga) {
+        Connection con=Coneccion.ObtenerConeccion();
+        Boolean chq=false;
+        String sql="";
+        Statement st=null;
+        ResultSet rs=null;
+        PedidosParaReparto ped=new PedidosParaReparto();
+        try {
+            st=con.createStatement();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Iterator ic=carga.listIterator();
+        while(ic.hasNext()){
+            ped=(PedidosParaReparto)ic.next();
+            /*
+             * VER SI NO ES CONVENIENTE LEER DIRECTAMENTE DE LA TABLA PEDIDOS_CARGA1
+             */
+            sql="select movimientospedidoslistados.listadoNumero from movimientospedidoslistados where pedidoNumero like '%"+ped.getCodigoTangoDePedido()+"' and fechaEntrega like '"+ped.getFechaEnvio()+"' and listadoNumero="+ped.getNumeroDeListadoDeMateriales();
+            try {
+                st.execute(sql);
+                rs=st.getResultSet();
+                while(rs.next()){
+                    RevisionDeListados.numeroDeListadoAnterior=rs.getInt("listadoNumero");
+                    chq=true;
+                }
+                rs.close();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        try {
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Coneccion.CerrarConneccion(con);
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return chq;
+    }
+
+    @Override
+    public Boolean guardarDatosRevision(ArrayList carga) {
+        Boolean resp=false;
+        Connection con=Coneccion.ObtenerConeccion();
+        Statement st=null;
+        String sql="";
+        try {
+            st=con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        PedidosParaReparto ped=new PedidosParaReparto();
+        Iterator icc=carga.listIterator();
+        while(icc.hasNext()){
+            ped=(PedidosParaReparto)icc.next();
+            sql="insert into movimientospedidoslistados (pedidoNumero,fechaEntrega,listadoNumero,revisionNumero) values ('"+ped.getCodigoTangoDePedido()+"','"+ped.getFechaEnvio()+"',"+ped.getNumeroDeListadoDeMateriales()+","+ped.getNumeroDeRevisionDeListado()+")";
+            System.out.println(" STRING SQL GUARDAR REVISION "+sql);
+            try {
+                st.executeUpdate(sql);
+                resp=true;
+            } catch (SQLException ex) {
+                Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Coneccion.CerrarConneccion(con);
+        } catch (SQLException ex) {
+            Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resp;
+    }
+
+    @Override
+    public Integer leerNumeroDeListadoAnterior() {
+        return RevisionDeListados.numeroDeListadoAnterior;
     }
     
 }

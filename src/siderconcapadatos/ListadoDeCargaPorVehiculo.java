@@ -46,6 +46,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static Integer listadoNumero;
     static Listados ls;
     static ArrayList cargaRevi=new ArrayList();
+    static Integer numeroDeListadoAnterior;
+    static Integer numeroDeRevisionAnterior;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -258,6 +260,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          * - FILTRA LOS PEDIDOS PARA SER INCORPORADOS A LA REVISION A EMITIR
          * - TRASMITE LA MATRIZ RESULTANTE PARA SER GUARDADA EN LA BASE DE DATOS
          * 
+         * |----------------|
+         * |CONSIDERACIONES:|
+         * |----------------|
+         * LOS DISTINTOS ITEMS VAN RECIBIENDO EN TABLA PEDIDOS_CARGA1 UN NUMERO DE LISTADO Y REVISION, LOS TENDRIA QUE GRABAR ASI COMO ESTAN EN HISTORICOPEDIDOSLISTADOS
+         * CON EL FIN DE AGRUPARLOS E IR VERIFICANDO QUE LAS CANTIDADES LAS SUMEN CORRECTAMENTE, EN CASO DE UN ITEMS QUE SE DA DE BAJA, QUE EL SISTEMA CHEQUEE QUE EN EL PEDIDO
+         * EXISTA UN NUMERO DE LISTADO Y/O REVISION Y GENERE UNA NUEVA REVISION EN CANTIDAD NEGATIVA, PARA INDICAR QUE SE QUITAN ELEMENTOS, CON LA NUMERACION DEL LISTADO 
+         * ANTERIOR, SI EL LISTADO ES IGUAL SIMPLEMENTE GENERA UNA NUEVA REVISION
+         * 
          */
         
         this.jButton2.setEnabled(false);
@@ -269,6 +279,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
         try {
             ls=pr.GenerarNuevoListado(seleccion, fecha2);
+            int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();
             System.err.println("NUMERO DE REVISION QUE SE APLICA AL LISTADO "+ls.getNumeroRevision());
         } catch (SQLException ex) {
@@ -314,6 +325,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(carga);
+                if(rrev.chequearCambioDeListado(carga)){
+                    //rrev.guardarDatosRevision(cargaDetallada);
+                    ListadoDeCargaPorVehiculo.numeroDeListadoAnterior=rrev.leerNumeroDeListadoAnterior();
+                }
+                rrev.guardarDatosRevision(carga);
+                cargaDetallada.clear();
             } catch (SQLException ex) {
                 GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
@@ -354,6 +371,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(cargaDetallada);
+                if(rrev.chequearCambioDeListado(carga)){
+                    //rrev.guardarDatosRevision(cargaDetallada);
+                    ListadoDeCargaPorVehiculo.numeroDeListadoAnterior=rrev.leerNumeroDeListadoAnterior();
+                }
+                rrev.guardarDatosRevision(carga);
+ 
                 cargaDetallada.clear();
             } catch (SQLException ex) {
                 GuardarMovimientos gArch=new Archivador();
