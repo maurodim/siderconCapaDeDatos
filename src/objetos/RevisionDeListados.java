@@ -26,6 +26,7 @@ public class RevisionDeListados implements Revisionar{
     private Double cantidad;
     private Double cantidadNueva;
     private String codigoPedido;
+    private static Integer numeroDeListadoAnterior;
     //private String campoNumero="numero";
             
 
@@ -234,11 +235,12 @@ public class RevisionDeListados implements Revisionar{
             /*
              * VER SI NO ES CONVENIENTE LEER DIRECTAMENTE DE LA TABLA PEDIDOS_CARGA1
              */
-            sql="select movimientospedidoslistados.numero from movimientospedidoslistados where pedidoNumero like '%"+ped.getCodigoTangoDePedido()+"' and fechaEntrega like '"+ped.getFechaEnvio()+"' and listadoNumero="+ped.getNumeroDeListadoDeMateriales();
+            sql="select movimientospedidoslistados.listadoNumero from movimientospedidoslistados where pedidoNumero like '%"+ped.getCodigoTangoDePedido()+"' and fechaEntrega like '"+ped.getFechaEnvio()+"' and listadoNumero="+ped.getNumeroDeListadoDeMateriales();
             try {
                 st.execute(sql);
                 rs=st.getResultSet();
                 while(rs.next()){
+                    RevisionDeListados.numeroDeListadoAnterior=rs.getInt("listadoNumero");
                     chq=true;
                 }
                 rs.close();
@@ -296,6 +298,11 @@ public class RevisionDeListados implements Revisionar{
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resp;
+    }
+
+    @Override
+    public Integer leerNumeroDeListadoAnterior() {
+        return RevisionDeListados.numeroDeListadoAnterior;
     }
     
 }

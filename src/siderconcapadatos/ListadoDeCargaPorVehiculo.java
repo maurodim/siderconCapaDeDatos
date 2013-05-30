@@ -46,6 +46,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static Integer listadoNumero;
     static Listados ls;
     static ArrayList cargaRevi=new ArrayList();
+    static Integer numeroDeListadoAnterior;
+    static Integer numeroDeRevisionAnterior;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -323,9 +325,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(carga);
-                if(rrev.chequearCambioDeListado(cargaDetallada)){
-                    rrev.guardarDatosRevision(cargaDetallada);
+                if(rrev.chequearCambioDeListado(carga)){
+                    //rrev.guardarDatosRevision(cargaDetallada);
+                    ListadoDeCargaPorVehiculo.numeroDeListadoAnterior=rrev.leerNumeroDeListadoAnterior();
                 }
+                rrev.guardarDatosRevision(carga);
+                cargaDetallada.clear();
             } catch (SQLException ex) {
                 GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
@@ -366,6 +371,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(cargaDetallada);
+                if(rrev.chequearCambioDeListado(carga)){
+                    //rrev.guardarDatosRevision(cargaDetallada);
+                    ListadoDeCargaPorVehiculo.numeroDeListadoAnterior=rrev.leerNumeroDeListadoAnterior();
+                }
+                rrev.guardarDatosRevision(carga);
+ 
                 cargaDetallada.clear();
             } catch (SQLException ex) {
                 GuardarMovimientos gArch=new Archivador();
