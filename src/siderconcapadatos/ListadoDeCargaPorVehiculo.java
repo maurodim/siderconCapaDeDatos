@@ -277,6 +277,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
         try {
             ls=pr.GenerarNuevoListado(seleccion, fecha2);
+            int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();
             System.err.println("NUMERO DE REVISION QUE SE APLICA AL LISTADO "+ls.getNumeroRevision());
         } catch (SQLException ex) {
