@@ -323,6 +323,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(carga);
+                if(rrev.chequearCambioDeListado(cargaDetallada)){
+                    rrev.guardarDatosRevision(cargaDetallada);
+                }
             } catch (SQLException ex) {
                 GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
