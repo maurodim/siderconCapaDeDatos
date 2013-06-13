@@ -291,6 +291,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         PedidosParaReparto ped=new PedidosParaReparto();
         PedidosParaReparto pedi=new PedidosParaReparto();
         ArrayList cargaDetallada=new ArrayList();
+        ArrayList cargaDetallada1=new ArrayList();
         ArrayList detall=new ArrayList();
         ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
@@ -301,6 +302,10 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
              * DE TODAS FORMAS, PRESTAR ATENCION QUE ES LO QUE QUEDA CARGADO POR QUE AL REINICIAR EL SISTEMA TOMA CORRECTAMENTE LAS CANTIDADES Y 
              * REVISIONES, NO ASI SI EL SISTEMA ESTA EN MARCHA
              * -- SUPONGO QUE ALGO ESTA VA QUEDANDO EN MEMORIA Y NO SE REINICIA O QUEDA CON UN VALOR ERRONEO
+             * APARENTEMENTE LA MATRIZ CARGA ES LA QUE ME ESTA HACIENDO LIO
+             * 
+             * SOLUCIONADO EL RESTO DE LOS TEMAS PERO EL FUNDAMENTAL AHORA
+             * ES POR QUE EN LA REVISON 2 ME RENOMBRA TODO, ME HACE DESAPARECER LAS OTRAS REVISIONES Y ME PONE TODO COMO 2
              * 
              */
             if(ped.getNumeroDeListadoDeMateriales()==numeroListado){
@@ -329,6 +334,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
                     //System.out.println("DETALLE CARGA "+pedi);
                     cargaDetallada.add(pedi);
+                    cargaDetallada1.add(pedi);
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(carga);
@@ -349,10 +355,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
                 
             }else{
-                /*
-                 * ver por que no me esta contabilizando las revisiones
-                 * 
-                 */
+                
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
@@ -375,6 +378,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     pedi.setNumeroDeListadoDeMateriales(ls.getNumeroListado());
                     //System.out.println("DETALLE CARGA "+pedi);
                     cargaDetallada.add(pedi);
+                    cargaDetallada1.add(pedi);
                 }
                 Revisionar rrev=new RevisionDeListados();
                 rrev.convertirARevision(cargaDetallada);
@@ -404,7 +408,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         
         try {
             try {
-                pr.GuardarNumeroListadoEnPedido(cargaDetallada,seleccion,fecha2);
+                pr.GuardarNumeroListadoEnPedido(cargaDetallada1,seleccion,fecha2);
             } catch (IOException ex) {
                 GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
@@ -439,9 +443,13 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          * TRASMITO EL ARRAY REVIS, POR QUE ES DONDE CARGUE EL LISTADO FILTRADO 
          * 
          */
-        GuardarListados gl=new GuardarListados();
-        gl.setList(carga);
-        gl.start();
+        
+        
+        //GuardarListados gl=new GuardarListados();
+        //gl.setList(carga);
+        //gl.start();
+        
+        
         /*
         try {
             emision.ImprimirListadoConsolidado(fecha2, seleccion, descUnidad, totalKg);
@@ -454,6 +462,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          */
         Runtime r=Runtime.getRuntime();
         r.gc();
+        ls=null;
         this.jButton2.setEnabled(true);
         //this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
