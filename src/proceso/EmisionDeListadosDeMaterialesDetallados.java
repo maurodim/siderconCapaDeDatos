@@ -60,7 +60,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
         listDetallado.put("kG",totalKg);
         String master="C://src//listadosDePreparacion//revisionDeListados.jasper";
         System.out.println("DIRECCION DE DESTINO "+master);
-        String destino="C://ListadosHdr//"+this.numeroListado+"-R"+this.numeroRevision+" - listado detallado de materiales.pdf";
+        String destino="C://ListadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
