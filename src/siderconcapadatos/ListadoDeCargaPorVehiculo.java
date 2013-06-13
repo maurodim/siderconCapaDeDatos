@@ -287,6 +287,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             System.err.println("PARA VER QUE ERROR ES :"+ex);
         }
         Iterator ic=carga.listIterator();
+        System.out.println("CANTIDAD DE ITEMS EN MATRIZ CARGA :"+carga.size());
         PedidosParaReparto ped=new PedidosParaReparto();
         PedidosParaReparto pedi=new PedidosParaReparto();
         ArrayList cargaDetallada=new ArrayList();
@@ -295,7 +296,13 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         Integer revisionNum=0;
         while(ic.hasNext()){
             ped=(PedidosParaReparto)ic.next();
-            
+            /*
+             * SUPONGO QUE AQUI VOY A ENCONTRAR EL PROBLEMA DE LAS REVISIONES QUE NO ME NUMERA CORRECTAMENTE
+             * DE TODAS FORMAS, PRESTAR ATENCION QUE ES LO QUE QUEDA CARGADO POR QUE AL REINICIAR EL SISTEMA TOMA CORRECTAMENTE LAS CANTIDADES Y 
+             * REVISIONES, NO ASI SI EL SISTEMA ESTA EN MARCHA
+             * -- SUPONGO QUE ALGO ESTA VA QUEDANDO EN MEMORIA Y NO SE REINICIA O QUEDA CON UN VALOR ERRONEO
+             * 
+             */
             if(ped.getNumeroDeListadoDeMateriales()==numeroListado){
             // vamos a ver si asi esta bien
                 
