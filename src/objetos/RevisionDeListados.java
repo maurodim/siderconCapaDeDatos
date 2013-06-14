@@ -182,6 +182,7 @@ public class RevisionDeListados implements Revisionar{
                 st.executeUpdate(sql);
                 sql="update pedidos_carga1 set revisionado=1 where numero ="+ped.getiDPedido();
                 st.executeUpdate(sql);
+                ped.setVerificadorRevision(1);
                 numeroListado=ped.getNumeroDeListadoDeMateriales();
                 revisionNumero=0;
                 

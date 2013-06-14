@@ -315,7 +315,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             
                 int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
-            if(ped.getVerificadorRevision()==1){
+            int verRev=ped.getVerificadorRevision();
+            if(verRev==1){
             //ped.setNumeroDeRevisionDeListado(ls.getNumeroRevision());
             //ped.setNumeroDeRevisionDeListado(0);
             //revisionNum=ls.getNumeroRevision();
@@ -422,6 +423,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("EL NUMERO DE LISTADO ES "+numeroListado);
+        cargaDetallada1.clear();
         EmisionDeListados emision=new EmisionDeListados();
         try {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
