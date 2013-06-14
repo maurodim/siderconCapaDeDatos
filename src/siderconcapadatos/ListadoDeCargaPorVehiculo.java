@@ -48,6 +48,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static ArrayList cargaRevi=new ArrayList();
     static Integer numeroDeListadoAnterior;
     static Integer numeroDeRevisionAnterior;
+    static Boolean nuevoListado=false;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -109,6 +110,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 fila[2]="PS";
             }else{
                 fila[2]=pedid.getSaldoCliente();
+            }
+            if(pedid.getVerificadorRevision()==0){
+                nuevoListado=true;
             }
             kilos+= pedid.getPesoTotal();
             //System.out.println(pedid.getPesoItems()+" PESOS "+pedid.getPesoTotal());
@@ -181,7 +185,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -278,7 +282,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
        int numeroListado=0;
 
         try {
-            ls=pr.GenerarNuevoListado(seleccion, fecha2);
+            
+            ls=pr.GenerarNuevoListado(seleccion, fecha2,nuevoListado);
+            
             int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();
             System.err.println("NUMERO DE REVISION QUE SE APLICA AL LISTADO "+ls.getNumeroRevision());
@@ -366,6 +372,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //revisionNum=ls.getNumeroRevision();
             //}else{
              ped.setNumeroDeRevisionDeListado(ls.getNumeroRevision());
+             ped.setVerificadorRevision(1);
             //ped.setNumeroDeRevisionDeListado(0);
             revisionNum=ls.getNumeroRevision();            
              try {
