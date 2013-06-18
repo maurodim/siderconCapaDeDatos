@@ -716,7 +716,7 @@ public class Procesos {
             
             return detalle;
         }
-        public Listados GenerarNuevoListado(int vehiculo,String fecha) throws SQLException{
+        public Listados GenerarNuevoListado(int vehiculo,String fecha,Boolean listadoCh) throws SQLException{
             System.out.println(vehiculo+" "+fecha);
             Listados list=new Listados();
             Boolean chq=ChequearListado(vehiculo,fecha);
@@ -728,7 +728,9 @@ public class Procesos {
                 //ultimaRevisionDeListado;
                 
                 list.setNumeroListado(ultimoNumeroDeListado);
+                if(listadoCh){
                 ultimaRevisionDeListado++;
+                }
                 list.setNumeroRevision(ultimaRevisionDeListado);
                 /*
                 list.setNumeroListado(ultimoNumeroDeListado);
@@ -756,6 +758,7 @@ public class Procesos {
             rs.close();
             //list.setNumeroRevision(0);
             }
+            if(listadoCh){
             sql="insert into historicolistadorevision (numeroListado,numeroRevision) values ("+ultimoNumeroDeListado+","+ultimaRevisionDeListado+")";
             st.executeUpdate(sql);
             
@@ -765,6 +768,7 @@ public class Procesos {
             st.close();
             //Listados.nuevoListado();
             System.err.println(sql+" "+chq);
+            }
             return list;
             
         }
@@ -817,8 +821,7 @@ public class Procesos {
                 //sql="update pedidos_carga1 set revision="+revision+",listado="+pe.getNumeroDeListadoDeMateriales()+" where NRO_PEDIDO ='"+pe.getCodigoTangoDePedido()+"' and vehiculo="+seleccion+" and entrega like '"+fecha+"%'";
                 txx+=revision+" - "+pe.getCodigoTangoDePedido()+"\r\n";
                 
-                if(pe.getVerificadorRevision()==0){
-                    pe.setVerificadorRevision(1);
+            
                 sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+" where numero ="+pe.getiDPedido(); 
                 Statement st=cp.createStatement();
                 st.executeUpdate(sql);
@@ -826,7 +829,7 @@ public class Procesos {
                 //sql="insert into historicoListadoRevision (numeroListado,numeroRevision) values ("+pe.getNumeroDeListadoDeMateriales()+","+pe.getNumeroDeRevisionDeListado()+")";
                 //st.executeUpdate(sql);
                 st.close();
-                }
+               
                 
                 
                 System.err.println(sql+" NUMERO ID "+pe.getiDPedido()+" articulo "+pe.getCodigoArticulo()+"cantidad "+pe.getCantidadArticulo());
