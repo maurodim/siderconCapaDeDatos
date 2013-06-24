@@ -53,6 +53,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
     @Override
     public synchronized void run(){
         chequearListado(this.numeroListado);
+        cc=Coneccion.ObtenerConeccion();
         Map listDetallado=new HashMap();
         listDetallado.put("numeroListado",this.numeroListado);
         listDetallado.put("numeroRevision", this.numeroRevision);
