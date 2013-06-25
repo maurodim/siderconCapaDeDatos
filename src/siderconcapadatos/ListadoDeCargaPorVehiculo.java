@@ -378,6 +378,11 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                  * - GUARDO EN HISTORICO
                  * - SALE LA NUEVA REVISION
                  * 
+                 * POR OTRO LADO SI MANDO ASI NO TENGO DONDE PUEDA LEER EL LISTADO , A NO SER QUE LO HAGA SOLAMENTE CON PARAMETROS, O SEA LOS DATOS DEL PEDIDO Y LISTO
+                 * DE ESA FORMA SOLAMENTE IMPRIMO Y NO ESTOY MODIFICANDO LAS BASE PARA QUE SALGA LA INFO SOLAMENTE PARA UNA REVISION, NO TIENE MUCHO SENTIDO. EL RESTO ESTARÍA HECHO 
+                 * Y NO TENDRÍA QUE TRAER MAYORES PROBLEMAS
+                 * 
+                 * 
                  */
             }  
             ped.setNumeroDeListadoDeMateriales(numeroListado);
