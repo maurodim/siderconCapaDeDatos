@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prueba1_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from  pedidos_carga1]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="TALON_PEDI" class="java.lang.String"/>
+	<field name="TALON_FACT" class="java.lang.Double"/>
+	<field name="FEC_PEDIDO" class="java.sql.Timestamp"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="BONIFIC" class="java.lang.Double"/>
+	<field name="COND_VENTA" class="java.lang.Double"/>
+	<field name="COD_VENDED" class="java.lang.String"/>
+	<field name="COD_DEPóSI" class="java.lang.String"/>
+	<field name="LISTA_PREC" class="java.lang.Double"/>
+	<field name="COD_TRANSP" class="java.lang.String"/>
+	<field name="TIPO_ASIEN" class="java.lang.String"/>
+	<field name="FEC_ENTREG" class="java.sql.Timestamp"/>
+	<field name="COTIZ" class="java.lang.String"/>
+	<field name="MONEDA" class="java.lang.String"/>
+	<field name="EXPORTADO" class="java.lang.String"/>
+	<field name="N_REMITO" class="java.lang.String"/>
+	<field name="NRO_SUCUR" class="java.lang.Double"/>
+	<field name="LEYENDA_1" class="java.lang.String"/>
+	<field name="LEYENDA_2" class="java.lang.String"/>
+	<field name="LEYENDA_3" class="java.lang.String"/>
+	<field name="LEYENDA_4" class="java.lang.String"/>
+	<field name="LEYENDA_5" class="java.lang.String"/>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ADIC" class="java.lang.String"/>
+	<field name="CANT_PEDID" class="java.lang.Double"/>
+	<field name="CANT_FACT" class="java.lang.Double"/>
+	<field name="CANT_DESC" class="java.lang.Double"/>
+	<field name="PRECIO" class="java.lang.Double"/>
+	<field name="BONIFRENGL" class="java.lang.Double"/>
+	<field name="IMPORTE" class="java.lang.Double"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="condicion" class="java.lang.Integer"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<field name="terminado" class="java.sql.Timestamp"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="reparto" class="java.lang.Integer"/>
+	<field name="proceso" class="java.lang.Integer"/>
+	<field name="pago" class="java.lang.String"/>
+	<field name="enviar" class="java.lang.Integer"/>
+	<field name="listado" class="java.lang.Integer"/>
+	<field name="revision" class="java.lang.Integer"/>
+	<field name="hdr1" class="java.lang.Integer"/>
+	<field name="motivo_anulacion" class="java.lang.String"/>
+	<field name="vehiculo" class="java.lang.Integer"/>
+	<field name="peso" class="java.lang.Double"/>
+	<field name="fletero" class="java.lang.Integer"/>
+	<field name="archivoListado" class="java.lang.String"/>
+	<field name="archivoHdr" class="java.lang.String"/>
+	<field name="saldoCliente" class="java.lang.Double"/>
+	<field name="actualizacionPesos" class="java.lang.Integer"/>
+	<field name="actualizacionSaldo" class="java.lang.Integer"/>
+	<field name="entregaConv" class="java.sql.Date"/>
+	<field name="numeroOriginal" class="java.lang.Integer"/>
+	<field name="repetidoEnListado" class="java.lang.Integer"/>
+	<field name="zona" class="java.lang.Integer"/>
+	<field name="alerta" class="java.lang.Integer"/>
+	<field name="itemRecibido" class="java.sql.Timestamp"/>
+	<field name="smmd" class="java.lang.Integer"/>
+	<group name="NRO_PEDIDO">
+		<groupExpression><![CDATA[$F{NRO_PEDIDO}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

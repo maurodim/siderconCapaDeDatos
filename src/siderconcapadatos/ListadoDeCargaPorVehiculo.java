@@ -371,7 +371,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                */  
             if(ped.getNumeroDeListadoDeMateriales() > 0){
                 
-            }else{  
+            }  
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
@@ -417,7 +417,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //System.out.println("DETALLE PEDIDO "+ped.getDescripcionArticulo()+" cant "+ped.getCantidadArticulo());
             }
             
-            } 
+            
         }
         
         listadoNumero=numeroListado;
