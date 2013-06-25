@@ -56,6 +56,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         seleccion=unidad;
 	fecha2=fecha;
         descUnidad=descripcion;
+        ls=new Listados();
         initComponents();
     }
 
@@ -276,7 +277,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         
         this.jButton2.setEnabled(false);
         int totalFilas=jTable1.getRowCount();
-        ls=new Listados();
+        
         //Double totalKg=0.00;
         Procesos pr=new Procesos();
        int numeroListado=0;
@@ -370,7 +371,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                * 
                */  
             if(ped.getNumeroDeListadoDeMateriales() > 0){
-                
+                /*
+                 * SOLUCION MAS SIMPLE:
+                 * -GENERO UNA NUEVA PLANTILLA DE LISTADO PARA ANULACIONES
+                 * - PASO LOS DATOS DE NUMERO DE PEDIDO, FECHA, NUMERO LISTADO, REVISION DE LOS QUE HALLA QUE ELIMINAR
+                 * - GUARDO EN HISTORICO
+                 * - SALE LA NUEVA REVISION
+                 * 
+                 */
             }  
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
