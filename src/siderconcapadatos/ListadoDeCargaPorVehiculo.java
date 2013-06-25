@@ -362,7 +362,16 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
                 
             }else{
+              /*
+               * ACA TENGO QUE VERIFICAR QUE EL NUMERO DE LISTADO DE MATERIALES SEA MAYOR A 0, SI ES ASI GENERO UNA REVISION DE EL NUMERO QUE TIENE CARGADO EL PEDIDO
+               * COMO REVISION PARA QUITAR MATERIAL -----
+               * O BIEN PUEDO GENERAR UNA NUEVA REVISION CON NUMEROS NEGATIVOS, CON EL FIN DE MANTENER LAS CANTIDADES CORRECTAS
+               * 
+               * 
+               */  
+            if(ped.getNumeroDeListadoDeMateriales() > 0){
                 
+            }else{  
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
@@ -408,7 +417,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //System.out.println("DETALLE PEDIDO "+ped.getDescripcionArticulo()+" cant "+ped.getCantidadArticulo());
             }
             
-           
+            } 
         }
         
         listadoNumero=numeroListado;
