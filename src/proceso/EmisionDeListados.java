@@ -5,6 +5,7 @@
 package proceso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -31,5 +32,12 @@ public class EmisionDeListados {
         emiList.setNumeroListado(numeroListado);
         emiList.setRevision(revision);
         emiList.start();
+    }
+    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido){
+        EmisionDeListadosDeDescargaDeMateriales descM=new EmisionDeListadosDeDescargaDeMateriales();
+        descM.setNumeroListado(numeroListado);
+        descM.setNumeroDeRevision(numeroDeRevision);
+        descM.setDetallePedidos(detallePedido);
+        descM.start();
     }
     }

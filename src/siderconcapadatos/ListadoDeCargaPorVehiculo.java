@@ -300,6 +300,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         ArrayList cargaDetallada=new ArrayList();
         ArrayList cargaDetallada1=new ArrayList();
         ArrayList detall=new ArrayList();
+        ArrayList descarga=new ArrayList();
         ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
         while(ic.hasNext()){
@@ -384,6 +385,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                  * 
                  * 
                  */
+                descarga.add(ped);
             }  
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
@@ -432,7 +434,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             
             
         }
-        
+
         listadoNumero=numeroListado;
         
         
@@ -456,6 +458,10 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         EmisionDeListados emision=new EmisionDeListados();
         try {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
+            if(descarga.size() > 0){
+                emision.ImprimirListadoDeDescargaDeMateriales(5,4,descarga);
+                descarga.clear();
+            }
         } catch (IOException ex) {
             GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
