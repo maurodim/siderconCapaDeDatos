@@ -459,6 +459,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         try {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
             if(descarga.size() > 0){
+                System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
                 emision.ImprimirListadoDeDescargaDeMateriales(5,4,descarga);
                 descarga.clear();
             }

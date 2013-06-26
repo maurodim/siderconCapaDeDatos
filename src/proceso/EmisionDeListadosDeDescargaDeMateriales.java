@@ -6,6 +6,7 @@ package proceso;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,6 +32,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
     private Integer numeroDeRevision;
     private ArrayList detallePedidos=new ArrayList();
     private Double pesoTotal;
+    private Connection cc;
 
     public Integer getNumeroListado() {
         return numeroListado;
@@ -69,7 +71,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
 
     public synchronized void run(){
         //chequearListado(this.numeroListado);
-        //cc=Coneccion.ObtenerConeccion();
+        cc=Coneccion.ObtenerConeccion();
         PedidosParaReparto ped=new PedidosParaReparto();
         Double cantidad=0.00;
         Double peso=0.00;
@@ -96,7 +98,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
         listDetallado.put("codigoCliente",ped.getCodigoCliente());
         listDetallado.put("numeroPedido",ped.getCodigoTangoDePedido());
         //listDetallado.put("kG",totalKg);
-        String master="C://src//listadosDePreparacion//revisionDeListados.jasper";
+        String master="C://src//listadosDePreparacion//descargaDeMateriales.jasper";
         System.out.println("DIRECCION DE DESTINO "+master);
         String destino="C://ListadosHdr//"+numeroListado+"-Rev "+numeroDeRevision+" - listado consolidado de materiales.pdf";
         JasperReport reporte = null;
@@ -107,7 +109,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
         }
         JasperPrint jasperPrint = null;
         try {
-            jasperPrint = JasperFillManager.fillReport(reporte, listDetallado);
+            jasperPrint = JasperFillManager.fillReport(reporte, listDetallado,cc);
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("ERROR EN LA IMPRSION :"+ex);
