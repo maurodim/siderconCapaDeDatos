@@ -6,7 +6,9 @@ package proceso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import net.sf.jasperreports.engine.JRException;
+import objetos.PedidosParaReparto;
 
 /**
  *
@@ -33,11 +35,17 @@ public class EmisionDeListados {
         emiList.setRevision(revision);
         emiList.start();
     }
-    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido){
+    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido) throws JRException, IOException{
         EmisionDeListadosDeDescargaDeMateriales descM=new EmisionDeListadosDeDescargaDeMateriales();
-        EmisionDeListadosDeDescargaDeMateriales.setNumeroListado(numeroListado);
-        EmisionDeListadosDeDescargaDeMateriales.setNumeroDeRevision(numeroDeRevision);
-        EmisionDeListadosDeDescargaDeMateriales.setDetallePedidos(detallePedido);
+        descM.setNumeroListado(numeroListado);
+        descM.setNumeroDeRevision(numeroDeRevision);
+        PedidosParaReparto ped=new PedidosParaReparto();
+        Iterator il=detallePedido.listIterator();
+        while(il.hasNext()){
+            ped=(PedidosParaReparto)il.next();
+            ped.setCantidadArticulo(ped.getCantidadArticulo()*(-1));
+            descM.addPedido(ped);
+        }
         descM.start();
     }
     }

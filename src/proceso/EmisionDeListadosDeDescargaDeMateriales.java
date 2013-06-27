@@ -30,44 +30,32 @@ import objetos.PedidosParaReparto;
  * @author hernan
  */
 public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
-    private static Integer numeroListado;
-    private static Integer numeroDeRevision;
-    private static List<PedidosParaReparto> detallePedidos=new ArrayList<PedidosParaReparto>();
-    private static Double pesoTotal;
-    private static Connection cc;
+    private Integer numeroListado;
+    private Integer numeroDeRevision;
+    private ArrayList detallePedidos1=new ArrayList();
+    private Double pesoTotal;
+    private Connection cc;
 
-    public static Integer getNumeroListado() {
-        return numeroListado;
+    public void setNumeroListado(Integer numeroListado) {
+        this.numeroListado = numeroListado;
     }
 
-    public static void setNumeroListado(Integer numeroListado) {
-        EmisionDeListadosDeDescargaDeMateriales.numeroListado = numeroListado;
+    public void setNumeroDeRevision(Integer numeroDeRevision) {
+        this.numeroDeRevision = numeroDeRevision;
     }
 
-    public static Integer getNumeroDeRevision() {
-        return numeroDeRevision;
+    public void setPesoTotal(Double pesoTotal) {
+        this.pesoTotal = pesoTotal;
     }
 
-    public static void setNumeroDeRevision(Integer numeroDeRevision) {
-        EmisionDeListadosDeDescargaDeMateriales.numeroDeRevision = numeroDeRevision;
-    }
-
-    public static Double getPesoTotal() {
-        return pesoTotal;
-    }
-
-    public static void setPesoTotal(Double pesoTotal) {
-        EmisionDeListadosDeDescargaDeMateriales.pesoTotal = pesoTotal;
-    }
-
-    public static void setDetallePedidos(List<PedidosParaReparto> detallePedidos) {
-        EmisionDeListadosDeDescargaDeMateriales.detallePedidos = detallePedidos;
-    }
-
+public void addPedido(PedidosParaReparto ped){
+    this.detallePedidos1.add(ped);
+}
     
     
     
 
+    @Override
     public synchronized void run(){
         //chequearListado(this.numeroListado);
         cc=Coneccion.ObtenerConeccion();
@@ -75,17 +63,17 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
         Double cantidad=0.00;
         Double peso=0.00;
         Map listDetallado=new HashMap();
-        listDetallado.put("numeroListado",numeroListado);
-        listDetallado.put("numeroRevision", numeroDeRevision);
+        listDetallado.put("numeroListado",this.numeroListado);
+        listDetallado.put("numeroRevision", this.numeroDeRevision);
         //System.err.println("Listado "+this.numeroListado+" kg "+this.totalKg);
-        
-        Iterator il=detallePedidos.listIterator();
+        ArrayList listadoP=this.detallePedidos1;
+        Iterator il=listadoP.listIterator();
         ListaDataSource datasource=new ListaDataSource();
         int cantidadItems=0;
         
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
-            DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoItems());
+            DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoTotal());
             datasource.addListaDataSource(det);
             System.out.println("cant IT :"+cantidadItems+" / "+ped.getCodigoArticulo()+" / "+ped.getDescripcionArticulo());
             
