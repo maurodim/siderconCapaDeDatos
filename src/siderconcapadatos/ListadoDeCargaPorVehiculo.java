@@ -281,7 +281,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         //Double totalKg=0.00;
         Procesos pr=new Procesos();
        int numeroListado=0;
-
+       Listados ls2=new Listados();
+       int numeroRev2=0;
+       int numeroListado2=0;
         try {
             
             ls=pr.GenerarNuevoListado(seleccion, fecha2,nuevoListado);
@@ -405,6 +407,11 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                          * 
                          * 
                          */
+                        ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado);
+                        numeroRev2 = ls2.getNumeroRevision();
+                        numeroListado2=ls2.getNumeroListado();
+                        pedi.setNumeroDeListadoDeMateriales(numeroListado2);
+                        pedi.setNumeroDeRevisionDeListado(numeroRev2);
                         descarga.add(pedi);
                     }
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
@@ -462,7 +469,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
             if(descarga.size() > 0){
                 System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
-                emision.ImprimirListadoDeDescargaDeMateriales(5,4,descarga);
+                emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga);
                 descarga.clear();
             }
         } catch (IOException ex) {

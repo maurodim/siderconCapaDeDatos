@@ -70,7 +70,7 @@ public void addPedido(PedidosParaReparto ped){
         Iterator il=listadoP.listIterator();
         ListaDataSource datasource=new ListaDataSource();
         int cantidadItems=0;
-        
+        cantidadItems=listadoP.size();
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
             DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoTotal());
@@ -96,7 +96,7 @@ public void addPedido(PedidosParaReparto ped){
             jasperPrint = JasperFillManager.fillReport(reporte, listDetallado,datasource);
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("ERROR EN LA IMPRSION :"+ex);
+            System.err.println("ERROR EN LA IMPRESION :"+ex);
         }
                  JRExporter exporter=new JRPdfExporter();
                  exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
