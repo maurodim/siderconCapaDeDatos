@@ -371,22 +371,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                * 
                * 
                */  
-            if(ped.getNumeroDeListadoDeMateriales() > 0){
-                /*
-                 * SOLUCION MAS SIMPLE:
-                 * -GENERO UNA NUEVA PLANTILLA DE LISTADO PARA ANULACIONES
-                 * - PASO LOS DATOS DE NUMERO DE PEDIDO, FECHA, NUMERO LISTADO, REVISION DE LOS QUE HALLA QUE ELIMINAR
-                 * - GUARDO EN HISTORICO
-                 * - SALE LA NUEVA REVISION
-                 * 
-                 * POR OTRO LADO SI MANDO ASI NO TENGO DONDE PUEDA LEER EL LISTADO , A NO SER QUE LO HAGA SOLAMENTE CON PARAMETROS, O SEA LOS DATOS DEL PEDIDO Y LISTO
-                 * DE ESA FORMA SOLAMENTE IMPRIMO Y NO ESTOY MODIFICANDO LAS BASE PARA QUE SALGA LA INFO SOLAMENTE PARA UNA REVISION, NO TIENE MUCHO SENTIDO. EL RESTO ESTARÍA HECHO 
-                 * Y NO TENDRÍA QUE TRAER MAYORES PROBLEMAS
-                 * 
-                 * 
-                 */
-                descarga.add(ped);
-            }  
+              
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
@@ -406,9 +391,26 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Iterator id=detall.listIterator();
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
+                            if(pedi.getNumeroDeListadoDeMateriales() > 0){
+                        /*
+                         * SOLUCION MAS SIMPLE:
+                         * -GENERO UNA NUEVA PLANTILLA DE LISTADO PARA ANULACIONES
+                         * - PASO LOS DATOS DE NUMERO DE PEDIDO, FECHA, NUMERO LISTADO, REVISION DE LOS QUE HALLA QUE ELIMINAR
+                         * - GUARDO EN HISTORICO
+                         * - SALE LA NUEVA REVISION
+                         * 
+                         * POR OTRO LADO SI MANDO ASI NO TENGO DONDE PUEDA LEER EL LISTADO , A NO SER QUE LO HAGA SOLAMENTE CON PARAMETROS, O SEA LOS DATOS DEL PEDIDO Y LISTO
+                         * DE ESA FORMA SOLAMENTE IMPRIMO Y NO ESTOY MODIFICANDO LAS BASE PARA QUE SALGA LA INFO SOLAMENTE PARA UNA REVISION, NO TIENE MUCHO SENTIDO. EL RESTO ESTARÍA HECHO 
+                         * Y NO TENDRÍA QUE TRAER MAYORES PROBLEMAS
+                         * 
+                         * 
+                         */
+                        descarga.add(pedi);
+                    }
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
                     pedi.setNumeroDeListadoDeMateriales(ls.getNumeroListado());
                     //System.out.println("DETALLE CARGA "+pedi);
+                    
                     cargaDetallada.add(pedi);
                     cargaDetallada1.add(pedi);
                 }

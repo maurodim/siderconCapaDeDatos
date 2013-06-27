@@ -5,13 +5,13 @@
 	<property name="ireport.y" value="17"/>
 	<parameter name="numeroListado" class="java.lang.Integer"/>
 	<parameter name="numeroRevision" class="java.lang.Integer"/>
-	<parameter name="codigoArticulo" class="java.lang.String"/>
-	<parameter name="descripcionArticulo" class="java.lang.String"/>
-	<parameter name="cantidad" class="java.lang.Integer"/>
-	<parameter name="peso" class="java.lang.Float"/>
 	<parameter name="nombreCliente" class="java.lang.String"/>
 	<parameter name="numeroPedido" class="java.lang.String"/>
 	<parameter name="codigoCliente" class="java.lang.String"/>
+	<field name="codigoArticulo" class="java.lang.String"/>
+	<field name="descripcionArticulo" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Double"/>
+	<field name="peso" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -99,28 +99,28 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{codigoArticulo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{codigoArticulo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="1" width="162" height="14"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{descripcionArticulo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{descripcionArticulo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 				<reportElement x="455" y="1" width="44" height="14"/>
 				<textElement textAlignment="Right">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{peso}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="272" y="1" width="167" height="14"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{cantidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

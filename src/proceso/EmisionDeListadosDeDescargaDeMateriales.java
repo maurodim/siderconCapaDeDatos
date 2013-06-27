@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import objetos.DetalleListado;
 import objetos.PedidosParaReparto;
 
 /**
@@ -28,43 +30,40 @@ import objetos.PedidosParaReparto;
  * @author hernan
  */
 public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
-    private Integer numeroListado;
-    private Integer numeroDeRevision;
-    private ArrayList detallePedidos=new ArrayList();
-    private Double pesoTotal;
-    private Connection cc;
+    private static Integer numeroListado;
+    private static Integer numeroDeRevision;
+    private static List<PedidosParaReparto> detallePedidos=new ArrayList<PedidosParaReparto>();
+    private static Double pesoTotal;
+    private static Connection cc;
 
-    public Integer getNumeroListado() {
+    public static Integer getNumeroListado() {
         return numeroListado;
     }
 
-    public void setNumeroListado(Integer numeroListado) {
-        this.numeroListado = numeroListado;
+    public static void setNumeroListado(Integer numeroListado) {
+        EmisionDeListadosDeDescargaDeMateriales.numeroListado = numeroListado;
     }
 
-    public Integer getNumeroDeRevision() {
+    public static Integer getNumeroDeRevision() {
         return numeroDeRevision;
     }
 
-    public void setNumeroDeRevision(Integer numeroDeRevision) {
-        this.numeroDeRevision = numeroDeRevision;
+    public static void setNumeroDeRevision(Integer numeroDeRevision) {
+        EmisionDeListadosDeDescargaDeMateriales.numeroDeRevision = numeroDeRevision;
     }
 
-    public ArrayList getDetallePedidos() {
-        return detallePedidos;
-    }
-
-    public void setDetallePedidos(ArrayList detallePedidos) {
-        this.detallePedidos = detallePedidos;
-    }
-
-    public Double getPesoTotal() {
+    public static Double getPesoTotal() {
         return pesoTotal;
     }
 
-    public void setPesoTotal(Double pesoTotal) {
-        this.pesoTotal = pesoTotal;
+    public static void setPesoTotal(Double pesoTotal) {
+        EmisionDeListadosDeDescargaDeMateriales.pesoTotal = pesoTotal;
     }
+
+    public static void setDetallePedidos(List<PedidosParaReparto> detallePedidos) {
+        EmisionDeListadosDeDescargaDeMateriales.detallePedidos = detallePedidos;
+    }
+
     
     
     
@@ -79,19 +78,16 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
         listDetallado.put("numeroListado",numeroListado);
         listDetallado.put("numeroRevision", numeroDeRevision);
         //System.err.println("Listado "+this.numeroListado+" kg "+this.totalKg);
+        
         Iterator il=detallePedidos.listIterator();
+        ListaDataSource datasource=new ListaDataSource();
+        int cantidadItems=0;
+        
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
-            listDetallado.put("codigoArticulo", ped.getCodigoArticulo());
-            listDetallado.put("descripcionArticulo",ped.getDescripcionArticulo());
-            cantidad=(Double)ped.getCantidadArticulo();
-            cantidad=cantidad * (-1);
-            listDetallado.put("cantidad",cantidad);
-            peso=ped.getPesoTotal();
-            peso=peso *(-1);
-            listDetallado.put("peso",peso);
-            peso=0.00;
-            cantidad=0.00;
+            DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoItems());
+            datasource.addListaDataSource(det);
+            System.out.println("cant IT :"+cantidadItems+" / "+ped.getCodigoArticulo()+" / "+ped.getDescripcionArticulo());
             
         }
         listDetallado.put("nombreCliente",ped.getRazonSocial());
@@ -109,7 +105,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
         }
         JasperPrint jasperPrint = null;
         try {
-            jasperPrint = JasperFillManager.fillReport(reporte, listDetallado,cc);
+            jasperPrint = JasperFillManager.fillReport(reporte, listDetallado,datasource);
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("ERROR EN LA IMPRSION :"+ex);

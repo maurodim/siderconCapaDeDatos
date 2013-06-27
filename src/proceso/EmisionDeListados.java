@@ -35,9 +35,9 @@ public class EmisionDeListados {
     }
     public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido){
         EmisionDeListadosDeDescargaDeMateriales descM=new EmisionDeListadosDeDescargaDeMateriales();
-        descM.setNumeroListado(numeroListado);
-        descM.setNumeroDeRevision(numeroDeRevision);
-        descM.setDetallePedidos(detallePedido);
+        EmisionDeListadosDeDescargaDeMateriales.setNumeroListado(numeroListado);
+        EmisionDeListadosDeDescargaDeMateriales.setNumeroDeRevision(numeroDeRevision);
+        EmisionDeListadosDeDescargaDeMateriales.setDetallePedidos(detallePedido);
         descM.start();
     }
     }
