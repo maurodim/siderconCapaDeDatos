@@ -622,10 +622,13 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
             while(xx.hasNext()){
                 Integer posicionPedidos=(Integer) xx.next();
                 ped=(PedidosParaReparto) SiderconCapaatos.listaPedidos.get(posicionPedidos);
-                if(ped.getVehiculoAnterior() > 0){
-                    ped.setVehiculoAnterior(ped.getVehiculoAsignado());
+                if(ped.getVehiculoAnterior()==uniSeleccionada){
+                    ped.setVehiculoAsignado(uniSeleccionada);
+                }else{
+                    int vAnt=ped.getVehiculoAsignado();
+                    ped.setVehiculoAnterior(vAnt);
+                    ped.setVehiculoAsignado(uniSeleccionada);
                 }
-                ped.setVehiculoAsignado(uniSeleccionada);
                 
             }
             

@@ -407,12 +407,18 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                          * 
                          * 
                          */
+                                int unidadActual=pedi.getVehiculoAsignado();
+                                int unidadAnterior=pedi.getVehiculoAnterior();
+                         if(unidadActual == unidadAnterior){
+                             
+                         }else{    
                         ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado);
                         numeroRev2 = ls2.getNumeroRevision();
                         numeroListado2=ls2.getNumeroListado();
                         pedi.setNumeroDeListadoDeMateriales(numeroListado2);
                         pedi.setNumeroDeRevisionDeListado(numeroRev2);
                         descarga.add(pedi);
+                         }
                     }
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
                     pedi.setNumeroDeListadoDeMateriales(ls.getNumeroListado());
