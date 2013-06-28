@@ -35,10 +35,13 @@ public class EmisionDeListados {
         emiList.setRevision(revision);
         emiList.start();
     }
-    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido) throws JRException, IOException{
+    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido,String vehiculo,String codigoCliente,String nombreCliente) throws JRException, IOException{
         EmisionDeListadosDeDescargaDeMateriales descM=new EmisionDeListadosDeDescargaDeMateriales();
         descM.setNumeroListado(numeroListado);
         descM.setNumeroDeRevision(numeroDeRevision);
+        descM.setCodigoCliente(codigoCliente);
+        descM.setNombreCliente(nombreCliente);
+        descM.setDescripcionVehiculo(vehiculo);
         PedidosParaReparto ped=new PedidosParaReparto();
         Iterator il=detallePedido.listIterator();
         while(il.hasNext()){

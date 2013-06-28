@@ -794,7 +794,7 @@ public class Procesos {
              */
             while(rs.next()){
                 ultimoNumeroDeListado=rs.getInt(1);
-                ultimaRevisionDeListado=rs.getInt(4);
+                ultimaRevisionDeListado=rs.getInt("revision");
                 
                 ccch=true;
             
@@ -821,6 +821,9 @@ public class Procesos {
             String ruta="C://bases//STHDR//revHdr//"+fch+"testRevision.txt";
             revisiones=new FileWriter(ruta);
             String txx="";
+             Runtime r=Runtime.getRuntime();
+        r.gc();
+            
             while(iip.hasNext()){
                 pe=(PedidosParaReparto)iip.next();
                 int revision=pe.getNumeroDeRevisionDeListado();
@@ -830,7 +833,7 @@ public class Procesos {
                 txx+=revision+" - "+pe.getCodigoTangoDePedido()+"\r\n";
                 
             
-                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+" where numero ="+pe.getiDPedido(); 
+                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+",vehiculoAnterior="+pe.getVehiculoAsignado()+" where numero ="+pe.getiDPedido(); 
                 Statement st=cp.createStatement();
                 st.executeUpdate(sql);
                 

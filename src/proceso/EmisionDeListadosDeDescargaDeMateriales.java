@@ -35,6 +35,35 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
     private ArrayList detallePedidos1=new ArrayList();
     private Double pesoTotal;
     private Connection cc;
+    private String codigoCliente;
+    private String nombreCliente;
+    private int numeroVehiculo;
+    private String descripcionVehiculo;
+    private String fechaEntrega;
+
+    public void setDetallePedidos1(ArrayList detallePedidos1) {
+        this.detallePedidos1 = detallePedidos1;
+    }
+
+    public void setCodigoCliente(String codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public void setNumeroVehiculo(int numeroVehiculo) {
+        this.numeroVehiculo = numeroVehiculo;
+    }
+
+    public void setDescripcionVehiculo(String descripcionVehiculo) {
+        this.descripcionVehiculo = descripcionVehiculo;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
 
     public void setNumeroListado(Integer numeroListado) {
         this.numeroListado = numeroListado;
@@ -59,6 +88,7 @@ public void addPedido(PedidosParaReparto ped){
     public synchronized void run(){
         //chequearListado(this.numeroListado);
         cc=Coneccion.ObtenerConeccion();
+        String fecha="";
         PedidosParaReparto ped=new PedidosParaReparto();
         Double cantidad=0.00;
         Double peso=0.00;
@@ -73,18 +103,21 @@ public void addPedido(PedidosParaReparto ped){
         cantidadItems=listadoP.size();
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
+            fecha=ped.getFechaEnvio();
             DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoTotal());
             datasource.addListaDataSource(det);
             System.out.println("cant IT :"+cantidadItems+" / "+ped.getCodigoArticulo()+" / "+ped.getDescripcionArticulo());
             
         }
-        listDetallado.put("nombreCliente",ped.getRazonSocial());
-        listDetallado.put("codigoCliente",ped.getCodigoCliente());
-        listDetallado.put("numeroPedido",ped.getCodigoTangoDePedido());
+        listDetallado.put("nombreCliente",this.nombreCliente);
+        listDetallado.put("codigoCliente",this.codigoCliente);
+        listDetallado.put("fechaDeEntrega", fecha);
+        listDetallado.put("descripcionVehiculo",this.descripcionVehiculo);
+        //listDetallado.put("numeroPedido",ped.getCodigoTangoDePedido());
         //listDetallado.put("kG",totalKg);
         String master="C://src//listadosDePreparacion//descargaDeMateriales.jasper";
         System.out.println("DIRECCION DE DESTINO "+master);
-        String destino="C://ListadosHdr//"+numeroListado+"-Rev "+numeroDeRevision+" - listado consolidado de materiales.pdf";
+        String destino="C://ListadosHdr//"+numeroListado+"-Rev "+numeroDeRevision+" - listado consolidado de descarga de materiales.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);

@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JRException;
 import objetos.Listados;
 import objetos.PedidosParaReparto;
 import objetos.RevisionDeListados;
+import objetos.Vehiculos;
 import proceso.EmisionDeListados;
 import proceso.GuardarListados;
 import proceso.Procesos;
@@ -41,6 +42,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static String fecha2;
     static String descUnidad;
     public static ArrayList carga=new ArrayList();
+    static ArrayList vehiculos=new ArrayList();
     static Double totalKg;
     static Double tKg;
     static Integer listadoNumero;
@@ -54,6 +56,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     /** Creates new form ListadoDeCargaPorVehiculo */
     public ListadoDeCargaPorVehiculo(Integer unidad,String fecha,String descripcion) {
         seleccion=unidad;
+        Procesos pr=new Procesos();
+        try {
+            vehiculos=pr.ListarVehiculos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	fecha2=fecha;
         descUnidad=descripcion;
         ls=new Listados();
@@ -279,13 +287,17 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         int totalFilas=jTable1.getRowCount();
         
         //Double totalKg=0.00;
+        String vehiculosAnt="";
+        String nombreCliente="";
+        String codigoCliente="";
         Procesos pr=new Procesos();
        int numeroListado=0;
        Listados ls2=new Listados();
        int numeroRev2=0;
        int numeroListado2=0;
         try {
-            
+             Runtime r=Runtime.getRuntime();
+            r.gc();
             ls=pr.GenerarNuevoListado(seleccion, fecha2,nuevoListado);
             
             int numeroRev=ls.getNumeroRevision();
@@ -305,6 +317,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         ArrayList descarga=new ArrayList();
         ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
+        int senal=0;
         while(ic.hasNext()){
             ped=(PedidosParaReparto)ic.next();
             /*
@@ -343,6 +356,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
+                    pedi.setNumeroDeListadoDeMateriales(numeroListado);
                     //System.out.println("DETALLE CARGA "+pedi);
                     cargaDetallada.add(pedi);
                     cargaDetallada1.add(pedi);
@@ -411,17 +425,26 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                                 int unidadAnterior=pedi.getVehiculoAnterior();
                          if(unidadActual == unidadAnterior){
                              
-                         }else{    
+                         }else{ 
+                          if(senal==0){   
+                              Vehiculos vh=new Vehiculos();
+                              vh=(Vehiculos) vehiculos.get(pedi.getVehiculoAnterior());
+                              vehiculosAnt=vh.getDescripcion();
+                              nombreCliente=ped.getRazonSocial();
+                              codigoCliente=ped.getCodigoCliente();
                         ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado);
+                        
                         numeroRev2 = ls2.getNumeroRevision();
                         numeroListado2=ls2.getNumeroListado();
-                        pedi.setNumeroDeListadoDeMateriales(numeroListado2);
-                        pedi.setNumeroDeRevisionDeListado(numeroRev2);
+                          }
+                        //pedi.setNumeroDeListadoDeMateriales(numeroListado2);
+                        //pedi.setNumeroDeRevisionDeListado(numeroRev2);
                         descarga.add(pedi);
                          }
                     }
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
-                    pedi.setNumeroDeListadoDeMateriales(ls.getNumeroListado());
+                    
+                    pedi.setNumeroDeListadoDeMateriales(numeroListado);
                     //System.out.println("DETALLE CARGA "+pedi);
                     
                     cargaDetallada.add(pedi);
@@ -475,7 +498,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
             if(descarga.size() > 0){
                 System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
-                emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga);
+                emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga,vehiculosAnt,codigoCliente,nombreCliente);
                 descarga.clear();
             }
         } catch (IOException ex) {
@@ -515,7 +538,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          */
         Runtime r=Runtime.getRuntime();
         r.gc();
-        ls=null;
+        //ls=null;
         this.jButton2.setEnabled(true);
         //this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
