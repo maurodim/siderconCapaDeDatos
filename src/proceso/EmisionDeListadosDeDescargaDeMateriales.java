@@ -98,7 +98,7 @@ public void addPedido(PedidosParaReparto ped){
         //System.err.println("Listado "+this.numeroListado+" kg "+this.totalKg);
         ArrayList listadoP=this.detallePedidos1;
         Iterator il=listadoP.listIterator();
-        ListaDataSource datasource=new ListaDataSource();
+        ListaDataSource datasource=new ListaDataSource();  
         int cantidadItems=0;
         cantidadItems=listadoP.size();
         while(il.hasNext()){
