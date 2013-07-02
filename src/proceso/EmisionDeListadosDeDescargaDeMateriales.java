@@ -70,7 +70,7 @@ public class EmisionDeListadosDeDescargaDeMateriales extends Thread{
     }
 
     public void setNumeroDeRevision(Integer numeroDeRevision) {
-        this.numeroDeRevision = numeroDeRevision;
+        this.numeroDeRevision = numeroDeRevision++;
     }
 
     public void setPesoTotal(Double pesoTotal) {
@@ -101,12 +101,15 @@ public void addPedido(PedidosParaReparto ped){
         ListaDataSource datasource=new ListaDataSource();  
         int cantidadItems=0;
         cantidadItems=listadoP.size();
+        Double pesoDescarga=0.00;
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
             fecha=ped.getFechaEnvio();
-            DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),ped.getPesoTotal());
+            pesoDescarga=ped.getPesoTotal() * (-1);
+            DetalleListado det=new DetalleListado(ped.getCodigoArticulo(),ped.getDescripcionArticulo(),ped.getCantidadArticulo(),(ped.getPesoTotal()*(-1)));
+            
             datasource.addListaDataSource(det);
-            System.out.println("cant IT :"+cantidadItems+" / "+ped.getCodigoArticulo()+" / "+ped.getDescripcionArticulo());
+            System.out.println("cant IT :"+cantidadItems+" / "+ped.getCodigoArticulo()+" / "+ped.getDescripcionArticulo()+" / "+ped.getPesoItems()+" "+ped.getPesoTotal());
             
         }
         listDetallado.put("nombreCliente",this.nombreCliente);

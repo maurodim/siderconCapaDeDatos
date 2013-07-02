@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="406"/>
+	<property name="ireport.x" value="69"/>
+	<property name="ireport.y" value="0"/>
 	<style name="vendedore" forecolor="#999999" backcolor="#CCCCCC" radius="2" hAlign="Center" vAlign="Middle" fontSize="6" isUnderline="false">
 		<box leftPadding="1" rightPadding="1">
 			<pen lineWidth="0.0" lineColor="#999999"/>
@@ -52,11 +52,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="23" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="3" width="325" height="20"/>
-				<textElement textAlignment="Justified">
-					<font size="14" isBold="true"/>
+				<reportElement x="0" y="3" width="455" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Listado de Preparación de Carga N° :"+$P{numeroListado}]]></textFieldExpression>
 			</textField>

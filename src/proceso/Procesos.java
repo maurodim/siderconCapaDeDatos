@@ -357,6 +357,7 @@ public class Procesos {
                 pedido.setEmpresa(rs.getString("TALON_PEDI"));
                 pedido.setVehiculoAsignado(rs.getInt("vehiculo"));
                 pedido.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
+                pedido.setPesoTotal(rs.getDouble("peso"));
                 System.out.println("pedido :"+numeroPedido+" fecha"+fecha+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
             }
