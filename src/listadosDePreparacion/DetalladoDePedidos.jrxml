@@ -8,8 +8,11 @@
 	<parameter name="leyenda1" class="java.lang.String"/>
 	<parameter name="leyenda2" class="java.lang.String"/>
 	<parameter name="leyenda3" class="java.lang.String"/>
+	<parameter name="revision" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{revision}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.orden_num,(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as pesoT,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos from pedidos_carga1 where listado=$P{numeroListado} and NRO_PEDIDO = $P{numeroPedido} order by numero]]>
+		<![CDATA[select pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.orden_num,(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as pesoT,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos from pedidos_carga1 where listado=$P{numeroListado} and NRO_PEDIDO = $P{numeroPedido} and revision=$P{revision} order by numero]]>
 	</queryString>
 	<field name="COD_ARTIC" class="java.lang.String"/>
 	<field name="DESC_ARTIC" class="java.lang.String"/>

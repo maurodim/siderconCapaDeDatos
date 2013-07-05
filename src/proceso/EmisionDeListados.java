@@ -5,7 +5,10 @@
 package proceso;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import net.sf.jasperreports.engine.JRException;
+import objetos.PedidosParaReparto;
 
 /**
  *
@@ -31,5 +34,21 @@ public class EmisionDeListados {
         emiList.setNumeroListado(numeroListado);
         emiList.setRevision(revision);
         emiList.start();
+    }
+    public void ImprimirListadoDeDescargaDeMateriales(Integer numeroListado,Integer numeroDeRevision,ArrayList detallePedido,String vehiculo,String codigoCliente,String nombreCliente) throws JRException, IOException{
+        EmisionDeListadosDeDescargaDeMateriales descM=new EmisionDeListadosDeDescargaDeMateriales();
+        descM.setNumeroListado(numeroListado);
+        descM.setNumeroDeRevision(numeroDeRevision);
+        descM.setCodigoCliente(codigoCliente);
+        descM.setNombreCliente(nombreCliente);
+        descM.setDescripcionVehiculo(vehiculo);
+        PedidosParaReparto ped=new PedidosParaReparto();
+        Iterator il=detallePedido.listIterator();
+        while(il.hasNext()){
+            ped=(PedidosParaReparto)il.next();
+            ped.setCantidadArticulo(ped.getCantidadArticulo()*(-1));
+            descM.addPedido(ped);
+        }
+        descM.start();
     }
     }

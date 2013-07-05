@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
  * @author Administrador
  */
 public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
-    static Connection cc=Coneccion.ObtenerConeccion();
+    static Connection cc;
     private String fechaEnvio;
     private Integer numVehiculo;
     private String descVehiculo;
@@ -60,6 +60,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
     
     public synchronized void run(){
         Map listConsolidado=new HashMap();
+        cc=Coneccion.ObtenerConeccion();
         listConsolidado.put("numListado",this.numeroListado);
         listConsolidado.put("totalKg",this.total);
         listConsolidado.put("revision",this.revision);

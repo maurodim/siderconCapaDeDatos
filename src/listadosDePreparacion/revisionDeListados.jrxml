@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="310"/>
+	<property name="ireport.x" value="69"/>
+	<property name="ireport.y" value="0"/>
 	<style name="vendedore" forecolor="#999999" backcolor="#CCCCCC" radius="2" hAlign="Center" vAlign="Middle" fontSize="6" isUnderline="false">
 		<box leftPadding="1" rightPadding="1">
 			<pen lineWidth="0.0" lineColor="#999999"/>
@@ -26,10 +26,10 @@
 	<parameter name="numeroListado" class="java.lang.Integer"/>
 	<parameter name="numeroRevision" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\hernan\\Documents\\NetBeansProjects\\SiderconCapaDatos\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -38,6 +38,7 @@
 	<field name="LEYENDA_2" class="java.lang.String"/>
 	<field name="LEYENDA_3" class="java.lang.String"/>
 	<field name="COD_VENDED" class="java.lang.String"/>
+	<field name="revision" class="java.lang.Integer"/>
 	<field name="vehiculo" class="java.lang.Integer"/>
 	<field name="kilos" class="java.lang.Double"/>
 	<field name="totalKg" class="java.lang.Double"/>
@@ -51,11 +52,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="23" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="3" width="325" height="20"/>
-				<textElement textAlignment="Justified">
-					<font size="14" isBold="true"/>
+				<reportElement x="0" y="3" width="455" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="13" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Listado de Preparación de Carga N° :"+$P{numeroListado}]]></textFieldExpression>
 			</textField>
@@ -254,7 +255,7 @@
 					<subreportParameterExpression><![CDATA[$P{numeroRevision}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "revisionDetalle.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\revisionDetalle.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement style="subEncabezado" mode="Transparent" x="100" y="0" width="44" height="15" backcolor="#CCCCCC"/>
@@ -262,6 +263,20 @@
 					<font size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreVendedor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="48" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[revision]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="15" width="96" height="20"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

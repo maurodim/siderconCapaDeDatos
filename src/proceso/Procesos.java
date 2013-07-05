@@ -128,6 +128,7 @@ public class Procesos {
                         pedidos.setNumeroComprobante(rs.getString("N_REMITO"));
                         pedidos.setEmpresa(rs.getString("TALON_PEDI"));
                         pedidos.setVerificadorRevision(rs.getInt("revisionado"));
+                        pedidos.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
                         //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
                         clie.setCodigoCliente(pedidos.getCodigoCliente());
                         clie.setRazonSocial(pedidos.getRazonSocial());
@@ -311,11 +312,16 @@ public class Procesos {
             String ttx="-- guardarAsignacionDeVehiculos - function - Clase Procesos -\r\n";
            // Connection cp=cn.ObtenerConeccion();
             Iterator ii=pedidosTrabajados.listIterator();
-            
+            String sql="";
             Statement st=cp.createStatement();
             while(ii.hasNext()){
                 pedidos=(PedidosParaReparto) ii.next();
-                String sql="update pedidos_carga1 set vehiculo="+pedidos.getVehiculoAsignado()+" where NRO_PEDIDO like '%"+pedidos.getCodigoTangoDePedido()+"%' and entrega like '"+pedidos.getFechaEnvio()+"%'";
+                if(pedidos.getVehiculoAnterior()==0){
+                sql="update pedidos_carga1 set vehiculo="+pedidos.getVehiculoAsignado()+",vehiculoAnterior="+pedidos.getVehiculoAsignado()+" where NRO_PEDIDO like '%"+pedidos.getCodigoTangoDePedido()+"%' and entrega like '"+pedidos.getFechaEnvio()+"%'";
+                }else{
+                    
+                sql="update pedidos_carga1 set vehiculo="+pedidos.getVehiculoAsignado()+",vehiculoAnterior="+pedidos.getVehiculoAnterior()+" where NRO_PEDIDO like '%"+pedidos.getCodigoTangoDePedido()+"%' and entrega like '"+pedidos.getFechaEnvio()+"%'";                    
+                }
                 ttx+=sql+"\r\n";
                 st.executeUpdate(sql);                
                 
@@ -349,6 +355,9 @@ public class Procesos {
                 pedido.setFechaEnvio(rs.getString("entrega"));
                 pedido.setiDPedido(rs.getInt("numero"));
                 pedido.setEmpresa(rs.getString("TALON_PEDI"));
+                pedido.setVehiculoAsignado(rs.getInt("vehiculo"));
+                pedido.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
+                pedido.setPesoTotal(rs.getDouble("peso"));
                 System.out.println("pedido :"+numeroPedido+" fecha"+fecha+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
             }
@@ -786,7 +795,7 @@ public class Procesos {
              */
             while(rs.next()){
                 ultimoNumeroDeListado=rs.getInt(1);
-                ultimaRevisionDeListado=rs.getInt(4);
+                ultimaRevisionDeListado=rs.getInt("revision");
                 
                 ccch=true;
             
@@ -813,6 +822,9 @@ public class Procesos {
             String ruta="C://bases//STHDR//revHdr//"+fch+"testRevision.txt";
             revisiones=new FileWriter(ruta);
             String txx="";
+             Runtime r=Runtime.getRuntime();
+        r.gc();
+            
             while(iip.hasNext()){
                 pe=(PedidosParaReparto)iip.next();
                 int revision=pe.getNumeroDeRevisionDeListado();
@@ -822,7 +834,7 @@ public class Procesos {
                 txx+=revision+" - "+pe.getCodigoTangoDePedido()+"\r\n";
                 
             
-                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+" where numero ="+pe.getiDPedido(); 
+                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+",vehiculoAnterior="+pe.getVehiculoAsignado()+" where numero ="+pe.getiDPedido(); 
                 Statement st=cp.createStatement();
                 st.executeUpdate(sql);
                 

@@ -7,8 +7,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\Administrador\\Mis documentos\\NetBeansProjects\\SiderconCapaDatos\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="revision" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{revision}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_CLIENT,pedidos_carga1.orden_num from pedidos_carga1 where listado=$P{numeroListado} group by COD_CLIENT,orden_num]]>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_CLIENT,pedidos_carga1.orden_num from pedidos_carga1 where listado=$P{numeroListado} and revision=$P{revision} group by COD_CLIENT,orden_num]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="RAZON_SOC" class="java.lang.String"/>

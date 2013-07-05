@@ -68,6 +68,16 @@ public class PedidosParaReparto {
         private Integer numeroVendedor;
         private String nombreVendedor;
         private int verificadorRevision;
+        private int vehiculoAnterior;
+
+    public int getVehiculoAnterior() {
+        return vehiculoAnterior;
+    }
+
+    public void setVehiculoAnterior(int vehiculoAnterior) {
+        this.vehiculoAnterior = vehiculoAnterior;
+    }
+        
 
     public int getVerificadorRevision() {
         return verificadorRevision;

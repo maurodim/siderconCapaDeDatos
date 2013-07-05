@@ -10,7 +10,7 @@
 	<parameter name="totalKg" class="java.lang.Double"/>
 	<parameter name="revision" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.COD_CLIENT,pedidos_carga1.listado,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as total,sum(pedidos_carga1.CANT_PEDID),(select sum(movimientoslpm.cantidadNueva) from movimientoslpm where movimientoslpm.numeroListado=$P{numListado}  and revision < $P{revision} AND movimientoslpm.codigoArticulo like pedidos_carga1.COD_ARTIC) as cantidadVieja,left(pedidos_carga1.entrega,10)as entrega,pedidos_carga1.vehiculo,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as descripcion,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as totalList from pedidos_carga1 where listado=$P{numListado} and COD_ARTIC not like '999%' and COD_ARTIC not like '30030011%' and COD_ARTIC not like '90020010%' and orden_num=0 and revision=$P{revision} group by COD_ARTIC]]>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.COD_CLIENT,pedidos_carga1.listado,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as total,(select sum(movimientoslpm.cantidadNueva) from movimientoslpm where movimientoslpm.numeroListado=$P{numListado} and codigoArticulo=pedidos_carga1.COD_ARTIC) as cantidadNueva,(select sum(movimientoslpm.cantidadNueva) from movimientoslpm where movimientoslpm.numeroListado=$P{numListado}  and revision < $P{revision} and codigoArticulo=pedidos_carga1.COD_ARTIC) as cantidadVieja,left(pedidos_carga1.entrega,10)as entrega,pedidos_carga1.vehiculo,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as descripcion,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as totalList from pedidos_carga1 where listado=$P{numListado} and COD_ARTIC not like '999%' and COD_ARTIC not like '30030011%' and COD_ARTIC not like '90020010%' and orden_num=0 and revision=$P{revision} group by COD_ARTIC]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -19,7 +19,7 @@
 	<field name="COD_ARTIC" class="java.lang.String"/>
 	<field name="DESC_ARTIC" class="java.lang.String"/>
 	<field name="total" class="java.lang.Double"/>
-	<field name="sum(pedidos_carga1.CANT_PEDID)" class="java.lang.Double"/>
+	<field name="cantidadNueva" class="java.lang.Double"/>
 	<field name="cantidadVieja" class="java.lang.Double"/>
 	<field name="entrega" class="java.lang.String"/>
 	<field name="vehiculo" class="java.lang.Integer"/>
@@ -160,11 +160,11 @@
 				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="383" y="0" width="70" height="15"/>
+				<reportElement x="343" y="0" width="110" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sum(pedidos_carga1.CANT_PEDID)}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cantidadNueva}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
 				<reportElement x="453" y="0" width="44" height="15"/>
@@ -175,7 +175,7 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="273" y="1" width="70" height="14"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidadVieja}]]></textFieldExpression>

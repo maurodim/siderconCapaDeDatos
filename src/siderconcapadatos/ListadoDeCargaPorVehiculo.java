@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JRException;
 import objetos.Listados;
 import objetos.PedidosParaReparto;
 import objetos.RevisionDeListados;
+import objetos.Vehiculos;
 import proceso.EmisionDeListados;
 import proceso.GuardarListados;
 import proceso.Procesos;
@@ -41,6 +42,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static String fecha2;
     static String descUnidad;
     public static ArrayList carga=new ArrayList();
+    static ArrayList vehiculos=new ArrayList();
     static Double totalKg;
     static Double tKg;
     static Integer listadoNumero;
@@ -54,8 +56,15 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     /** Creates new form ListadoDeCargaPorVehiculo */
     public ListadoDeCargaPorVehiculo(Integer unidad,String fecha,String descripcion) {
         seleccion=unidad;
+        Procesos pr=new Procesos();
+        try {
+            vehiculos=pr.ListarVehiculos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	fecha2=fecha;
         descUnidad=descripcion;
+        ls=new Listados();
         initComponents();
     }
 
@@ -276,13 +285,19 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         
         this.jButton2.setEnabled(false);
         int totalFilas=jTable1.getRowCount();
-        ls=new Listados();
+        
         //Double totalKg=0.00;
+        String vehiculosAnt="";
+        String nombreCliente="";
+        String codigoCliente="";
         Procesos pr=new Procesos();
        int numeroListado=0;
-
+       Listados ls2=new Listados();
+       int numeroRev2=0;
+       int numeroListado2=0;
         try {
-            
+             Runtime r=Runtime.getRuntime();
+            r.gc();
             ls=pr.GenerarNuevoListado(seleccion, fecha2,nuevoListado);
             
             int numeroRev=ls.getNumeroRevision();
@@ -299,8 +314,10 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         ArrayList cargaDetallada=new ArrayList();
         ArrayList cargaDetallada1=new ArrayList();
         ArrayList detall=new ArrayList();
+        ArrayList descarga=new ArrayList();
         ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
+        int senal=0;
         while(ic.hasNext()){
             ped=(PedidosParaReparto)ic.next();
             /*
@@ -339,6 +356,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
+                    pedi.setNumeroDeListadoDeMateriales(numeroListado);
                     //System.out.println("DETALLE CARGA "+pedi);
                     cargaDetallada.add(pedi);
                     cargaDetallada1.add(pedi);
@@ -362,7 +380,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
                 
             }else{
-                
+              /*
+               * ACA TENGO QUE VERIFICAR QUE EL NUMERO DE LISTADO DE MATERIALES SEA MAYOR A 0, SI ES ASI GENERO UNA REVISION DE EL NUMERO QUE TIENE CARGADO EL PEDIDO
+               * COMO REVISION PARA QUITAR MATERIAL -----
+               * O BIEN PUEDO GENERAR UNA NUEVA REVISION CON NUMEROS NEGATIVOS, CON EL FIN DE MANTENER LAS CANTIDADES CORRECTAS
+               * 
+               * 
+               */  
+              
             ped.setNumeroDeListadoDeMateriales(numeroListado);
             int revisionListado=ped.getNumeroDeRevisionDeListado();
             int lSRevisionDeListado=ls.getNumeroRevision();
@@ -382,9 +407,46 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Iterator id=detall.listIterator();
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
+                            if(pedi.getNumeroDeListadoDeMateriales() > 0){
+                        /*
+                         * SOLUCION MAS SIMPLE:
+                         * -GENERO UNA NUEVA PLANTILLA DE LISTADO PARA ANULACIONES
+                         * - PASO LOS DATOS DE NUMERO DE PEDIDO, FECHA, NUMERO LISTADO, REVISION DE LOS QUE HALLA QUE ELIMINAR
+                         * - GUARDO EN HISTORICO
+                         * - SALE LA NUEVA REVISION
+                         * 
+                         * POR OTRO LADO SI MANDO ASI NO TENGO DONDE PUEDA LEER EL LISTADO , A NO SER QUE LO HAGA SOLAMENTE CON PARAMETROS, O SEA LOS DATOS DEL PEDIDO Y LISTO
+                         * DE ESA FORMA SOLAMENTE IMPRIMO Y NO ESTOY MODIFICANDO LAS BASE PARA QUE SALGA LA INFO SOLAMENTE PARA UNA REVISION, NO TIENE MUCHO SENTIDO. EL RESTO ESTARÍA HECHO 
+                         * Y NO TENDRÍA QUE TRAER MAYORES PROBLEMAS
+                         * 
+                         * 
+                         */
+                                int unidadActual=pedi.getVehiculoAsignado();
+                                int unidadAnterior=pedi.getVehiculoAnterior();
+                         if(unidadActual == unidadAnterior){
+                             
+                         }else{ 
+                          if(senal==0){   
+                              Vehiculos vh=new Vehiculos();
+                              vh=(Vehiculos) vehiculos.get(pedi.getVehiculoAnterior());
+                              vehiculosAnt=vh.getDescripcion();
+                              nombreCliente=ped.getRazonSocial();
+                              codigoCliente=ped.getCodigoCliente();
+                        ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado);
+                        
+                        numeroRev2 = ls2.getNumeroRevision();
+                        numeroListado2=ls2.getNumeroListado();
+                          }
+                        //pedi.setNumeroDeListadoDeMateriales(numeroListado2);
+                        //pedi.setNumeroDeRevisionDeListado(numeroRev2);
+                        descarga.add(pedi);
+                         }
+                    }
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
-                    pedi.setNumeroDeListadoDeMateriales(ls.getNumeroListado());
+                    
+                    pedi.setNumeroDeListadoDeMateriales(numeroListado);
                     //System.out.println("DETALLE CARGA "+pedi);
+                    
                     cargaDetallada.add(pedi);
                     cargaDetallada1.add(pedi);
                 }
@@ -408,9 +470,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //System.out.println("DETALLE PEDIDO "+ped.getDescripcionArticulo()+" cant "+ped.getCantidadArticulo());
             }
             
-           
+            
         }
-        
+
         listadoNumero=numeroListado;
         
         
@@ -434,6 +496,11 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         EmisionDeListados emision=new EmisionDeListados();
         try {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
+            if(descarga.size() > 0){
+                System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
+                emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga,vehiculosAnt,codigoCliente,nombreCliente);
+                descarga.clear();
+            }
         } catch (IOException ex) {
             GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
@@ -471,7 +538,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          */
         Runtime r=Runtime.getRuntime();
         r.gc();
-        ls=null;
+        //ls=null;
         this.jButton2.setEnabled(true);
         //this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
