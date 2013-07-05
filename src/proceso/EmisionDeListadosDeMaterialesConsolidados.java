@@ -19,6 +19,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
@@ -65,7 +66,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
         listConsolidado.put("totalKg",this.total);
         listConsolidado.put("revision",this.revision);
         System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado);
-        String master="C://src//listadosDePreparacion//ListadoDeMaterialesConsolidado.jasper";
+        String master=SiderconCapaatos.formularioConsolidado;
         String destino="C://ListadosHdr//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
         JasperReport reporte = null;
         try {

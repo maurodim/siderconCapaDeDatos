@@ -4,6 +4,7 @@
  */
 package proceso;
 
+import config.Configu;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,6 +24,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
@@ -53,14 +55,16 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
     @Override
     public synchronized void run(){
         chequearListado(this.numeroListado);
+        //Configu configuracion=Configu.DETALLADO;
         cc=Coneccion.ObtenerConeccion();
         Map listDetallado=new HashMap();
         listDetallado.put("numeroListado",this.numeroListado);
         listDetallado.put("numeroRevision", this.numeroRevision);
         System.err.println("Listado "+this.numeroListado+" kg "+this.totalKg);
         listDetallado.put("kG",totalKg);
-        String master="C://src//listadosDePreparacion//revisionDeListados.jasper";
-        System.out.println("DIRECCION DE DESTINO "+master);
+        String master = SiderconCapaatos.formularioDetallado;//"C://src//listadosDePreparacion//revisionDeListados.jasper";
+        //configuracion.valueOf(master);
+        System.out.println("DIRECCION DE DESTINO //////////////////////////////////// "+master);
         String destino="C://ListadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         JasperReport reporte = null;
         try {
