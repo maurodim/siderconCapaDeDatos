@@ -13,6 +13,7 @@ import actualizaciones.ChequearCantidadesPedidos;
 import actualizaciones.ImportarPedidos;
 import actualizaciones.objetosActualizables.EncabezadoHdr;
 import config.Configuracion;
+import config.Formularios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -65,6 +66,10 @@ public class SiderconCapaatos {
     public static Connection sqlBu=null;
     public static Connection sqlSd=null;
     public static Connection sqlSdSrl=null;
+    public static String formularioConsolidado=null;
+    public static String formularioDetallado=null;
+    public static String formularioDescarga=null;
+    public static String formularioHdr=null;
 	/**
 	 * @param args the command line arguments
 	 */
@@ -87,6 +92,11 @@ public class SiderconCapaatos {
             //retorno.clear();
             log l=new log();
              Configuracion conf=new Configuracion();
+             Formularios form=new Formularios();
+             formularioConsolidado=form.getConsolidado();
+             formularioDetallado=form.getDetallado();
+             formularioDescarga=form.getDescarga();
+             formularioHdr=form.getHdr();
         try {
             listadoDeConfiguraciones=conf.leerConfiguraciones();
         } catch (MalformedURLException ex) {

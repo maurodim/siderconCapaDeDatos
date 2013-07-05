@@ -24,6 +24,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import objetos.DetalleListado;
 import objetos.PedidosParaReparto;
+import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
@@ -118,7 +119,7 @@ public void addPedido(PedidosParaReparto ped){
         listDetallado.put("descripcionVehiculo",this.descripcionVehiculo);
         //listDetallado.put("numeroPedido",ped.getCodigoTangoDePedido());
         //listDetallado.put("kG",totalKg);
-        String master="C://src//listadosDePreparacion//descargaDeMateriales.jasper";
+        String master=SiderconCapaatos.formularioDescarga;
         System.out.println("DIRECCION DE DESTINO "+master);
         String destino="C://ListadosHdr//"+numeroListado+"-Rev "+numeroDeRevision+" - listado consolidado de descarga de materiales.pdf";
         JasperReport reporte = null;

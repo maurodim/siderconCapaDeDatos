@@ -28,6 +28,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import objetos.PedidosParaReparto;
 import objetos.Vehiculos;
+import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
@@ -179,7 +180,7 @@ public class EmisionHojaDeRuta extends Thread{
         Map listConsolidado=new HashMap();
         listConsolidado.put("numeroHdr",num);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
-        String master="C://src//hojasDeRuta//HojaDeRuta.jasper";
+        String master=SiderconCapaatos.formularioHdr;
         String destino="C://Hdr//"+num+"hdr.pdf";
         JasperReport reporte = null;
         try {
