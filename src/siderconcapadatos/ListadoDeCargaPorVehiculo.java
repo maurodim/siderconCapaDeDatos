@@ -51,6 +51,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static Integer numeroDeListadoAnterior;
     static Integer numeroDeRevisionAnterior;
     static Boolean nuevoListado=false;
+    static Integer nListado;
+    static Integer rNum;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -298,7 +300,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         try {
              Runtime r=Runtime.getRuntime();
             r.gc();
-            ls=pr.GenerarNuevoListado(seleccion, fecha2,nuevoListado);
+            ls=pr.GenerarNuevoListado(seleccion, fecha2,true);
             
             int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();
@@ -496,6 +498,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         EmisionDeListados emision=new EmisionDeListados();
         try {
             emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
+            nListado=numeroListado;
+            rNum=revisionNum;
             if(descarga.size() > 0){
                 System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
                 emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga,vehiculosAnt,codigoCliente,nombreCliente);
@@ -548,7 +552,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         Procesos pr=new Procesos();
         //Listados ls=new Listados();
        int numeroListado=0;
-       numeroListado=ls.getNumeroListado();
+       numeroListado=nListado;
        /*
         try {
             //ls=pr.GenerarNuevoListado(seleccion, fecha2);

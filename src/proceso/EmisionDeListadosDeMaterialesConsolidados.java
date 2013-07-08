@@ -7,6 +7,7 @@ package proceso;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,7 +27,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author Administrador
  */
 public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
-    static Connection cc1;
+    private static Connection cc1;
     private String fechaEnvio;
     private Integer numVehiculo;
     private String descVehiculo;
@@ -100,7 +101,10 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    
-
+        try {
+            Coneccion.CerrarConneccion(cc1);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
