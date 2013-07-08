@@ -4,8 +4,9 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="listadoNumero" class="java.lang.Integer"/>
+	<parameter name="revision" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.orden_num,(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID)as peso FROM pedidos_carga1 where listado=$P{listadoNumero} and orden_num > 0 order by numero]]>
+		<![CDATA[select pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.orden_num,(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID)as peso FROM pedidos_carga1 where listado=$P{listadoNumero} and orden_num > 0 and revision=$P{revision} order by numero]]>
 	</queryString>
 	<field name="COD_ARTIC" class="java.lang.String"/>
 	<field name="DESC_ARTIC" class="java.lang.String"/>

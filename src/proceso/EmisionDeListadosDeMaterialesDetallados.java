@@ -98,7 +98,11 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-
+        try {
+            Coneccion.CerrarConneccion(cc);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private void chequearListado(int listadox){
         try {
