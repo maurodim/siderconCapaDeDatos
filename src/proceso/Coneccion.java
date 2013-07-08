@@ -18,7 +18,7 @@ import seguimientos.GuardarMovimientos;
 public class Coneccion {
 	public static Connection cn=null;
         private static String driver="com.mysql.jdbc.Driver";
-        private static String url="jdbc:mysql://192.168.0.111/siderpruebas";
+        private static String url="jdbc:mysql://192.168.0.111/siderprueba";
         private static String usuario="mauro";//"hdr";
         private static String clave="mauro";//"daniel";
 
