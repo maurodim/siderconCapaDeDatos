@@ -300,7 +300,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         try {
              Runtime r=Runtime.getRuntime();
             r.gc();
-            ls=pr.GenerarNuevoListado(seleccion, fecha2,true);
+            ls=pr.GenerarNuevoListado(seleccion, fecha2,true,false);
             
             int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();
@@ -434,7 +434,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                               vehiculosAnt=vh.getDescripcion();
                               nombreCliente=ped.getRazonSocial();
                               codigoCliente=ped.getCodigoCliente();
-                        ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado);
+                        ls2=pr.GenerarNuevoListado(pedi.getVehiculoAnterior(), pedi.getFechaEnvio(),nuevoListado,true);
                         
                         numeroRev2 = ls2.getNumeroRevision();
                         numeroListado2=ls2.getNumeroListado();
@@ -458,6 +458,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     //rrev.guardarDatosRevision(cargaDetallada);
                     ListadoDeCargaPorVehiculo.numeroDeListadoAnterior=rrev.leerNumeroDeListadoAnterior();
                 }
+                Runtime r=Runtime.getRuntime();
+            r.gc();
                 rrev.guardarDatosRevision(carga);
  
                 cargaDetallada.clear();

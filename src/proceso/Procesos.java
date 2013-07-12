@@ -313,6 +313,8 @@ public class Procesos {
            // Connection cp=cn.ObtenerConeccion();
             Iterator ii=pedidosTrabajados.listIterator();
             String sql="";
+            Runtime r=Runtime.getRuntime();
+            r.gc();
             Statement st=cp.createStatement();
             while(ii.hasNext()){
                 pedidos=(PedidosParaReparto) ii.next();
@@ -725,7 +727,7 @@ public class Procesos {
             
             return detalle;
         }
-        public Listados GenerarNuevoListado(int vehiculo,String fecha,Boolean listadoCh) throws SQLException{
+        public Listados GenerarNuevoListado(int vehiculo,String fecha,Boolean listadoCh,Boolean listadoCH1) throws SQLException{
             System.out.println(vehiculo+" "+fecha);
             Listados list=new Listados();
             Boolean chq=ChequearListado(vehiculo,fecha);
@@ -737,7 +739,7 @@ public class Procesos {
                 //ultimaRevisionDeListado;
                 
                 list.setNumeroListado(ultimoNumeroDeListado);
-                if(listadoCh){
+                if(listadoCH1){
                 ultimaRevisionDeListado++;
                 }
                 list.setNumeroRevision(ultimaRevisionDeListado);

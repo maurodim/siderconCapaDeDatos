@@ -31,7 +31,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author MAURO DI
  */
 public class EmisionDeListadosDeMaterialesDetallados extends Thread{
-    static Connection cc=Coneccion.ObtenerConeccion();
+    static Connection cc;
     private Integer numeroListado;
     private Double totalKg;
     private Integer numeroRevision;
@@ -104,15 +104,15 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void chequearListado(int listadox){
+    private synchronized void chequearListado(int listadox){
         try {
             Coneccion con=new Coneccion();
-            Connection cnn=Coneccion.ObtenerConeccion();
-            blanquearListado(cnn,listadox);
+            Connection cnn1=con.ObtenerConeccion();
+            blanquearListado(cnn1,listadox);
             ArrayList listado=new ArrayList();
             ArrayList numeros=new ArrayList();
             String sql="select pedidos_carga1.DESC_ARTIC,pedidos_carga1.numero from pedidos_carga1 where listado="+listadox;
-            Statement st=cnn.createStatement();
+            Statement st=cnn1.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
             while(rs.next()){
@@ -126,7 +126,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
              String descripcion=(String)listado.get(i);   
              Integer numeroSel=(Integer)numeros.get(i);
              Integer numeroDestino=0;
-             Statement st1=cnn.createStatement();
+             Statement st1=cnn1.createStatement();
              int c=i+1;
              for(int h=c;h<listado.size();h++){
                 actual=(String)listado.get(h);
@@ -141,6 +141,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 }
             }
             st1.close();
+            //Coneccion.CerrarConneccion(cnn);
             //con.CerrarConneccion(cc);
             }
         } catch (SQLException ex) {
