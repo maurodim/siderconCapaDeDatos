@@ -16,7 +16,7 @@ import seguimientos.GuardarMovimientos;
  * @author USUARIO
  */
 public class Coneccion {
-	public static Connection cn=null;
+	public Connection cn=null;
         private static String driver="com.mysql.jdbc.Driver";
         private static String url="jdbc:mysql://192.168.0.111/siderprueba";
         private static String usuario="mauro";//"hdr";
@@ -39,7 +39,7 @@ public class Coneccion {
     }
         
         
-	public static Connection getCn() {
+	public Connection getCn() {
 		return cn;
 	}
 	
@@ -71,9 +71,10 @@ public class Coneccion {
 		String usuario="maurodim_mSider";
 		String clave="2428WEBmauro";
 */
-                String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
-		String usuario1="mauro";//"hdr";
-		String clave1="mauro";//daniel";
+                String url1="jdbc:mysql://192.168.0.111/sidercon";//"sidercon";
+		String usuario1="hdr";//"hdr";
+		String clave1="hdr";//daniel";
+                Connection cn=null;
 		//Connection cn=null;
 		try{
 			Class.forName(driver1).newInstance();

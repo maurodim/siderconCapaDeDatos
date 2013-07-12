@@ -7,6 +7,7 @@ package proceso;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,7 +27,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author Administrador
  */
 public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
-    static Connection cc;
+    private static Connection cc1;
     private String fechaEnvio;
     private Integer numVehiculo;
     private String descVehiculo;
@@ -61,22 +62,24 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
     
     public synchronized void run(){
         Map listConsolidado=new HashMap();
-        cc=Coneccion.ObtenerConeccion();
+        cc1=Coneccion.ObtenerConeccion();
         listConsolidado.put("numListado",this.numeroListado);
-        listConsolidado.put("totalKg",this.total);
+        listConsolidado.put("totalKg",total);
         listConsolidado.put("revision",this.revision);
-        System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado);
-        String master=SiderconCapaatos.formularioConsolidado;
+        System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado+" rev "+this.revision);
+        String master=SiderconCapaatos.formularioConsolidado.trim();
         String destino="C://ListadosHdr//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
+        System.err.println(master);
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("ERROR EN EL MASTER");
         }
         JasperPrint jasperPrint = null;
         try {
-            jasperPrint = JasperFillManager.fillReport(reporte, listConsolidado,cc);
+            jasperPrint = JasperFillManager.fillReport(reporte, listConsolidado,cc1);
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,7 +101,10 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    
-
+        try {
+            Coneccion.CerrarConneccion(cc1);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
