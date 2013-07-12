@@ -73,7 +73,7 @@ public class Coneccion {
 */
                 String url1="jdbc:mysql://192.168.0.111/sidercon";//"sidercon";
 		String usuario1="hdr";//"hdr";
-		String clave1="hdr";//daniel";
+		String clave1="daniel";//daniel";
                 Connection cn=null;
 		//Connection cn=null;
 		try{
