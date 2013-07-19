@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="69"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<style name="vendedore" forecolor="#999999" backcolor="#CCCCCC" radius="2" hAlign="Center" vAlign="Middle" fontSize="6" isUnderline="false">
 		<box leftPadding="1" rightPadding="1">
 			<pen lineWidth="0.0" lineColor="#999999"/>
@@ -29,7 +29,7 @@
 		<defaultValueExpression><![CDATA["C:\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -44,6 +44,7 @@
 	<field name="totalKg" class="java.lang.Double"/>
 	<field name="nombreVehiculo" class="java.lang.String"/>
 	<field name="entrega" class="java.lang.String"/>
+	<field name="fechaPedido" class="java.lang.String"/>
 	<field name="destino" class="java.lang.String"/>
 	<field name="domicilio" class="java.lang.String"/>
 	<field name="localidad" class="java.lang.String"/>
@@ -265,18 +266,32 @@
 				<textFieldExpression><![CDATA[$F{nombreVendedor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="15" width="48" height="20"/>
+				<reportElement x="0" y="15" width="48" height="10"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[revision]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="15" width="96" height="20"/>
+				<reportElement x="48" y="15" width="96" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="25" width="58" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Fecha del Pedido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="58" y="25" width="86" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaPedido}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -18,9 +18,9 @@ import seguimientos.GuardarMovimientos;
 public class Coneccion {
 	public Connection cn=null;
         private static String driver="com.mysql.jdbc.Driver";
-        private static String url="jdbc:mysql://192.168.0.111/sidercon";
-        private static String usuario="hdr";//"hdr";
-        private static String clave="daniel";//"daniel";
+        private static String url="jdbc:mysql://192.168.0.111/siderpruebas";
+        private static String usuario="mauro";//"hdr";
+        private static String clave="mauro";//"daniel";
 
     public static String getDriver() {
         return driver;
@@ -71,9 +71,9 @@ public class Coneccion {
 		String usuario="maurodim_mSider";
 		String clave="2428WEBmauro";
 */
-                String url1="jdbc:mysql://192.168.0.111/sidercon";//"sidercon";
-		String usuario1="hdr";//"hdr";
-		String clave1="daniel";//daniel";
+                String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
+		String usuario1="mauro";//"hdr";
+		String clave1="mauro";//daniel";
                 Connection cn=null;
 		//Connection cn=null;
 		try{
