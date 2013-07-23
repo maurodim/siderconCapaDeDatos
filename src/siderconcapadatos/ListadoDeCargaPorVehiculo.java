@@ -300,7 +300,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         try {
              Runtime r=Runtime.getRuntime();
             r.gc();
-            ls=pr.GenerarNuevoListado(seleccion, fecha2,true,false);
+            ls=pr.GenerarNuevoListado(seleccion, fecha2,true,true);
             
             int numeroRev=ls.getNumeroRevision();
             numeroListado=ls.getNumeroListado();

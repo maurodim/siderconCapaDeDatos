@@ -739,6 +739,9 @@ public class Procesos {
                 //ultimaRevisionDeListado;
                 
                 list.setNumeroListado(ultimoNumeroDeListado);
+               
+                // listadoCH1 debe ser true para incrementar numero de revision
+                
                 if(listadoCH1){
                 ultimaRevisionDeListado++;
                 }
@@ -769,6 +772,9 @@ public class Procesos {
             rs.close();
             //list.setNumeroRevision(0);
             }
+
+            // listadoCH al ser true guarda los datos en las bases sobre los distintos listados y revisiones
+            
             if(listadoCh){
             sql="insert into historicolistadorevision (numeroListado,numeroRevision) values ("+ultimoNumeroDeListado+","+ultimaRevisionDeListado+")";
             st.executeUpdate(sql);
