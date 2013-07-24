@@ -8,7 +8,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import proceso.Coneccion;
 
 /**
@@ -124,4 +127,36 @@ public static Integer nuevaRevision() throws SQLException{
     rev=Listados.numeroRevision;
     return rev;
 }
+private ArrayList listarLpm(String fecha,Integer vehiculo) throws SQLException{
+    ArrayList listado=new ArrayList();
+    String sql="select * listadodemateriales where fechaEntrega like '"+fecha+"%' and vehiculo="+vehiculo;
+    Connection cn=Coneccion.ObtenerConeccion();
+    Statement st=cn.createStatement();
+    st.executeQuery(sql);
+    ResultSet rs=st.getResultSet();
+    while(rs.next()){
+        Listados lista=new Listados();
+        lista.setNumeroListado(rs.getInt("numero"));
+        lista.setFechaDeEntrega(rs.getDate("fechaDeEntrega"));
+        listado.add(lista);
+    }
+    Coneccion.CerrarConneccion(cn);
+    return listado;
+}
+private Boolean eliminarLpm(Object listado){
+    Boolean confirmacion=true;    
+    try {
+            Listados lst=(Listados)listado;
+            String sql="update listadodemateriales set vehiculo=0,revision=0 where numero="+lst.getNumeroListado();
+            Connection cn=Coneccion.ObtenerConeccion();
+            Statement st=cn.createStatement();
+            st.executeUpdate(sql);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Listados.class.getName()).log(Level.SEVERE, null, ex);
+            confirmacion=false;
+        }
+        return confirmacion;
+}
+
 }
