@@ -85,11 +85,11 @@
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="257" y="0" width="47" height="12"/>
-				<textElement textAlignment="Left">
+				<reportElement x="239" y="0" width="65" height="12"/>
+				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CANT NUEVA]]></text>
+				<text><![CDATA[CANTIDAD]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="0" width="56" height="12"/>
@@ -113,13 +113,6 @@
 				<text><![CDATA[N° de Orden]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="0" width="57" height="12"/>
-				<textElement textAlignment="Left">
-					<font size="6" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CANT]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="420" y="0" width="40" height="12"/>
 				<textElement>
 					<font size="6" isBold="true"/>
@@ -138,8 +131,8 @@
 				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="257" y="0" width="24" height="12"/>
-				<textElement textAlignment="Left">
+				<reportElement x="200" y="0" width="81" height="12"/>
+				<textElement textAlignment="Right">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CANT_PEDID}]]></textFieldExpression>
@@ -165,13 +158,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{orden_num}==0 ? " " : $F{orden_num} )]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00;-###0.00">
-				<reportElement x="200" y="0" width="28" height="12"/>
-				<textElement textAlignment="Left">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cantidadAntigua}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="420" y="0" width="40" height="12"/>
 				<textElement textAlignment="Center">
@@ -180,15 +166,8 @@
 				<textFieldExpression><![CDATA[$F{repetidos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="228" y="0" width="29" height="12"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{medida}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="281" y="0" width="23" height="12"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{medida}]]></textFieldExpression>
