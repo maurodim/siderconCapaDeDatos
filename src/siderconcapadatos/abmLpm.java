@@ -40,6 +40,7 @@ public class abmLpm extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Listados de LPM");
 
         jTable1.setModel(lpmModelo);
