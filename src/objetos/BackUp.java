@@ -31,11 +31,11 @@ public class BackUp {
         //sentencia para crear el BackUp
         
         //datos de coneccion
-        Coneccion con=new Coneccion();
-        Connection cnn=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        Connection cnn=cone.ObtenerConeccion();
         String db="sidercon";
         String host="//192.168.0.111/";
-        String dumpMy="c:/xampp/mysql/bin/mysqldump --opt --host="+host+"--user="+Coneccion.getUsuario()+"--password="+Coneccion.getClave()+" "+db;
+        String dumpMy="c:/xampp/mysql/bin/mysqldump --opt --host="+host+"--user="+cone.getUsuario()+"--password="+cone.getClave()+" "+db;
         //String dumpMy="Hola mundo 13-01-28";
         System.out.println(dumpMy);
          Process run = Runtime.getRuntime().exec(dumpMy);

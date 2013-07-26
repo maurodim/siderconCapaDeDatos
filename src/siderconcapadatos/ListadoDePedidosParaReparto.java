@@ -383,7 +383,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
-        jButton7.setText("Listar LPM´S");
+        jButton7.setText("Anular LPM´S");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -813,7 +813,7 @@ modelo.addRow(fila6);
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        abmLpm lpm=new abmLpm();
+        abmLpm lpm=new abmLpm(fechaPedido);
         InicioSiderconHdr.jDesktopPane1.add(lpm);
         lpm.setVisible(true);
         lpm.toFront();

@@ -33,7 +33,7 @@ public class PedidosParaReparto {
 	private String fechaEnvio;
 	private Integer vehiculoAsignado;
 	private Boolean entregaCompletada;
-	private Connection coneccionPedidos=Coneccion.ObtenerConeccion();
+	private Connection coneccionPedidos=null;
 	private Integer numeroDeProceso;
         private Boolean confirmacionPorceso;
         private Integer codigoDeposito;
@@ -443,6 +443,8 @@ public class PedidosParaReparto {
 	}
 
     public PedidosParaReparto() {
+        Coneccion cone=new Coneccion();
+        coneccionPedidos=cone.ObtenerConeccion();
         this.empresa = "";
     }
 	

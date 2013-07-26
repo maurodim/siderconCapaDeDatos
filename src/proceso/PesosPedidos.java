@@ -22,7 +22,7 @@ import objetos.DetallePesosPedido;
  * @author Administrador
  */
 public class PesosPedidos extends Thread{
-    private static Connection cp=Coneccion.ObtenerConeccion();
+    private static Connection cp=null;
     
     @Override
     public synchronized void run(){
@@ -31,6 +31,8 @@ public class PesosPedidos extends Thread{
             Map art=new HashMap();
             ArrayList pesosArt=new ArrayList();
             DetallePesosPedido pesDet=new DetallePesosPedido();
+            Coneccion cone=new Coneccion();
+            cp=cone.ObtenerConeccion();
             String codigo=null;
                 Double pesoIt=0.00;
             Procesos pr=new Procesos();
@@ -71,7 +73,7 @@ public class PesosPedidos extends Thread{
                     ht.executeUpdate(sql);
                 }
                 ht.close();
-                Coneccion.CerrarConneccion(cp);    
+                cone.CerrarConneccion(cp);    
         } catch (SQLException ex) {
             Logger.getLogger(PesosPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }

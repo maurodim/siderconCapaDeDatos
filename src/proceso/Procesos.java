@@ -43,12 +43,17 @@ import siderconcapadatos.SiderconCapaatos;
  * @author MAURO DI
  */
 public class Procesos {
-    static Connection cp=Coneccion.ObtenerConeccion();
+    static Connection cp=null;
     static ArrayList<PedidosParaReparto> listaPed=new ArrayList();
     static Coneccion cn=new Coneccion();
     static int ultimoNumeroDeListado=0;
     static int ultimaRevisionDeListado=0;
     static Connection cT=null;
+
+    public Procesos() {
+        Coneccion cone=new Coneccion();
+        cp=cone.ObtenerConeccion();
+    }
     
     public Map cargarPesosDeArticulos() throws SQLException{
         Map<String,Double> articulos=new HashMap<String,Double>();

@@ -22,7 +22,7 @@ import siderconcapadatos.ListadoDeCargaPorVehiculo;
  * @author Administrador
  */
 public class DatosClientes extends Thread{
-    static Connection cd=Coneccion.ObtenerConeccion();
+    static Connection cd=null;
     private ArrayList cargados=new ArrayList();
 
     public void setCargados(ArrayList cargados) {
@@ -37,6 +37,8 @@ public class DatosClientes extends Thread{
         Map saldoCliente=new HashMap();
         PedidosParaReparto pd=new PedidosParaReparto();
         Clientes cl=new Clientes();
+        Coneccion cone=new Coneccion();
+        cd=cone.ObtenerConeccion();
         String sql=null;
         String cli=null;
         Double saldo=0.00;

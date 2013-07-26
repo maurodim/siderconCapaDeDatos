@@ -4,37 +4,40 @@
  */
 package proceso;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
+import javax.sql.DataSource;
 import seguimientos.Archivador;
 import seguimientos.GuardarMovimientos;
+
 
 /**
  *
  * @author USUARIO
  */
 public class Coneccion {
-	public Connection cn=null;
-        private static String driver="com.mysql.jdbc.Driver";
-        private static String url="jdbc:mysql://192.168.0.111/siderpruebas";
-        private static String usuario="mauro";//"hdr";
-        private static String clave="mauro";//"daniel";
+	private Connection cn=null;
+        private String driver="com.mysql.jdbc.Driver";
+        private String url="jdbc:mysql://192.168.0.111/siderpruebas";
+        private String usuario="mauro";//"hdr";
+        private String clave="mauro";//"daniel";
 
-    public static String getDriver() {
+    public  String getDriver() {
         return driver;
     }
 
-    public static String getUrl() {
+    public  String getUrl() {
         return url;
     }
 
-    public static String getUsuario() {
+    public  String getUsuario() {
         return usuario;
     }
 
-    public static String getClave() {
+    public  String getClave() {
         return clave;
     }
         
@@ -51,20 +54,12 @@ public class Coneccion {
 		//String clave="mauro";
 
 		//Connection cn=null;
-		try{
-			Class.forName(driver);
-			cn=DriverManager.getConnection(url,usuario,clave);
-				
-		}catch(Exception ex){
-                    GuardarMovimientos gArch=new Archivador();
-                String cod1=String.valueOf(ex);
-                gArch.registrarErrores(cod1, "", "");
-			System.out.println("NO SE PUDO CONECTAR "+ex);
-		}
+
 		
 	}
 	
-	public static Connection ObtenerConeccion(){
+	public Connection ObtenerConeccion(){
+            
 		String driver1="com.mysql.jdbc.Driver";
                 /*
 		String url="jdbc:mysql://201.235.253.65:3306/maurodim_sidercon";
@@ -72,13 +67,18 @@ public class Coneccion {
 		String clave="2428WEBmauro";
 */
                 String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
-		String usuario1="mauro";//"hdr";
-		String clave1="mauro";//daniel";
+		String usuario1="hdr";//"hdr";
+		String clave1="daniel";//daniel";
                 Connection cn=null;
 		//Connection cn=null;
+                MysqlDataSource dataSource=new MysqlDataSource();
 		try{
-			Class.forName(driver1).newInstance();
-			cn=DriverManager.getConnection(url1,usuario1,clave1);
+			//Class.forName(driver1).newInstance();
+                    dataSource.setUser(usuario1);
+                    dataSource.setDatabaseName("siderpruebas");
+                    dataSource.setPassword(clave1);
+                    dataSource.setServerName("192.168.0.111");
+			cn=dataSource.getConnection();
 			
 		}catch(Exception ex){
                     GuardarMovimientos gArch=new Archivador();
@@ -88,7 +88,7 @@ public class Coneccion {
 		}
 		return cn;
 	}
-	public static void CerrarConneccion(Connection cb) throws SQLException{
+	public void CerrarConneccion(Connection cb) throws SQLException{
 		cb.close();
 	}
 }

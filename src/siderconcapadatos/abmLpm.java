@@ -4,18 +4,26 @@
  */
 package siderconcapadatos;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import objetos.Listados;
+import siderconcapadatos.tablas.lpmModel;
 
 /**
  *
  * @author hernan
  */
 public class abmLpm extends javax.swing.JInternalFrame {
-
+    private String fecha;
     /**
      * Creates new form abmLpm
      */
-    public abmLpm() {
+    public abmLpm(String fechaPedido) {
+        fecha=fechaPedido;
         initComponents();
     }
 
@@ -30,20 +38,41 @@ public class abmLpm extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        DefaultTableModel lpmModelo=new DefaultTableModel();
-
-        lpmModelo.addColumn("Eliminar");
-        lpmModelo.addColumn("numero LPM");
-        lpmModelo.addColumn("vehiculo");
+        lpmModel lpmModelo=new lpmModel();
+        Listados lista=new Listados();
+        ArrayList lst=new ArrayList();
+        try{
+            lst=Listados.listarLpm(fecha);
+        }catch(SQLException ex){
+            System.out.println(" no se pudo recuperar lpm"+ex);
+        }
+        Iterator iLst=lst.listIterator();
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Listados de LPM");
 
         jTable1.setModel(lpmModelo);
+        lpmModelo.addColumn("Eliminar");
+        lpmModelo.addColumn("numero LPM");
+        lpmModelo.addColumn("vehiculo");
+        lpmModelo.addColumn("descripcion");
+        lpmModelo.addColumn("Estado");
+        Boolean eliminacion=true;
+        Object []fila=new Object[5];
+        while(iLst.hasNext()){
+            lista=(Listados)iLst.next();
+            fila[0]=false;
+            fila[1]=lista.getNumeroListado();
+            fila[2]=lista.getNumeroDeVehiculo();
+            fila[3]="F100 1";
+            fila[4]="activa";
+            lpmModelo.addRow(fila);
+        }
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -62,9 +91,16 @@ public class abmLpm extends javax.swing.JInternalFrame {
                 .addGap(0, 26, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Eliminar Seleccion");
+        jButton1.setText("Anular Seleccion");
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Anular Todas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -73,6 +109,8 @@ public class abmLpm extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -83,7 +121,8 @@ public class abmLpm extends javax.swing.JInternalFrame {
                 .addGap(0, 27, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,14 +143,20 @@ public class abmLpm extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

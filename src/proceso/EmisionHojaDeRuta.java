@@ -35,7 +35,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author Administrador
  */
 public class EmisionHojaDeRuta extends Thread{
-    static Connection ch=Coneccion.ObtenerConeccion();
+    static Connection ch=null;
     private ArrayList listado=new ArrayList();
     private String fecha;
     private Integer numeroFletero;
@@ -77,6 +77,8 @@ public class EmisionHojaDeRuta extends Thread{
         Procesos pro=new Procesos();
         Vehiculos uni=new Vehiculos();
         ArrayList unidades=new ArrayList();
+        Coneccion cone=new Coneccion();
+        ch=cone.ObtenerConeccion();
         try {
             unidades=pro.ListarVehiculos();
         } catch (SQLException ex) {

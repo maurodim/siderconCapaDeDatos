@@ -40,7 +40,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,7 +82,8 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="DefaultTableModel lpmModelo=new DefaultTableModel();&#xa;&#xa;lpmModelo.addColumn(&quot;Eliminar&quot;);&#xa;lpmModelo.addColumn(&quot;numero LPM&quot;);&#xa;lpmModelo.addColumn(&quot;vehiculo&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="lpmModel lpmModelo=new lpmModel();&#xa;Listados lista=new Listados();&#xa;ArrayList lst=new ArrayList();&#xa;try{&#xa;lst=Listados.listarLpm(fecha);&#xa;}catch(SQLException ex){&#xa;System.out.println(&quot; no se pudo recuperar lpm&quot;+ex);&#xa;}&#xa;Iterator iLst=lst.listIterator();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lpmModelo.addColumn(&quot;Eliminar&quot;);&#xa;lpmModelo.addColumn(&quot;numero LPM&quot;);&#xa;lpmModelo.addColumn(&quot;vehiculo&quot;);&#xa;lpmModelo.addColumn(&quot;descripcion&quot;);&#xa;lpmModelo.addColumn(&quot;Estado&quot;);&#xa;Boolean eliminacion=true;&#xa;Object []fila=new Object[5];&#xa;while(iLst.hasNext()){&#xa;lista=(Listados)iLst.next();&#xa;fila[0]=false;&#xa;fila[1]=lista.getNumeroListado();&#xa;fila[2]=lista.getNumeroDeVehiculo();&#xa;fila[3]=&quot;F100 1&quot;;&#xa;fila[4]=&quot;activa&quot;;&#xa;lpmModelo.addRow(fila);&#xa;}"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -98,6 +99,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="127" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jButton3" min="-2" pref="133" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" pref="129" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -110,6 +113,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -118,12 +122,20 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar Seleccion"/>
+            <Property name="text" type="java.lang.String" value="Anular Seleccion"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Anular Todas"/>
           </Properties>
         </Component>
       </SubComponents>

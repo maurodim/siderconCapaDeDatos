@@ -25,8 +25,8 @@ public class ActualizacionPesos extends Thread{
     private static Connection cnn;
     
     public ActualizacionPesos() throws SQLException {
-        //Coneccion con=new Coneccion();
-        cnn=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        cnn=cone.ObtenerConeccion();
         String sql="select * from pesos";
         Articulos art=null;
         Statement st=cnn.createStatement();
@@ -40,7 +40,7 @@ public class ActualizacionPesos extends Thread{
         }
         rs.close();
         st.close();
-        //Coneccion.CerrarConneccion(cnn);
+        //cone.CerrarConneccion(cnn);
         
     }
     public synchronized void run(){
@@ -57,7 +57,7 @@ public class ActualizacionPesos extends Thread{
                 
             }
             st.close();
-            Coneccion.CerrarConneccion(cnn);
+            //cone.CerrarConneccion(cnn);
         } catch (SQLException ex) {
             Logger.getLogger(ActualizacionPesos.class.getName()).log(Level.SEVERE, null, ex);
         }

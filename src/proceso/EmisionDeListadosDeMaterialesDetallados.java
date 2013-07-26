@@ -56,7 +56,8 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
     public synchronized void run(){
         chequearListado(this.numeroListado);
         //Configu configuracion=Configu.DETALLADO;
-        cc=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        cc=cone.ObtenerConeccion();
         Map listDetallado=new HashMap();
         listDetallado.put("numeroListado",this.numeroListado);
         listDetallado.put("numeroRevision", this.numeroRevision);
@@ -99,7 +100,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             }
 }
         try {
-            Coneccion.CerrarConneccion(cc);
+            cone.CerrarConneccion(cc);
         } catch (SQLException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -141,7 +142,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 }
             }
             st1.close();
-            //Coneccion.CerrarConneccion(cnn);
+            //cone.CerrarConneccion(cnn);
             //con.CerrarConneccion(cc);
             }
         } catch (SQLException ex) {

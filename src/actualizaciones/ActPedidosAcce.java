@@ -26,12 +26,31 @@ public class ActPedidosAcce extends Thread{
     }
     @Override
     public synchronized void run(){
-        try {
+        
             //ConeccionAcc conA=new ConeccionAcc();
             String database="jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\Documents and Settings\\Administrador\\Mis documentos\\bases\\hdrL.mdb";
+        try {
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-            Connection con=DriverManager.getConnection(database, "", "");
-            Statement s=con.createStatement();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            Connection con = null;
+        try {
+            con = DriverManager.getConnection(database, "", "");
+        } catch (SQLException ex) {
+            Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                con.close();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+            Statement s = null;
+        try {
+            s = con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
+        }
             PedidosParaReparto ped=new PedidosParaReparto();
             Iterator iPed=this.pedidos.listIterator();
             String sql=null;
@@ -39,15 +58,23 @@ public class ActPedidosAcce extends Thread{
             while(iPed.hasNext()){
                 ped=(PedidosParaReparto)iPed.next();
                 sql="update pedidos_carga set actualizacionRegistro=1 where numero ="+ped.getiDPedido();
+            try {
                 s.executeUpdate(sql);
+            } catch (SQLException ex) {
+                Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 System.out.println("actualizacion "+sql);
             }
+        try {
             s.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ActPedidosAcce.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 }

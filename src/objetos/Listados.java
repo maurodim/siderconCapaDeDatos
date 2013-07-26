@@ -22,6 +22,7 @@ public class Listados {
         //private String titulo;
         private Date fechaDeImpresion;
         private Integer numeroPedidoParaReparto;
+        private Integer numeroDeVehiculo;
         //private String codigoArticulo;
         //private String descripcionArticulo;
         //private Double cantidadArticulo;
@@ -31,6 +32,14 @@ public class Listados {
         private static Integer numeroListado;
         private static Integer numeroRevision;
         private Date fechaDeEntrega;
+
+    public Integer getNumeroDeVehiculo() {
+        return numeroDeVehiculo;
+    }
+
+    public void setNumeroDeVehiculo(Integer numeroDeVehiculo) {
+        this.numeroDeVehiculo = numeroDeVehiculo;
+    }
 
     public Date getFechaDeEntrega() {
         return fechaDeEntrega;
@@ -85,8 +94,8 @@ public class Listados {
     }
        
 public static void nuevoListado() throws SQLException{
-    Coneccion cnn=new Coneccion();
-    Connection con=Coneccion.ObtenerConeccion();
+    Coneccion cone=new Coneccion();
+    Connection con=cone.ObtenerConeccion();
     String sql="select * from listadosDeMateriales order by numero";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -101,12 +110,12 @@ public static void nuevoListado() throws SQLException{
     st.executeUpdate(sql);
     st.close();
     rs.close();
-    Coneccion.CerrarConneccion(con);
+    cone.CerrarConneccion(con);
 }    
 public static Integer nuevaRevision() throws SQLException{
     Integer rev=0;
-    Coneccion cnn=new Coneccion();
-    Connection con=Coneccion.ObtenerConeccion();
+    Coneccion cone=new Coneccion();
+    Connection con=cone.ObtenerConeccion();
     String sql="select * from historicolistadorevision where numeroListado ="+Listados.numeroListado+" order by numeroRevision";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -123,14 +132,15 @@ public static Integer nuevaRevision() throws SQLException{
     st.executeUpdate(sql);
     st.close();
     rs.close();
-    Coneccion.CerrarConneccion(con);
+    cone.CerrarConneccion(con);
     rev=Listados.numeroRevision;
     return rev;
 }
-private ArrayList listarLpm(String fecha,Integer vehiculo) throws SQLException{
+public static ArrayList listarLpm(String fecha) throws SQLException{
     ArrayList listado=new ArrayList();
-    String sql="select * listadodemateriales where fechaEntrega like '"+fecha+"%' and vehiculo="+vehiculo;
-    Connection cn=Coneccion.ObtenerConeccion();
+    String sql="select * from listadodemateriales where fechaEntrega like '"+fecha+"%'";
+    Coneccion cone=new Coneccion();
+    Connection cn=cone.ObtenerConeccion();
     Statement st=cn.createStatement();
     st.executeQuery(sql);
     ResultSet rs=st.getResultSet();
@@ -138,17 +148,20 @@ private ArrayList listarLpm(String fecha,Integer vehiculo) throws SQLException{
         Listados lista=new Listados();
         lista.setNumeroListado(rs.getInt("numero"));
         lista.setFechaDeEntrega(rs.getDate("fechaDeEntrega"));
+        lista.setNumeroDeVehiculo(rs.getInt("vehiculo"));
+        System.out.println(" LISTADOS EMITIDOS "+lista.getNumeroListado());
         listado.add(lista);
     }
-    Coneccion.CerrarConneccion(cn);
+    cone.CerrarConneccion(cn);
     return listado;
 }
-private Boolean eliminarLpm(Object listado){
+public static Boolean eliminarLpm(Object listado){
     Boolean confirmacion=true;    
     try {
             Listados lst=(Listados)listado;
             String sql="update listadodemateriales set vehiculo=0,revision=0 where numero="+lst.getNumeroListado();
-            Connection cn=Coneccion.ObtenerConeccion();
+            Coneccion cone=new Coneccion();
+            Connection cn=cone.ObtenerConeccion();
             Statement st=cn.createStatement();
             st.executeUpdate(sql);
             

@@ -24,11 +24,13 @@ import objetos.ConversionesFecha;
  * @author Administrador
  */
 public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
-    private Connection cp=Coneccion.ObtenerConeccion();
+    private Connection cp=null;
     public synchronized void run(){
+        Coneccion cone=new Coneccion();
         try {
             
             ArrayList listadoConv=new ArrayList();
+            cp=cone.ObtenerConeccion();
             SimpleDateFormat fd=new SimpleDateFormat("yyyy-MM-dd");
             String fec=null;
             String dia=null;
@@ -41,9 +43,10 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
             ResultSet rs=st.getResultSet();
             while(rs.next()){
             ConversionesFecha conv=new ConversionesFecha();
-                
-                conv.setFechaOriginal(rs.getString(3).substring(0,10));
                 conv.setNumeroDeCampo(rs.getInt(2));
+                System.out.println("REGISTRO DE ENTREGA "+conv.getNumeroDeCampo());
+                conv.setFechaOriginal(rs.getString(3).substring(0,10));
+                
                 /*
                 dia=rs.getString(3).substring(0,2);
                 mes=rs.getString(3).substring(3,5);
@@ -66,9 +69,14 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
                 st.executeUpdate(sql);
             }
             st.close();
-            Coneccion.CerrarConneccion(cp);
+            cone.CerrarConneccion(cp);
         } catch (SQLException ex) {
             Logger.getLogger(ProcesoDeConversionDeFechasDeEntrega.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                cone.CerrarConneccion(cp);
+            } catch (SQLException ex1) {
+                Logger.getLogger(ProcesoDeConversionDeFechasDeEntrega.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
         private Date deStringToDate(String fecha) {

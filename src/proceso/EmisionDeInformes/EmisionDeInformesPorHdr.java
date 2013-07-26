@@ -50,7 +50,8 @@ public class EmisionDeInformesPorHdr extends Thread{
     public synchronized void run(){
         Map listConsolidado=new HashMap();
         int num=0;
-        Connection ch=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        Connection ch=cone.ObtenerConeccion();
         listConsolidado.put("fechaDesde",fD);
         listConsolidado.put("fechaHasta",fH);
         System.out.println(fD+" "+fH);

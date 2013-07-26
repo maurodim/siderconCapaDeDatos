@@ -37,10 +37,14 @@ public class ImportarPedidos implements Actualizar{
         try {
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             System.out.println(conA.getDriver());
-        try {
+        
             String sql="select * from pedidos_carga where reparto =1 and actualizacionRegistro < 1";
             System.out.println(sql);
-            Connection con=DriverManager.getConnection(database, "", "");
+            Connection con=null;
+            try {
+                con = DriverManager.getConnection(database, "", "");
+
+        try{
             Statement s=con.createStatement();
             s.execute(sql);
             ResultSet rs=s.getResultSet();
@@ -154,11 +158,19 @@ public class ImportarPedidos implements Actualizar{
             con.close();
         } catch (SQLException ex) {
            System.out.println("no entra en connection");
+                try {
+                    con.close();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(ImportarPedidos.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);
                 gArch.registrarErrores(cod1, "", "");
                 Logger.getLogger(ImportarPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        } catch (SQLException ex) {
+                Logger.getLogger(ImportarPedidos.class.getName()).log(Level.SEVERE, null, ex);
+            }
  
             
         } catch (ClassNotFoundException ex) {

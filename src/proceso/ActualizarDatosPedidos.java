@@ -28,7 +28,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author Administrador
  */
 public class ActualizarDatosPedidos extends Thread {
-    static Connection cped=Coneccion.ObtenerConeccion();
+    static Connection cped=null;
     private ArrayList pedidos;
     static Map saldoCliente=new HashMap();
     static String fecha=null;    
@@ -44,6 +44,8 @@ public class ActualizarDatosPedidos extends Thread {
     }
     public synchronized void cargarPedidosParaActualizar() throws SQLException{
         DetallePesosPedido det=new DetallePesosPedido();
+        Coneccion cone=new Coneccion();
+        cped=cone.ObtenerConeccion();
         String sql="select * from pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.peso from pedidos_carga1 where peso=0";
         Statement st=cped.createStatement();
         st.execute(sql);

@@ -88,7 +88,8 @@ public void addPedido(PedidosParaReparto ped){
     @Override
     public synchronized void run(){
         //chequearListado(this.numeroListado);
-        cc=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        cc=cone.ObtenerConeccion();
         String fecha="";
         PedidosParaReparto ped=new PedidosParaReparto();
         Double cantidad=0.00;

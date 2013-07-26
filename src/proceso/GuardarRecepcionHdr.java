@@ -33,7 +33,8 @@ public class GuardarRecepcionHdr extends Thread{
     }
     
     public synchronized void run(){
-        Connection cgr=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        Connection cgr=cone.ObtenerConeccion();
         DecimalFormat fr=new DecimalFormat("00");
         String sql="";
         EncabezadoHdr enc=new EncabezadoHdr();

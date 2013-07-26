@@ -176,7 +176,8 @@ public class Checking implements ChequearCantidadesPedidos{
         //aqui continua el codigo
         /* PRIMERO BLANQUEAR LAS CANTIDADES DE LOS PEDIDOS PENDIENTES Y LUEGO MODIFICAR LAS CANTIDADES CHECKEADAS
          */
-        sqlC=Coneccion.ObtenerConeccion();
+        Coneccion cone=new Coneccion();
+        sqlC=cone.ObtenerConeccion();
         sql="select pedidos_carga1.CANT_FACT,pedidos_carga1.COD_ARTIC,pedidos_carga1.NRO_PEDIDO,pedidos_carga1.CANT_FACT,pedidos_carga1.CANT_DESC,pedidos_carga1.CANT_PEDID from pedidos_carga1 where CANT_FACT > 0";
         String sql1="";
         try {

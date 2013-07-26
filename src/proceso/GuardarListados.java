@@ -18,7 +18,7 @@ import objetos.PedidosParaReparto;
  * @author Administrador
  */
 public class GuardarListados extends Thread{
-    static Connection cg=Coneccion.ObtenerConeccion();
+    static Connection cg=null;
     private ArrayList list=new ArrayList();
     
 
@@ -31,6 +31,8 @@ public class GuardarListados extends Thread{
         String sql=null;
         PedidosParaReparto pd=new PedidosParaReparto();
         Iterator ig=this.list.listIterator();
+        Coneccion cone=new Coneccion();
+        cg=cone.ObtenerConeccion();
         //try {
         Statement st = null;
         try {

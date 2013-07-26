@@ -10,16 +10,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author hernan
  */
-public class lpmModel extends DefaultTableModel {
+public class lpmModel extends DefaultTableModel{
     public Class getColumnClass(int colum){
-        if(colum==4){
+        if(colum==0){
             System.out.println("SE MARCO COMO VERDADERO");
             return Boolean.class;
-        }else{
-            System.out.println("se marco como falso");
         }
-        if(colum==3)return Integer.class;
-        if(colum==2)return Double.class;
+        if(colum==2)return Integer.class;
         return String.class;
     }    
 }
