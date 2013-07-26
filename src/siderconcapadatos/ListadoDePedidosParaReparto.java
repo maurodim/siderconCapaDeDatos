@@ -10,8 +10,11 @@
  */
 package siderconcapadatos;
 
+import actualizaciones.ActOt;
 import actualizaciones.Checking;
 import actualizaciones.ChequearCantidadesPedidos;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -29,6 +32,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import objetos.PedidosParaReparto;
 import objetos.Vehiculos;
 import proceso.Coneccion;
@@ -55,6 +59,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
     private int zonaSeleccionada;
     static int contad=0;
     static String movimientos="";
+    static int listasEliminadas=0;
     //static String fecha;
     /** Creates new form ListadoDePedidosParaReparto */
     public ListadoDePedidosParaReparto() {
@@ -199,6 +204,11 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Listados de Pedidos para Reparto");
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         jTable2.setModel(tab);
         tab.addColumn("Seleccion");
@@ -484,7 +494,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         pack();
@@ -817,10 +827,30 @@ modelo.addRow(fila6);
         InicioSiderconHdr.jDesktopPane1.add(lpm);
         lpm.setVisible(true);
         lpm.toFront();
+         Timer timer=new Timer(1500,new ActionListener(){ 
+            @Override
+    public void actionPerformed(ActionEvent e) 
+    { 
+        if(listasEliminadas==1){
+            try {
+                leerChooser();
+            } catch (SQLException ex) {
+                Logger.getLogger(ListadoDePedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            listasEliminadas=0;
+        }
+        
+     } 
+}); 
+        timer.start();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+    
+    }//GEN-LAST:event_formFocusGained
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
+    public static datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -846,7 +876,7 @@ modelo.addRow(fila6);
     private javax.swing.JDialog mod;
     // End of variables declaration//GEN-END:variables
 
-    private void leerChooser() throws SQLException {
+    public void leerChooser() throws SQLException {
         pedidosSeleccionados.clear();
         vehiculos.clear();
         limpiarTablas();

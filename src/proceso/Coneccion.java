@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 import seguimientos.Archivador;
 import seguimientos.GuardarMovimientos;
+//import org.apache.commons.dbcp.BasicDataSource;
+
 
 
 /**
@@ -71,6 +73,7 @@ public class Coneccion {
 		String clave1="daniel";//daniel";
                 Connection cn=null;
 		//Connection cn=null;
+                //BasicDataSource basicDataSource=new BasicDataSource();
                 MysqlDataSource dataSource=new MysqlDataSource();
 		try{
 			//Class.forName(driver1).newInstance();

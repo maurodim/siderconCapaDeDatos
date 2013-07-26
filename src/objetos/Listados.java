@@ -32,6 +32,15 @@ public class Listados {
         private static Integer numeroListado;
         private static Integer numeroRevision;
         private Date fechaDeEntrega;
+        private Integer numListado;
+
+    public Integer getNumListado() {
+        return numListado;
+    }
+
+    public void setNumListado(Integer numListado) {
+        this.numListado = numListado;
+    }
 
     public Integer getNumeroDeVehiculo() {
         return numeroDeVehiculo;
@@ -91,6 +100,7 @@ public class Listados {
 
     public Listados() {
         Listados.numeroRevision=0;
+        Listados.numeroListado=0;
     }
        
 public static void nuevoListado() throws SQLException{
@@ -138,7 +148,8 @@ public static Integer nuevaRevision() throws SQLException{
 }
 public static ArrayList listarLpm(String fecha) throws SQLException{
     ArrayList listado=new ArrayList();
-    String sql="select * from listadodemateriales where fechaEntrega like '"+fecha+"%'";
+    String sql="select * from listadosdemateriales where fechaEntrega like '"+fecha+"%'";
+    System.out.println(sql);
     Coneccion cone=new Coneccion();
     Connection cn=cone.ObtenerConeccion();
     Statement st=cn.createStatement();
@@ -146,8 +157,8 @@ public static ArrayList listarLpm(String fecha) throws SQLException{
     ResultSet rs=st.getResultSet();
     while(rs.next()){
         Listados lista=new Listados();
-        lista.setNumeroListado(rs.getInt("numero"));
-        lista.setFechaDeEntrega(rs.getDate("fechaDeEntrega"));
+        lista.setNumListado(rs.getInt("numero"));
+        //lista.setFechaDeEntrega(rs.getDate("fechaEntrega"));
         lista.setNumeroDeVehiculo(rs.getInt("vehiculo"));
         System.out.println(" LISTADOS EMITIDOS "+lista.getNumeroListado());
         listado.add(lista);
@@ -159,12 +170,13 @@ public static Boolean eliminarLpm(Object listado){
     Boolean confirmacion=true;    
     try {
             Listados lst=(Listados)listado;
-            String sql="update listadodemateriales set vehiculo=0,revision=0 where numero="+lst.getNumeroListado();
+            String sql="update listadosdemateriales set vehiculo=0,revision=0 where numero="+lst.getNumListado();
             Coneccion cone=new Coneccion();
             Connection cn=cone.ObtenerConeccion();
             Statement st=cn.createStatement();
             st.executeUpdate(sql);
-            
+            sql="update pedidos_carga1 set listado=0,revision=0,vehiculo=0,repetidoEnListado=0,revisionado=0,vehiculoAnterior=0 where listado="+lst.getNumListado();
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(Listados.class.getName()).log(Level.SEVERE, null, ex);
             confirmacion=false;

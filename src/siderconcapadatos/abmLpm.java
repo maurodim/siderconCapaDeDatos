@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import objetos.Listados;
+import objetos.Vehiculos;
+import proceso.Procesos;
 import siderconcapadatos.tablas.lpmModel;
 
 /**
@@ -19,6 +21,7 @@ import siderconcapadatos.tablas.lpmModel;
  */
 public class abmLpm extends javax.swing.JInternalFrame {
     private String fecha;
+    private ArrayList lst=new ArrayList();
     /**
      * Creates new form abmLpm
      */
@@ -39,10 +42,14 @@ public class abmLpm extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lpmModel lpmModelo=new lpmModel();
-        Listados lista=new Listados();
-        ArrayList lst=new ArrayList();
+        Procesos pr=new Procesos();
+        Vehiculos unidad=new Vehiculos();
+        Listados listass=new Listados();
+
+        ArrayList vehiculos=new ArrayList();
         try{
             lst=Listados.listarLpm(fecha);
+            vehiculos=pr.ListarVehiculos();
         }catch(SQLException ex){
             System.out.println(" no se pudo recuperar lpm"+ex);
         }
@@ -65,12 +72,22 @@ public class abmLpm extends javax.swing.JInternalFrame {
         Boolean eliminacion=true;
         Object []fila=new Object[5];
         while(iLst.hasNext()){
-            lista=(Listados)iLst.next();
+            listass=(Listados)iLst.next();
             fila[0]=false;
-            fila[1]=lista.getNumeroListado();
-            fila[2]=lista.getNumeroDeVehiculo();
-            fila[3]="F100 1";
-            fila[4]="activa";
+            fila[1]=listass.getNumListado();
+            fila[2]=listass.getNumeroDeVehiculo();
+            if(listass.getNumeroDeVehiculo()==0){
+                unidad=(Vehiculos)vehiculos.get(0);
+            }else{
+                unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo());
+            }
+            String descrVehiculo=unidad.getDescripcion();
+            fila[3]=descrVehiculo;
+            if(listass.getNumeroDeVehiculo()>0){
+                fila[4]="activa";
+            }else{
+                fila[4]="anulada";
+            }
             lpmModelo.addRow(fila);
         }
         jScrollPane1.setViewportView(jTable1);
@@ -92,6 +109,11 @@ public class abmLpm extends javax.swing.JInternalFrame {
         );
 
         jButton1.setText("Anular Seleccion");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +123,11 @@ public class abmLpm extends javax.swing.JInternalFrame {
         });
 
         jButton3.setText("Anular Todas");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,7 +170,7 @@ public class abmLpm extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,7 +178,39 @@ public class abmLpm extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //ACA SE TOMAN TODAS COMO MARCADAS
+        Listados listad=new Listados();
+        Iterator iLt=lst.listIterator();
+        int a=0;
+        while(iLt.hasNext()){
+            listad=(Listados)iLt.next();
+            Listados.eliminarLpm(listad);
+            a++;
+            
+        }
+        ListadoDePedidosParaReparto.listasEliminadas=1;
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Listados listad=new Listados();
+        int h=this.jTable1.getRowCount();
+        for(int i=0;i < h;i++){
+            listad=(Listados)lst.get(i);
+            Boolean tilde=(Boolean) this.jTable1.getValueAt(i, 0);
+            if(tilde){
+                Listados.eliminarLpm(listad);
+            }
+        }
+        //ListadoDePedidosParaReparto.dateChooserCombo1.setText(fecha);
+        ListadoDePedidosParaReparto.listasEliminadas=1;
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

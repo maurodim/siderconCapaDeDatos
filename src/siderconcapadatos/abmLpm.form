@@ -40,7 +40,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,8 +82,8 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="lpmModel lpmModelo=new lpmModel();&#xa;Listados lista=new Listados();&#xa;ArrayList lst=new ArrayList();&#xa;try{&#xa;lst=Listados.listarLpm(fecha);&#xa;}catch(SQLException ex){&#xa;System.out.println(&quot; no se pudo recuperar lpm&quot;+ex);&#xa;}&#xa;Iterator iLst=lst.listIterator();"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lpmModelo.addColumn(&quot;Eliminar&quot;);&#xa;lpmModelo.addColumn(&quot;numero LPM&quot;);&#xa;lpmModelo.addColumn(&quot;vehiculo&quot;);&#xa;lpmModelo.addColumn(&quot;descripcion&quot;);&#xa;lpmModelo.addColumn(&quot;Estado&quot;);&#xa;Boolean eliminacion=true;&#xa;Object []fila=new Object[5];&#xa;while(iLst.hasNext()){&#xa;lista=(Listados)iLst.next();&#xa;fila[0]=false;&#xa;fila[1]=lista.getNumeroListado();&#xa;fila[2]=lista.getNumeroDeVehiculo();&#xa;fila[3]=&quot;F100 1&quot;;&#xa;fila[4]=&quot;activa&quot;;&#xa;lpmModelo.addRow(fila);&#xa;}"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="lpmModel lpmModelo=new lpmModel();&#xa;Procesos pr=new Procesos();&#xa;Vehiculos unidad=new Vehiculos();&#xa;Listados listass=new Listados();&#xa;&#xa;ArrayList vehiculos=new ArrayList();&#xa;try{&#xa;lst=Listados.listarLpm(fecha);&#xa;vehiculos=pr.ListarVehiculos();&#xa;}catch(SQLException ex){&#xa;System.out.println(&quot; no se pudo recuperar lpm&quot;+ex);&#xa;}&#xa;Iterator iLst=lst.listIterator();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lpmModelo.addColumn(&quot;Eliminar&quot;);&#xa;lpmModelo.addColumn(&quot;numero LPM&quot;);&#xa;lpmModelo.addColumn(&quot;vehiculo&quot;);&#xa;lpmModelo.addColumn(&quot;descripcion&quot;);&#xa;lpmModelo.addColumn(&quot;Estado&quot;);&#xa;Boolean eliminacion=true;&#xa;Object []fila=new Object[5];&#xa;while(iLst.hasNext()){&#xa;listass=(Listados)iLst.next();&#xa;fila[0]=false;&#xa;fila[1]=listass.getNumListado();&#xa;fila[2]=listass.getNumeroDeVehiculo();&#xa;if(listass.getNumeroDeVehiculo()==0){&#xa;unidad=(Vehiculos)vehiculos.get(0);&#xa;}else{&#xa;unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo());&#xa;}&#xa;String descrVehiculo=unidad.getDescripcion();&#xa;fila[3]=descrVehiculo;&#xa;if(listass.getNumeroDeVehiculo()&gt;0){&#xa;fila[4]=&quot;activa&quot;;&#xa;}else{&#xa;fila[4]=&quot;anulada&quot;;&#xa;}&#xa;lpmModelo.addRow(fila);&#xa;}"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -124,6 +124,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Anular Seleccion"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
@@ -137,6 +140,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Anular Todas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
