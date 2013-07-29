@@ -56,8 +56,8 @@ public class EmisionDeInformesPorVehiculo extends Thread{
     public synchronized void run(){
         Map listConsolidado=new HashMap();
         int num=0;
-        Coneccion cone=new Coneccion();
-        Connection ch=cone.ObtenerConeccion();
+         
+        Connection ch=Coneccion.ObtenerConeccion();
         listConsolidado.put("fechaDesde",fD);
         listConsolidado.put("fechaHasta",fH);
         System.out.println(fH);
