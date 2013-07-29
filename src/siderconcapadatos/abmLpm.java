@@ -78,8 +78,13 @@ public class abmLpm extends javax.swing.JInternalFrame {
             fila[2]=listass.getNumeroDeVehiculo();
             if(listass.getNumeroDeVehiculo()==0){
                 unidad=(Vehiculos)vehiculos.get(0);
+                unidad.setDescripcion("ANULADA");
             }else{
-                unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo());
+                if(listass.getNumeroDeVehiculo()==1){
+                    unidad=(Vehiculos)vehiculos.get(0);
+                }else{
+                    unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo());
+                }
             }
             String descrVehiculo=unidad.getDescripcion();
             fila[3]=descrVehiculo;
@@ -170,7 +175,7 @@ public class abmLpm extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
