@@ -104,8 +104,8 @@ public class Listados {
     }
        
 public static void nuevoListado() throws SQLException{
-    Coneccion cone=new Coneccion();
-    Connection con=cone.ObtenerConeccion();
+     
+    Connection con=Coneccion.ObtenerConeccion();
     String sql="select * from listadosDeMateriales order by numero";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -120,12 +120,12 @@ public static void nuevoListado() throws SQLException{
     st.executeUpdate(sql);
     st.close();
     rs.close();
-    cone.CerrarConneccion(con);
+    //Coneccion.CerrarConneccion(con);
 }    
 public static Integer nuevaRevision() throws SQLException{
     Integer rev=0;
-    Coneccion cone=new Coneccion();
-    Connection con=cone.ObtenerConeccion();
+     
+    Connection con=Coneccion.ObtenerConeccion();
     String sql="select * from historicolistadorevision where numeroListado ="+Listados.numeroListado+" order by numeroRevision";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -142,7 +142,7 @@ public static Integer nuevaRevision() throws SQLException{
     st.executeUpdate(sql);
     st.close();
     rs.close();
-    cone.CerrarConneccion(con);
+    //Coneccion.CerrarConneccion(con);
     rev=Listados.numeroRevision;
     return rev;
 }
@@ -150,8 +150,8 @@ public static ArrayList listarLpm(String fecha) throws SQLException{
     ArrayList listado=new ArrayList();
     String sql="select * from listadosdemateriales where fechaEntrega like '"+fecha+"%'";
     System.out.println(sql);
-    Coneccion cone=new Coneccion();
-    Connection cn=cone.ObtenerConeccion();
+     
+    Connection cn=Coneccion.ObtenerConeccion();
     Statement st=cn.createStatement();
     st.executeQuery(sql);
     ResultSet rs=st.getResultSet();
@@ -163,7 +163,7 @@ public static ArrayList listarLpm(String fecha) throws SQLException{
         System.out.println(" LISTADOS EMITIDOS "+lista.getNumeroListado());
         listado.add(lista);
     }
-    cone.CerrarConneccion(cn);
+    //Coneccion.CerrarConneccion(cn);
     return listado;
 }
 public static Boolean eliminarLpm(Object listado){
@@ -171,8 +171,8 @@ public static Boolean eliminarLpm(Object listado){
     try {
             Listados lst=(Listados)listado;
             String sql="update listadosdemateriales set vehiculo=0,revision=0 where numero="+lst.getNumListado();
-            Coneccion cone=new Coneccion();
-            Connection cn=cone.ObtenerConeccion();
+             
+            Connection cn=Coneccion.ObtenerConeccion();
             Statement st=cn.createStatement();
             st.executeUpdate(sql);
             sql="update pedidos_carga1 set listado=0,revision=0,vehiculo=0,repetidoEnListado=0,revisionado=0,vehiculoAnterior=0 where listado="+lst.getNumListado();

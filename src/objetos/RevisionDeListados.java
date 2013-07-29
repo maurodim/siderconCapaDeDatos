@@ -99,8 +99,8 @@ public class RevisionDeListados implements Revisionar{
 
     @Override
     public Boolean agregarRevision(ArrayList nuevos) {
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         Boolean check=false;
        
         try {
@@ -113,7 +113,7 @@ public class RevisionDeListados implements Revisionar{
                 st.executeUpdate(sql);
             }
             st.close();
-            cone.CerrarConneccion(con);
+            //Coneccion.CerrarConneccion(con);
             check=true;
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,8 +124,8 @@ public class RevisionDeListados implements Revisionar{
     @Override
     public Object verificarCantidadAnterior(Object item) {
         RevisionDeListados rev=(RevisionDeListados)item;
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         try {
             Statement st=con.createStatement();
             String sql="select * from movimientosLpm where numeroListado ="+rev.getNumeroListado()+" order by revision";
@@ -149,8 +149,8 @@ public class RevisionDeListados implements Revisionar{
 
     @Override
     public int ultimaRevisionDeListado(Integer numeroDeListado) {
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         int ultimoListado=0;
         String sql="select movimientosLpm.revision from movimientosLpm where numeroListado ="+numeroDeListado+" group by revision";
         try {
@@ -174,8 +174,8 @@ public class RevisionDeListados implements Revisionar{
         ArrayList listadoDeRevisiones=new ArrayList();
         Iterator ic=carga.listIterator();
         String sql="";
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         Integer numeroListado=0;
         int revisionNumero=0;
         try {
@@ -192,10 +192,10 @@ public class RevisionDeListados implements Revisionar{
                 
             }
             //st.close();
-            //cone.CerrarConneccion(con);
+            ////Coneccion.CerrarConneccion(con);
             listadoDeRevisiones=convercion(numeroListado,revisionNumero,st);
             st.close();
-            cone.CerrarConneccion(con);
+            //Coneccion.CerrarConneccion(con);
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,8 +222,8 @@ public class RevisionDeListados implements Revisionar{
 
     @Override
     public Boolean chequearCambioDeListado(ArrayList carga) {
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         Boolean chq=false;
         String sql="";
         Statement st=null;
@@ -261,19 +261,22 @@ public class RevisionDeListados implements Revisionar{
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        /*
         try {
-            cone.CerrarConneccion(con);
+            //Coneccion.CerrarConneccion(con);
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
         return chq;
     }
 
     @Override
     public Boolean guardarDatosRevision(ArrayList carga) {
         Boolean resp=false;
-        Coneccion cone=new Coneccion();
-        Connection con=cone.ObtenerConeccion();
+         
+        Connection con=Coneccion.ObtenerConeccion();
         Statement st=null;
         String sql="";
         try {
@@ -299,11 +302,14 @@ public class RevisionDeListados implements Revisionar{
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        /*
         try {
-            cone.CerrarConneccion(con);
+            //Coneccion.CerrarConneccion(con);
         } catch (SQLException ex) {
             Logger.getLogger(RevisionDeListados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
         return resp;
     }
 

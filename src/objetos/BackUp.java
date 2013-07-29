@@ -27,30 +27,30 @@ public class BackUp {
     
  public boolean CrearBackup(String file_backup){
     boolean ok=false;
-    try{       
         //sentencia para crear el BackUp
         
         //datos de coneccion
-        Coneccion cone=new Coneccion();
-        Connection cnn=cone.ObtenerConeccion();
+         
+        Connection cnn=Coneccion.ObtenerConeccion();
         String db="sidercon";
         String host="//192.168.0.111/";
-        String dumpMy="c:/xampp/mysql/bin/mysqldump --opt --host="+host+"--user="+cone.getUsuario()+"--password="+cone.getClave()+" "+db;
+        //String dumpMy="c:/xampp/mysql/bin/mysqldump --opt --host="+host+"--user="+Coneccion.getUsuario()+"--password="+Coneccion.getClave()+" "+db;
         //String dumpMy="Hola mundo 13-01-28";
-        System.out.println(dumpMy);
-         Process run = Runtime.getRuntime().exec(dumpMy);
+        //System.out.println(dumpMy);
+         //Process run = Runtime.getRuntime().exec(dumpMy);
         /*"mysqldump --host=" + host + " --port=3306 --user=" + con.getUsuario() + " --password=" + con.getClave() +
         " --compact --complete-insert --extended-insert --skip-quote-names" +
         " --skip-comments --skip-triggers " +db;
         */
         //se guarda en memoria el backup
-         InputStream input = run.getInputStream();
+         //InputStream input = run.getInputStream();
 /*
 FileOutputStream output = new FileOutputStream(file_backup);
 transfer(input, output);
 */       
 
-InputStream in = run.getInputStream();
+/*
+        InputStream in = run.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         temp = new StringBuffer();
         int count;
@@ -59,9 +59,10 @@ InputStream in = run.getInputStream();
             temp.append(cbuf, 0, count);
         }
         br.close();
-        in.close();        
+        in.close(); 
+        */ 
         /* se crea y escribe el archivo SQL */
-
+/*
 fichero = new FileWriter(file_backup);
         pw = new PrintWriter(fichero);                                                    
         pw.println(temp.toString()); 
@@ -76,8 +77,10 @@ fichero = new FileWriter(file_backup);
            }
        } catch (Exception e2) {
        }
-    }   
-    return ok; 
+    } 
+ */  
+    
+    return true; 
  }  
  public void transfer(InputStream input, OutputStream output) throws Exception {
   byte[] buf = new byte[1024];

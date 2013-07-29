@@ -443,8 +443,8 @@ public class PedidosParaReparto {
 	}
 
     public PedidosParaReparto() {
-        Coneccion cone=new Coneccion();
-        coneccionPedidos=cone.ObtenerConeccion();
+         
+        coneccionPedidos=Coneccion.ObtenerConeccion();
         this.empresa = "";
     }
 	

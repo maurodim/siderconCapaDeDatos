@@ -68,8 +68,8 @@ public class Articulos {
         this.pesoUnitario = pesoUnitario;
     }
     public synchronized void cargarListado() throws SQLException, InterruptedException{
-        Coneccion cone=new Coneccion();
-        cart=cone.ObtenerConeccion();
+         
+        cart=Coneccion.ObtenerConeccion();
         try{
         String codig;
         String sql="select * from PESOS";

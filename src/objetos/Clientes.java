@@ -135,8 +135,8 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
     @Override
     public Object check(Object pedido) {
         Clientes cll=(Clientes)pedido;
-        Coneccion cone=new Coneccion();
-        Connection cnn=cone.ObtenerConeccion();
+         
+        Connection cnn=Coneccion.ObtenerConeccion();
         try {
             Statement st=cnn.createStatement();
             String sql="update clientes set DOMICILIO='"+cll.getDomicilio()+"',LOCALIDAD='"+cll.getLocalidad()+"',TELEFONO_1='"+cll.getTelefono()+"' where COD_CLIENT ='"+cll.getCodigoCliente()+"' and RAZON_SOCI like '"+cll.getRazonSocial()+"'";
@@ -146,11 +146,13 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*
         try {
-            cone.CerrarConneccion(cnn);
+            //Coneccion.CerrarConneccion(cnn);
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
         return cll;
     }
 
