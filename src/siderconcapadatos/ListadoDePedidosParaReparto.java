@@ -60,10 +60,13 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
     static int contad=0;
     static String movimientos="";
     static int listasEliminadas=0;
+    static Connection cone=null;
+    private Coneccion con=null;
     //static String fecha;
     /** Creates new form ListadoDePedidosParaReparto */
     public ListadoDePedidosParaReparto() {
-        
+        con=new Coneccion();
+        cone=con.getCn();
         initComponents();
     }
 
@@ -204,6 +207,23 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setTitle("Listados de Pedidos para Reparto");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 formFocusGained(evt);
@@ -362,10 +382,9 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
 
         jComboBox1.addItem("TODOS");
         try{
-            Coneccion con=new Coneccion();
-            Connection cnn=con.ObtenerConeccion();
+
             String sql="select zonas.descripcion from zonas order by numero";
-            Statement st=cnn.createStatement();
+            Statement st=cone.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
             while(rs.next()){
@@ -494,7 +513,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         pack();
@@ -848,6 +867,14 @@ modelo.addRow(fila6);
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
     
     }//GEN-LAST:event_formFocusGained
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        try {
+            con.CerrarCn(cone);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListadoDePedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formInternalFrameClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static datechooser.beans.DateChooserCombo dateChooserCombo1;

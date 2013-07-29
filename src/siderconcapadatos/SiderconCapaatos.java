@@ -93,10 +93,10 @@ public class SiderconCapaatos {
             log l=new log();
              Configuracion conf=new Configuracion();
              Formularios form=new Formularios();
-//             formularioConsolidado=form.getConsolidado();
-//             formularioDetallado=form.getDetallado();
-//             formularioDescarga=form.getDescarga();
-//             formularioHdr=form.getHdr();
+            formularioConsolidado=form.getConsolidado();
+             formularioDetallado=form.getDetallado();
+             formularioDescarga=form.getDescarga();
+             formularioHdr=form.getHdr();
         try {
             listadoDeConfiguraciones=conf.leerConfiguraciones();
         } catch (MalformedURLException ex) {

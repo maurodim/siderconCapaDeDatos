@@ -85,6 +85,7 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="internalFrameClosed" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosed"/>
     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formFocusGained"/>
   </Events>
   <AuxValues>
@@ -219,7 +220,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="156" max="32767" attributes="0"/>
+              <EmptySpace pref="160" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -399,7 +400,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBox1.addItem(&quot;TODOS&quot;);&#xa;try{&#xa;Coneccion con=new Coneccion();&#xa;Connection cnn=con.ObtenerConeccion();&#xa;String sql=&quot;select zonas.descripcion from zonas order by numero&quot;;&#xa;Statement st=cnn.createStatement();&#xa;st.execute(sql);&#xa;ResultSet rs=st.getResultSet();&#xa;while(rs.next()){&#xa;    jComboBox1.addItem(rs.getString(&quot;descripcion&quot;));&#xa;}&#xa;&#xa;}catch(Exception ex){&#xa;System.err.println(&quot;error &quot;+ex);&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBox1.addItem(&quot;TODOS&quot;);&#xa;try{&#xa;&#xa;String sql=&quot;select zonas.descripcion from zonas order by numero&quot;;&#xa;Statement st=cone.createStatement();&#xa;st.execute(sql);&#xa;ResultSet rs=st.getResultSet();&#xa;while(rs.next()){&#xa;    jComboBox1.addItem(rs.getString(&quot;descripcion&quot;));&#xa;}&#xa;&#xa;}catch(Exception ex){&#xa;System.err.println(&quot;error &quot;+ex);&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton5">

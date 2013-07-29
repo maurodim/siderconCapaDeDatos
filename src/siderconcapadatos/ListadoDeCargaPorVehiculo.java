@@ -14,6 +14,7 @@ import actualizaciones.Checking;
 import actualizaciones.ChequearCantidadesPedidos;
 import interfaces.Revisionar;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import objetos.Listados;
 import objetos.PedidosParaReparto;
 import objetos.RevisionDeListados;
 import objetos.Vehiculos;
+import proceso.Coneccion;
 import proceso.EmisionDeListados;
 import proceso.GuardarListados;
 import proceso.Procesos;
@@ -53,10 +55,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static Boolean nuevoListado=false;
     static Integer nListado;
     static Integer rNum;
+    private Coneccion con=null;
+    static Connection ccn=null;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
     public ListadoDeCargaPorVehiculo(Integer unidad,String fecha,String descripcion) {
+        con=new Coneccion();
+        ccn=con.getCn();
         seleccion=unidad;
         Procesos pr=new Procesos();
         try {
@@ -103,6 +109,23 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Listado de la Carga de Materiales del Vehiculo");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         System.out.println(" EL VEHICULO SELECCIONADO ES :"+seleccion);
         jTable1.setModel(mtDc);
@@ -196,7 +219,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -623,6 +646,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        try {
+            con.CerrarCn(ccn);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formInternalFrameClosed
     private void actualizarCarga(){
         Iterator ic=carga.listIterator();
         PedidosParaReparto ped=new PedidosParaReparto();
