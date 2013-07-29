@@ -40,7 +40,7 @@ public class ActPedidosMysql extends Thread{
             Coneccion con=new Coneccion();
             Connection cp=null;
             String sql=null;
-            cp=con.ObtenerConeccion();
+            cp=con.getCn();
             Statement st=cp.createStatement();
             
             Iterator iped=this.pedidos.listIterator();
@@ -57,7 +57,7 @@ public class ActPedidosMysql extends Thread{
                 }
             }
             st.close();
-            con.CerrarConneccion(cp);
+            con.CerrarCn(cp);
             ActPedidosAcce PedAc=new ActPedidosAcce();
             PedAc.setPedidos(pedidos);
             PedAc.start();
@@ -84,8 +84,8 @@ public class ActPedidosMysql extends Thread{
         String sqll="select * from pedidos_carga1 where NRO_PEDIDO like '%"+pedid.getCodigoTangoDePedido()+"' and DESC_ARTIC like '"+pedid.getDescripcionArticulo()+"%' and CANT_PEDID ="+pedid.getCantidadArticulo();
         //String fechaEntrega="";
         //String razonSocial="";
-        Coneccion cone=new Coneccion();
-        Connection ctn=cone.ObtenerConeccion();
+        Coneccion cc=new Coneccion(); 
+        Connection ctn=cc.getCn();
         Statement stt=ctn.createStatement();
         stt.execute(sqll);
         ResultSet rs=stt.getResultSet();
@@ -93,6 +93,7 @@ public class ActPedidosMysql extends Thread{
             verifi=true;
             
         }
+        cc.CerrarCn(ctn);
         return verifi;
     }
 }

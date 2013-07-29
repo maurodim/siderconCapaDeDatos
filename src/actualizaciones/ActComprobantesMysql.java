@@ -33,7 +33,7 @@ public class ActComprobantesMysql extends Thread{
             Coneccion con=new Coneccion();
             String sql=null;
             Connection cp=null;
-            cp=con.ObtenerConeccion();
+            cp=con.getCn();
             Statement st=cp.createStatement();
             /*
             if (this.listadoComprobantes.size()>100){
@@ -83,7 +83,7 @@ public class ActComprobantesMysql extends Thread{
                
             }
             st.close();
-            con.CerrarConneccion(cp);
+            con.CerrarCn(cp);
             ActComprobantesAcc acmD=new ActComprobantesAcc();
             acmD.setListadoComprobantes(listadoComprobantes);
             acmD.start();

@@ -84,7 +84,7 @@ public class ActClientesMysql extends Thread{
             Coneccion con=new Coneccion();
             Connection cp=null;
             String sql=null;
-            cp=con.ObtenerConeccion();
+            cp=con.getCn();
             Statement st=cp.createStatement();
             if(this.clientes.size() > 100){
                 sql="truncate table tabla1";
@@ -140,7 +140,7 @@ public class ActClientesMysql extends Thread{
 
             }
             st.close();
-            con.CerrarConneccion(cp);
+            con.CerrarCn(cp);
             ActClientesAcc acCli=new ActClientesAcc();
             acCli.setClientes(clientes);
             acCli.start();
