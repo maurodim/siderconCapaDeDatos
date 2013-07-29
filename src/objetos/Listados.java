@@ -160,7 +160,7 @@ public static ArrayList listarLpm(String fecha) throws SQLException{
         lista.setNumListado(rs.getInt("numero"));
         //lista.setFechaDeEntrega(rs.getDate("fechaEntrega"));
         lista.setNumeroDeVehiculo(rs.getInt("vehiculo"));
-        System.out.println(" LISTADOS EMITIDOS "+lista.getNumeroListado());
+        System.out.println(" LISTADOS EMITIDOS "+lista.getNumeroListado()+" vehiculo "+lista.getNumeroDeVehiculo());
         listado.add(lista);
     }
     //Coneccion.CerrarConneccion(cn);
