@@ -33,6 +33,8 @@ public class Listados {
         private static Integer numeroRevision;
         private Date fechaDeEntrega;
         private Integer numListado;
+        static Coneccion cc=null;
+        static Connection con=null;
 
     public Integer getNumListado() {
         return numListado;
@@ -99,13 +101,15 @@ public class Listados {
     }
 
     public Listados() {
+        cc=new Coneccion();
+        con=cc.getCn();
         Listados.numeroRevision=0;
         Listados.numeroListado=0;
     }
        
 public static void nuevoListado() throws SQLException{
      
-    Connection con=Coneccion.ObtenerConeccion();
+    
     String sql="select * from listadosDeMateriales order by numero";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -125,7 +129,7 @@ public static void nuevoListado() throws SQLException{
 public static Integer nuevaRevision() throws SQLException{
     Integer rev=0;
      
-    Connection con=Coneccion.ObtenerConeccion();
+    
     String sql="select * from historicolistadorevision where numeroListado ="+Listados.numeroListado+" order by numeroRevision";
     Statement st=con.createStatement();
     st.execute(sql);
@@ -151,8 +155,8 @@ public static ArrayList listarLpm(String fecha) throws SQLException{
     String sql="select * from listadosdemateriales where fechaEntrega like '"+fecha+"%'";
     System.out.println(sql);
      
-    Connection cn=Coneccion.ObtenerConeccion();
-    Statement st=cn.createStatement();
+    
+    Statement st=con.createStatement();
     st.executeQuery(sql);
     ResultSet rs=st.getResultSet();
     while(rs.next()){
@@ -172,8 +176,8 @@ public static Boolean eliminarLpm(Object listado){
             Listados lst=(Listados)listado;
             String sql="update listadosdemateriales set vehiculo=0,revision=0 where numero="+lst.getNumListado();
              
-            Connection cn=Coneccion.ObtenerConeccion();
-            Statement st=cn.createStatement();
+            
+            Statement st=con.createStatement();
             st.executeUpdate(sql);
             sql="update pedidos_carga1 set listado=0,revision=0,vehiculo=0,repetidoEnListado=0,revisionado=0,vehiculoAnterior=0 where listado="+lst.getNumListado();
             st.executeUpdate(sql);

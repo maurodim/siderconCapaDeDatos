@@ -77,13 +77,12 @@ public class abmLpm extends javax.swing.JInternalFrame {
             fila[1]=listass.getNumListado();
             fila[2]=listass.getNumeroDeVehiculo();
             if(listass.getNumeroDeVehiculo()==0){
-                unidad=(Vehiculos)vehiculos.get(0);
                 unidad.setDescripcion("ANULADA");
             }else{
                 if(listass.getNumeroDeVehiculo()==1){
                     unidad=(Vehiculos)vehiculos.get(0);
                 }else{
-                    unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo());
+                    unidad=(Vehiculos)vehiculos.get(listass.getNumeroDeVehiculo()-1);
                 }
             }
             String descrVehiculo=unidad.getDescripcion();
