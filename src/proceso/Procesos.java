@@ -51,8 +51,8 @@ public class Procesos {
     static Connection cT=null;
 
     public Procesos() {
-        Coneccion cone=new Coneccion();
-        cp=cone.ObtenerConeccion();
+         
+        cp=cn.getCn();
     }
     
     public Map cargarPesosDeArticulos() throws SQLException{

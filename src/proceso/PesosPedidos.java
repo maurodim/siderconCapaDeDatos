@@ -31,8 +31,8 @@ public class PesosPedidos extends Thread{
             Map art=new HashMap();
             ArrayList pesosArt=new ArrayList();
             DetallePesosPedido pesDet=new DetallePesosPedido();
-            Coneccion cone=new Coneccion();
-            cp=cone.ObtenerConeccion();
+             
+            cp=Coneccion.ObtenerConeccion();
             String codigo=null;
                 Double pesoIt=0.00;
             Procesos pr=new Procesos();
@@ -73,7 +73,7 @@ public class PesosPedidos extends Thread{
                     ht.executeUpdate(sql);
                 }
                 ht.close();
-                cone.CerrarConneccion(cp);    
+                //Coneccion.CerrarConneccion(cp);    
         } catch (SQLException ex) {
             Logger.getLogger(PesosPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }

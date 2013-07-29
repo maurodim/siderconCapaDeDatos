@@ -44,8 +44,8 @@ public class ActualizarDatosPedidos extends Thread {
     }
     public synchronized void cargarPedidosParaActualizar() throws SQLException{
         DetallePesosPedido det=new DetallePesosPedido();
-        Coneccion cone=new Coneccion();
-        cped=cone.ObtenerConeccion();
+        Coneccion con=new Coneccion();
+        cped=con.getCn();
         String sql="select * from pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.peso from pedidos_carga1 where peso=0";
         Statement st=cped.createStatement();
         st.execute(sql);
@@ -77,7 +77,7 @@ public class ActualizarDatosPedidos extends Thread {
         Map<String,Double> ar=new HashMap<String,Double>();
         Map<String,Double> detalle=new HashMap<String,Double>();
  
-        Coneccion cn=new Coneccion();      
+        //Coneccion cn=new Coneccion();      
         Articulos art=new Articulos(); 
         Clientes cl=new Clientes();
         try {

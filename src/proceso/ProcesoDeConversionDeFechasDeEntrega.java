@@ -26,11 +26,11 @@ import objetos.ConversionesFecha;
 public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
     private Connection cp=null;
     public synchronized void run(){
-        Coneccion cone=new Coneccion();
+         
         try {
             
             ArrayList listadoConv=new ArrayList();
-            cp=cone.ObtenerConeccion();
+            cp=Coneccion.ObtenerConeccion();
             SimpleDateFormat fd=new SimpleDateFormat("yyyy-MM-dd");
             String fec=null;
             String dia=null;
@@ -69,14 +69,17 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
                 st.executeUpdate(sql);
             }
             st.close();
-            cone.CerrarConneccion(cp);
+            //Coneccion.CerrarConneccion(cp);
         } catch (SQLException ex) {
             Logger.getLogger(ProcesoDeConversionDeFechasDeEntrega.class.getName()).log(Level.SEVERE, null, ex);
+            
+            /*
             try {
-                cone.CerrarConneccion(cp);
+                //Coneccion.CerrarConneccion(cp);
             } catch (SQLException ex1) {
                 Logger.getLogger(ProcesoDeConversionDeFechasDeEntrega.class.getName()).log(Level.SEVERE, null, ex1);
             }
+            * */
         }
     }
         private Date deStringToDate(String fecha) {

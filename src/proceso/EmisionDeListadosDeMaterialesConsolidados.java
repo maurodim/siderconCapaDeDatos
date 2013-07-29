@@ -62,8 +62,8 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
     
     public synchronized void run(){
         Map listConsolidado=new HashMap();
-        Coneccion cone=new Coneccion();
-        cc1=cone.ObtenerConeccion();
+         
+        cc1=Coneccion.ObtenerConeccion();
         listConsolidado.put("numListado",this.numeroListado);
         listConsolidado.put("totalKg",total);
         listConsolidado.put("revision",this.revision);
@@ -102,10 +102,13 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
+                 
+        /*         
         try {
-            cone.CerrarConneccion(cc1);
+            //Coneccion.CerrarConneccion(cc1);
         } catch (SQLException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
     }
 }

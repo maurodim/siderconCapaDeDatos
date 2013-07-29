@@ -56,8 +56,8 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
     public synchronized void run(){
         chequearListado(this.numeroListado);
         //Configu configuracion=Configu.DETALLADO;
-        Coneccion cone=new Coneccion();
-        cc=cone.ObtenerConeccion();
+         
+        cc=Coneccion.ObtenerConeccion();
         Map listDetallado=new HashMap();
         listDetallado.put("numeroListado",this.numeroListado);
         listDetallado.put("numeroRevision", this.numeroRevision);
@@ -99,11 +99,14 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
+                 
+                 /*
         try {
-            cone.CerrarConneccion(cc);
+            //Coneccion.CerrarConneccion(cc);
         } catch (SQLException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
     }
     private synchronized void chequearListado(int listadox){
         try {
@@ -142,7 +145,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 }
             }
             st1.close();
-            //cone.CerrarConneccion(cnn);
+            ////Coneccion.CerrarConneccion(cnn);
             //con.CerrarConneccion(cc);
             }
         } catch (SQLException ex) {

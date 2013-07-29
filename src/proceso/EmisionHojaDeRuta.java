@@ -42,6 +42,7 @@ public class EmisionHojaDeRuta extends Thread{
     private Integer numeroVehiculo;
     private Double totalMonto;
     private Double totalVuelto;
+    private Coneccion con=null;
 
     public void setTotalMonto(Double totalMonto) {
         this.totalMonto = totalMonto;
@@ -70,6 +71,10 @@ public class EmisionHojaDeRuta extends Thread{
        //Procesos pr=new Procesos();
         this.listado = listado;
     }
+
+    public EmisionHojaDeRuta() {
+        con=new Coneccion();
+    }
     
     
     public void run(){
@@ -77,8 +82,8 @@ public class EmisionHojaDeRuta extends Thread{
         Procesos pro=new Procesos();
         Vehiculos uni=new Vehiculos();
         ArrayList unidades=new ArrayList();
-        Coneccion cone=new Coneccion();
-        ch=cone.ObtenerConeccion();
+         
+        ch=con.getCn();
         try {
             unidades=pro.ListarVehiculos();
         } catch (SQLException ex) {
@@ -214,7 +219,11 @@ public class EmisionHojaDeRuta extends Thread{
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }
 }
-    
+        try {
+            con.CerrarCn(ch);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex);
+        }
  
     }
     private Integer numeroHojaDeRuta() throws SQLException{

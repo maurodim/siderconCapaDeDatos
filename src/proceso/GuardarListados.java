@@ -31,8 +31,8 @@ public class GuardarListados extends Thread{
         String sql=null;
         PedidosParaReparto pd=new PedidosParaReparto();
         Iterator ig=this.list.listIterator();
-        Coneccion cone=new Coneccion();
-        cg=cone.ObtenerConeccion();
+         
+        cg=Coneccion.ObtenerConeccion();
         //try {
         Statement st = null;
         try {
