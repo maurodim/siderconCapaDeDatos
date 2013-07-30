@@ -40,8 +40,9 @@ public class Checking implements ChequearCantidadesPedidos{
         Double cantidadPendiente=(Double)ped.getCantidadArticuloPendiente();
         Double cantidadTotal=(Double)ped.getCantidadArticulosTotales();
         String codigoArticulo=ped.getCodigoArticulo();
-        
-        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' and COD_ARTICU ='"+codigoArticulo+"'";
+        ArrayList idTango=new ArrayList();
+        Integer idTT=0;
+        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO,GVA03.ID_GVA03 from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"'";
         
         Statement xt=null;
         
@@ -93,8 +94,10 @@ public class Checking implements ChequearCantidadesPedidos{
                                 cantidadT=rs.getDouble("CANT_A_DES");
                                 cantidadTPendiente=rs.getDouble("CANT_PEDID");
                                 cantidadEq=rs.getDouble("CAN_EQUI_V");
+                                idTT=rs.getInt("ID_GVA03");
                                 System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU")+" pedido "+rs.getString("NRO_PEDIDO"));
                                 cantidadesItemsTango++;
+                                idTango.add(idTT);
                             }
                             
                             rs.close();
@@ -105,7 +108,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             /*
                              * TENGO QUE BUSCAR DE DONDE VIENE EL LLAMADO AL CHECKING - PARA PODER RENOVAR LOS DATOS DEL PEDIDO/PEDIDOS PARA MODIFICARLOS
                              */
-                            if(verif(pedido,xt,cantidadesItemsTango,cantidadT)){
+                            if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
@@ -332,9 +335,10 @@ public class Checking implements ChequearCantidadesPedidos{
         return ped;
 
     }
-    private Boolean verif(Object pedido,Statement conTango,int cantidadItemTango,Double cantidadesTango) throws SQLException{
+    private Boolean verif(Object pedido,Statement conTango,int cantidadItemTango,Double cantidadesTango,ArrayList idT){
         Boolean resultado=false;
         int cantidadItemsMysql=0;
+        int h=0;
         int cantidadItemsTango=cantidadItemTango;
         Double cantidadesMy=0.00;
         Double totalMy=0.00;
@@ -342,24 +346,38 @@ public class Checking implements ChequearCantidadesPedidos{
         Double cantidadITango=0.00;
         ArrayList cantidad=new ArrayList();
         ArrayList numeroI=new ArrayList();
+        ArrayList codigoH=new ArrayList();
+        String codigoHd="";
         Integer idPedido=0;
+        Integer idPedidoTango=0;
         PedidosParaReparto ped=(PedidosParaReparto)pedido;
         String codigoPedido=ped.getCodigoTangoDePedido().substring(2);
         String codigoArticulo=ped.getCodigoArticulo();
         String sql1="";
-        String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero from pedidos_carga1 where NRO_PEDIDO like '"+ped.getCodigoTangoDePedido()+"' and entrega like '"+ped.getFechaEnvio()+"%' and COD_ARTIC LIKE '"+ped.getCodigoArticulo()+"'";
-        Statement st=cnMy.createStatement();
-        st.execute(sql);
+        String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.COD_ARTIC from pedidos_carga1 where NRO_PEDIDO like '"+ped.getCodigoTangoDePedido()+"' and entrega like '"+ped.getFechaEnvio()+"%'";
+        Statement st=null;
+        try {
+            st = cnMy.createStatement();
+        
+        
+            st.execute(sql);
+        
         ResultSet rs=st.getResultSet();
+        
         while(rs.next()){
             cantidadesMy=rs.getDouble("CANT_PEDID");
             idPedido=rs.getInt("numero");
+            codigoHd=rs.getString("COD_ARTIC");
             totalMy=totalMy + cantidadesMy;
             cantidad.add(cantidadesMy);
             numeroI.add(idPedido);
             cantidadItemsMysql++;
+            codigoH.add(codigoHd);
         }
         rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //st.close();
         int a=0;
         if(totalMy == cantidadesTango){
@@ -367,37 +385,76 @@ public class Checking implements ChequearCantidadesPedidos{
         }else{
            Iterator iCant=cantidad.listIterator();
            Statement stt=conTango;
+           
            while(iCant.hasNext()){
                cantidadesMy=(Double)iCant.next();
                Double compTango=0.00;
+              if(cantidadItemTango > a){
+                   idPedidoTango=(Integer)idT.get(a);
+                   codigoHd=(String)codigoH.get(a);
+               
+               sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where ID_GVA03="+idPedidoTango;
                a++;
-               sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' and COD_ARTICU ='"+codigoArticulo+"' limit "+a+",1";
-               stt.execute(sql);
+               System.err.println(sql);
+                try {
+                    stt.execute(sql);
                ResultSet rss=stt.getResultSet();
                Double cantEqui=0.00;
                while(rss.next()){
-                   cantidadITango=rs.getDouble("CANT_A_DES");
-                   cantEqui=rs.getDouble("CAN_EQUI_V");
+                   cantidadITango=rss.getDouble("CANT_A_DES");
+                   cantEqui=rss.getDouble("CAN_EQUI_V");
                }
                rss.close();
-               //stt.close();
                compTango=cantidadITango / cantEqui;
-               int h=a-1;
+                } catch (SQLException ex) {
+                    Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                    compTango=0.00;
+                }
+
+               //stt.close();
+               
+               h=a-1;
+              }else{
+                  h=a;
+              }
                if(cantidadesMy==compTango){
                    
                }else{
+                       int itemsMatrizHdr=numeroI.size();
+                   /*
+                       if(itemsMatrizHdr > cantidadItemTango){
+                       
+                   }else{
+                       h=itemsMatrizHdr -1;
+                   }
+                   */ 
                    idPedido=(Integer) numeroI.get(h);
-                  sql1="update pedidos_carga1 set CANT_PEDID ="+compTango+" where numero="+idPedido;
-                  st.executeUpdate(sql);
-                  if(ped.getiDPedido()==idPedido){
+                   sql1="update pedidos_carga1 set CANT_PEDID ="+compTango+" where numero="+idPedido;
+                   System.out.println(" SQL1 "+sql1);
+                   try {
+                       st.executeUpdate(sql1);
+                   } catch (SQLException ex) {
+                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                  Integer id_Pedido=ped.getiDPedido();
+                  if(id_Pedido==idPedido){
                       ped.setCantidadArticulo(compTango);
                   }
                }
+           
            }
-           stt.close();
+            try {
+                stt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+            }
            
         }
-        st.close();
+        try {
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         return resultado;
