@@ -96,10 +96,16 @@ public class Checking implements ChequearCantidadesPedidos{
                                 System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU")+" pedido "+rs.getString("NRO_PEDIDO"));
                                 cantidadesItemsTango++;
                             }
+                            
                             rs.close();
-                            xt.close();
+                            //xt.close();
+                            
                             cantidadT=cantidadT/cantidadEq;
                             cantidadTPendiente=cantidadTPendiente / cantidadEq;
+                            /*
+                             * TENGO QUE BUSCAR DE DONDE VIENE EL LLAMADO AL CHECKING - PARA PODER RENOVAR LOS DATOS DEL PEDIDO/PEDIDOS PARA MODIFICARLOS
+                             */
+                            if(verif(pedido,xt,cantidadesItemsTango,cantidadT)){
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
@@ -118,6 +124,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             ped.setCantidadArticulo(cantidad);
                             ped.setCantidadArticuloPendiente(cantidadPendiente);
                             ped.setCantidadArticulosTotales(cantidadTotal);
+                            }
                         } catch (SQLException ex) {
                             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -325,7 +332,7 @@ public class Checking implements ChequearCantidadesPedidos{
         return ped;
 
     }
-    private Boolean verif(Object pedido,Connection conTango,int cantidadItemTango,Double cantidadesTango) throws SQLException{
+    private Boolean verif(Object pedido,Statement conTango,int cantidadItemTango,Double cantidadesTango) throws SQLException{
         Boolean resultado=false;
         int cantidadItemsMysql=0;
         int cantidadItemsTango=cantidadItemTango;
@@ -340,7 +347,7 @@ public class Checking implements ChequearCantidadesPedidos{
         String codigoPedido=ped.getCodigoTangoDePedido().substring(2);
         String codigoArticulo=ped.getCodigoArticulo();
         String sql1="";
-        String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero from pedidos_carga1 where NRO_PEDID like '"+ped.getCodigoTangoDePedido()+"' and entrega like '"+ped.getFechaEnvio()+"%'";
+        String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero from pedidos_carga1 where NRO_PEDIDO like '"+ped.getCodigoTangoDePedido()+"' and entrega like '"+ped.getFechaEnvio()+"%' and COD_ARTIC LIKE '"+ped.getCodigoArticulo()+"'";
         Statement st=cnMy.createStatement();
         st.execute(sql);
         ResultSet rs=st.getResultSet();
@@ -359,7 +366,7 @@ public class Checking implements ChequearCantidadesPedidos{
             resultado=true;
         }else{
            Iterator iCant=cantidad.listIterator();
-           Statement stt=conTango.createStatement();
+           Statement stt=conTango;
            while(iCant.hasNext()){
                cantidadesMy=(Double)iCant.next();
                Double compTango=0.00;
@@ -382,9 +389,13 @@ public class Checking implements ChequearCantidadesPedidos{
                    idPedido=(Integer) numeroI.get(h);
                   sql1="update pedidos_carga1 set CANT_PEDID ="+compTango+" where numero="+idPedido;
                   st.executeUpdate(sql);
+                  if(ped.getiDPedido()==idPedido){
+                      ped.setCantidadArticulo(compTango);
+                  }
                }
            }
            stt.close();
+           
         }
         st.close();
         
