@@ -110,12 +110,13 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         Double cli=0.00;
         try {
             
-            String sql="select GVA14.SALDO_CC from GVA14 where COD_CLIENT LIKE '"+codigo+"'";
+            String sql="select GVA14.SALDO_CC,GVA14.COD_CLIENT,GVA14.RAZON_SOCI from GVA14 where COD_CLIENT = '"+codigo+"'";
             Statement st=ccn.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
             while(rs.next()){
                 cli=rs.getDouble("SALDO_CC");
+                System.out.println(" COD CLIENTE Y SALDO :"+rs.getString("COD_CLIENT")+" "+rs.getString("RAZON_SOCI")+"saldo "+cli);
             }
             st.close();
             

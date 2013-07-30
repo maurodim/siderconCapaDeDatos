@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.PedidosParaReparto;
@@ -21,7 +22,14 @@ import siderconcapadatos.SiderconCapaatos;
  * @author hernan
  */
 public class Checking implements ChequearCantidadesPedidos{
+    private Coneccion con;
+    private Connection cnMy;
 
+    public Checking() {
+        con=new Coneccion();
+        cnMy=con.getCn();
+    }
+    
     @Override
     public Object check(Object pedido) {
         PedidosParaReparto ped=new PedidosParaReparto();
@@ -80,12 +88,13 @@ public class Checking implements ChequearCantidadesPedidos{
                             Double cantidadT=0.00;
                             Double cantidadTPendiente=0.00;
                             Double cantidadEq=0.00;
+                            int cantidadesItemsTango=0;
                             while(rs.next()){
                                 cantidadT=rs.getDouble("CANT_A_DES");
                                 cantidadTPendiente=rs.getDouble("CANT_PEDID");
                                 cantidadEq=rs.getDouble("CAN_EQUI_V");
                                 System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU")+" pedido "+rs.getString("NRO_PEDIDO"));
-                                
+                                cantidadesItemsTango++;
                             }
                             rs.close();
                             xt.close();
@@ -94,6 +103,10 @@ public class Checking implements ChequearCantidadesPedidos{
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
+                            }else{
+                                if(cantidad == 0.00){
+                                    cantidad=cantidadT;
+                                }
                             }
                             if(cantidadPendiente > cantidadT){
                                 cantidadPendiente=cantidadT;
@@ -220,7 +233,7 @@ public class Checking implements ChequearCantidadesPedidos{
 
     @Override
     public Object actualizar(Object pedido) {
-               PedidosParaReparto ped=new PedidosParaReparto();
+        PedidosParaReparto ped=new PedidosParaReparto();
         ped=(PedidosParaReparto)pedido;
         String empresa=ped.getEmpresa();
         String codigoPedido=ped.getCodigoTangoDePedido().substring(2);
@@ -290,6 +303,10 @@ public class Checking implements ChequearCantidadesPedidos{
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
+                            }else{
+                                if(cantidad==0.00){
+                                    cantidad=cantidadT;
+                                }
                             }
                             if(cantidadPendiente > cantidadT){
                                 cantidadPendiente=cantidadT;
@@ -307,6 +324,72 @@ public class Checking implements ChequearCantidadesPedidos{
         
         return ped;
 
+    }
+    private Boolean verif(Object pedido,Connection conTango,int cantidadItemTango,Double cantidadesTango) throws SQLException{
+        Boolean resultado=false;
+        int cantidadItemsMysql=0;
+        int cantidadItemsTango=cantidadItemTango;
+        Double cantidadesMy=0.00;
+        Double totalMy=0.00;
+        Double cantidadTango=cantidadesTango;
+        Double cantidadITango=0.00;
+        ArrayList cantidad=new ArrayList();
+        ArrayList numeroI=new ArrayList();
+        Integer idPedido=0;
+        PedidosParaReparto ped=(PedidosParaReparto)pedido;
+        String codigoPedido=ped.getCodigoTangoDePedido().substring(2);
+        String codigoArticulo=ped.getCodigoArticulo();
+        String sql1="";
+        String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero from pedidos_carga1 where NRO_PEDID like '"+ped.getCodigoTangoDePedido()+"' and entrega like '"+ped.getFechaEnvio()+"%'";
+        Statement st=cnMy.createStatement();
+        st.execute(sql);
+        ResultSet rs=st.getResultSet();
+        while(rs.next()){
+            cantidadesMy=rs.getDouble("CANT_PEDID");
+            idPedido=rs.getInt("numero");
+            totalMy=totalMy + cantidadesMy;
+            cantidad.add(cantidadesMy);
+            numeroI.add(idPedido);
+            cantidadItemsMysql++;
+        }
+        rs.close();
+        //st.close();
+        int a=0;
+        if(totalMy == cantidadesTango){
+            resultado=true;
+        }else{
+           Iterator iCant=cantidad.listIterator();
+           Statement stt=conTango.createStatement();
+           while(iCant.hasNext()){
+               cantidadesMy=(Double)iCant.next();
+               Double compTango=0.00;
+               a++;
+               sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' and COD_ARTICU ='"+codigoArticulo+"' limit "+a+",1";
+               stt.execute(sql);
+               ResultSet rss=stt.getResultSet();
+               Double cantEqui=0.00;
+               while(rss.next()){
+                   cantidadITango=rs.getDouble("CANT_A_DES");
+                   cantEqui=rs.getDouble("CAN_EQUI_V");
+               }
+               rss.close();
+               //stt.close();
+               compTango=cantidadITango / cantEqui;
+               int h=a-1;
+               if(cantidadesMy==compTango){
+                   
+               }else{
+                   idPedido=(Integer) numeroI.get(h);
+                  sql1="update pedidos_carga1 set CANT_PEDID ="+compTango+" where numero="+idPedido;
+                  st.executeUpdate(sql);
+               }
+           }
+           stt.close();
+        }
+        st.close();
+        
+        
+        return resultado;
     }
     
 }

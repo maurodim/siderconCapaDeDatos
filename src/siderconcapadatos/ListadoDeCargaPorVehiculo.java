@@ -340,6 +340,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         ArrayList cargaDetallada1=new ArrayList();
         ArrayList detall=new ArrayList();
         ArrayList descarga=new ArrayList();
+        //ver por el chequeo de las cantidades de los pedidos
+        
         ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
         int senal=0;
