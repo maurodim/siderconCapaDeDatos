@@ -175,7 +175,7 @@ public class SiderconCapaatos {
         rBk.start();
         //ActualizacionPesos actPes=new ActualizacionPesos();
         //actPes.start();
-        Coneccion cn=new Coneccion();      
+        //Coneccion cn=new Coneccion();      
         Articulos art=new Articulos(); 
         Clientes cl=new Clientes();
         art.cargarListado(); 
@@ -239,13 +239,16 @@ public class SiderconCapaatos {
                     
                     System.out.println(cli+" "+cli.length());
                     Clientes clie=new Clientes();
+                    /*
                     Iterator cil=saldoCliente.listIterator();
                     while(cil.hasNext()){
                         clie=(Clientes)cil.next();
-                        //if(clie.getCodigoCliente().equals(cli)||clie.getRazonSocial().equals(pedidos.) )
+                     
+                     * //if(clie.getCodigoCliente().equals(cli)||clie.getRazonSocial().equals(pedidos.) )
                     Saldo=(Double)clie.getSaldo();
                     }
-                    //Saldo=clie.getSaldo();
+                    */ 
+                     //Saldo=clie.getSaldo();
                      //Saldo=cl.getSaldo();
                      
  
@@ -254,7 +257,7 @@ public class SiderconCapaatos {
 
                     pedidos.setPesoItems(pesoItems);
                     pedidos.setPesoTotal(totalPeso);
-                    pedidos.setSaldoCliente(Saldo);
+                    //pedidos.setSaldoCliente(Saldo);
                     //pedidos.setFechaActualizacionSaldoCliente(clie.getFechaActualizacion());
                     art.setPesoUnitario(pedidos.getPesoItems());
                     art.setPesoUnitario((Double)ar.get(pedidos.getCodigoArticulo()));

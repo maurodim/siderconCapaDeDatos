@@ -109,8 +109,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
 
     public Clientes() {
         this.saldo=0.00;
-        con=new Coneccion();
-        cc=con.getCn();
+
     }
 
     @Override
@@ -144,7 +143,8 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
     @Override
     public Object check(Object pedido) {
         Clientes cll=(Clientes)pedido;
-         
+                con=new Coneccion();
+        cc=con.getCn(); 
         
         try {
             Statement st=cc.createStatement();
