@@ -556,6 +556,41 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
             Double peso=pr.getPesoTotal();
            
             
+           }else{
+               int unid=(Integer)jTable1.getValueAt(fila,3);
+               if(fila > 0){
+pedidosSeleccionados.add(fila);
+            Iterator ss=pedidosSeleccionados.listIterator();
+            
+            
+            String fechaMod=fechaPedido.replaceAll("/","_");
+            
+          
+                //reg=new FileOutputStream("c://bases//STHDR//regMv.txt");
+              
+            //int contad=0;
+            String numeroPedido=(String)jTable1.getValueAt(fila,0);
+            String nombre=(String)jTable1.getValueAt(fila,1);
+            movimientos+=fechaPedido+" LA MATRIZ TIENE CARGADO "+numeroPedido+" RAZON SOCIAL "+nombre+" orden "+contad+"\r\n";
+                   
+                       //salida.write(movimientos);
+                       GuardarMovimientos gArch=new Archivador();
+                       gArch.registrarMovimiento(movimientos, "regMv.txt", fechaMod);
+                   
+                   contad++;
+
+            while(ss.hasNext()){
+                Integer fi=(Integer) ss.next();
+                System.out.println("la matriz tiene cargado:"+fi);
+            }
+            
+            PedidosParaReparto pr;
+            pr=(PedidosParaReparto) SiderconCapaatos.listaPedidos.get(fila);
+            Double peso=pr.getPesoTotal();
+           
+                   
+               }
+               jTable1.setValueAt(true, fila,4);
            }
             
 
@@ -652,13 +687,13 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         int cantidad=jTable1.getRowCount();
         int unida=0;
         String vUni="";
-        for(int aa=1;aa < cantidad;aa++){
+        for(int aa=0;aa < cantidad;aa++){
             try{
             vUni=(String)jTable1.getValueAt(aa,5);
             }catch(Exception ex){
             unida=(Integer)jTable1.getValueAt(aa,5);    
             }
-            if(vUni==null){
+            if(unida==0){
                unida=0;
            }else{
                //vUni=(String)jTable1.getValueAt(aa,5);
@@ -669,7 +704,9 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
            }else{
                jTable1.setValueAt(unida, aa, 3);
                jTable1.setValueAt("", aa, 5);
+               unida=0;
            }
+           
         }
             this.jButton2.setEnabled(true);
             this.repaint();
@@ -990,6 +1027,7 @@ modelo.addRow(fila6);
         tb.addColumn("Peso del Pedido");
         tb.addColumn("Vehiculo");
         tb.addColumn("Seleccion");
+        tb.addColumn("Nueva Asignac de Vehiculo");
         tb.addColumn("Zona");
         tb.addColumn("Alerta");
         Object[] fila2=new Object[7];
@@ -1019,11 +1057,11 @@ modelo.addRow(fila6);
                 jTable2.setValueAt(ped.getNumeroDeHojaDeRuta(),numVehiculo,3);
                 jTable2.setValueAt(ped.getNumeroDeListadoDeMateriales(),numVehiculo,4);
             }
-             fila2[5]=ped.getZonaDescripcion();
+             fila2[6]=ped.getZonaDescripcion();
             if(ped.getAlertaAsignada()>0){
-                fila2[6]=ped.getAlertaDescripcion();
+                fila2[7]=ped.getAlertaDescripcion();
             }else{
-                fila2[6]="";
+                fila2[7]="";
             }
             tb.addRow(fila2);
         }
