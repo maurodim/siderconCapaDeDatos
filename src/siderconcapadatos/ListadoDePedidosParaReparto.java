@@ -301,7 +301,8 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
             if(vehi==0){
                 fila[4]=false;
             }else{
-                fila[4]=true;
+                //aca modifique
+                fila[4]=false;
                 int hilo=ped.getVehiculoAsignado();
                 hilo=hilo-1;
                 System.out.println(hilo);
@@ -514,7 +515,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         pack();
@@ -704,6 +705,7 @@ pedidosSeleccionados.add(fila);
            }else{
                jTable1.setValueAt(unida, aa, 3);
                jTable1.setValueAt("", aa, 5);
+               jTable1.setValueAt(false, aa,4);
                unida=0;
            }
            
