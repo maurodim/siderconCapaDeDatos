@@ -76,6 +76,7 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
                 st.executeUpdate(sql);
             }
             st.close();
+            con.CerrarCn(cp);
             //Coneccion.CerrarConneccion(cp);
         } catch (SQLException ex) {
             Logger.getLogger(ProcesoDeConversionDeFechasDeEntrega.class.getName()).log(Level.SEVERE, null, ex);

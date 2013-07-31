@@ -87,6 +87,7 @@ public class SiderconCapaatos {
             act.listarPedidos();
             ArrayList listadoHdr=null;
             ActualizarHdr hd=new EncabezadoHdr();
+            Procesos pr=new Procesos();
             //listadoHdr=hd.leerEncabezados();
             //hd.copiarEncabezados(listadoHdr);
             //retorno.clear();
@@ -175,7 +176,7 @@ public class SiderconCapaatos {
         rBk.start();
         //ActualizacionPesos actPes=new ActualizacionPesos();
         //actPes.start();
-        //Coneccion cn=new Coneccion();      
+        Coneccion cn=new Coneccion();      
         Articulos art=new Articulos(); 
         Clientes cl=new Clientes();
         art.cargarListado(); 
