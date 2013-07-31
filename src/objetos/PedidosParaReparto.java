@@ -444,8 +444,9 @@ public class PedidosParaReparto {
 
     public PedidosParaReparto() {
          
-        coneccionPedidos=Coneccion.ObtenerConeccion();
+       // coneccionPedidos=Coneccion.ObtenerConeccion();
         this.empresa = "";
+        this.saldoCliente=0.00;
     }
 	
 }

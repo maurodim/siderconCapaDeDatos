@@ -175,6 +175,7 @@ public class Procesos {
                         
                         
                         pedidos.setSaldoCliente(sald);
+                        sald=0.00;
                         pedidos.setNumeroVendedor(rs.getInt("COD_VENDED"));
                         pedidos.setNombreVendedor(rs.getString("vendedor"));
                         System.err.println(" numero v"+pedidos.getNumeroVendedor()+" nombre v "+pedidos.getNombreVendedor()+" cliente "+pedidos.getRazonSocial()+" saldo "+pedidos.getSaldoCliente());

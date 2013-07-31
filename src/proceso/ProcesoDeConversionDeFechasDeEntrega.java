@@ -25,12 +25,19 @@ import objetos.ConversionesFecha;
  */
 public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
     private Connection cp=null;
+    private Coneccion con;
+
+    public ProcesoDeConversionDeFechasDeEntrega() {
+        con=new Coneccion();
+        cp=con.getCn();
+    }
+    
+    
     public synchronized void run(){
          
         try {
             
-            ArrayList listadoConv=new ArrayList();
-            cp=Coneccion.ObtenerConeccion();
+            ArrayList listadoConv=new ArrayList();        
             SimpleDateFormat fd=new SimpleDateFormat("yyyy-MM-dd");
             String fec=null;
             String dia=null;

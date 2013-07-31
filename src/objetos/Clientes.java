@@ -30,6 +30,8 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         private String domicilio;
         private String localidad;
         private String telefono;
+        private Coneccion con;
+        private Connection cc;
 
     public String getDomicilio() {
         return domicilio;
@@ -105,6 +107,12 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         this.saldo = saldo;
     }
 
+    public Clientes() {
+        this.saldo=0.00;
+        con=new Coneccion();
+        cc=con.getCn();
+    }
+
     @Override
     public Double actualizarDatosSaldos(Connection ccn, String empresa, String codigo) {
         Double cli=0.00;
@@ -137,9 +145,9 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
     public Object check(Object pedido) {
         Clientes cll=(Clientes)pedido;
          
-        Connection cnn=Coneccion.ObtenerConeccion();
+        
         try {
-            Statement st=cnn.createStatement();
+            Statement st=cc.createStatement();
             String sql="update clientes set DOMICILIO='"+cll.getDomicilio()+"',LOCALIDAD='"+cll.getLocalidad()+"',TELEFONO_1='"+cll.getTelefono()+"' where COD_CLIENT ='"+cll.getCodigoCliente()+"' and RAZON_SOCI like '"+cll.getRazonSocial()+"'";
             System.out.println("UPDATE EN MYSQL "+sql);
             st.executeUpdate(sql);
