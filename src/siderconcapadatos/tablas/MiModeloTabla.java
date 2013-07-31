@@ -25,6 +25,7 @@ public class MiModeloTabla extends DefaultTableModel {
         }
         if(colum==3)return Integer.class;
         if(colum==2)return Double.class;
+        //if(colum==5)return Integer.class;
         return String.class;
     }
       public boolean isCellEditable (int row, int column)

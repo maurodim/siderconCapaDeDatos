@@ -277,9 +277,10 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         miModelo.addColumn("Peso Pedido");
         miModelo.addColumn("Vehiculo");
         miModelo.addColumn("Seleccion");
+        miModelo.addColumn("Nueva Asignac de Vehiculo");
         miModelo.addColumn("Zona");
         miModelo.addColumn("Alerta");
-        Object []fila=new Object[7];
+        Object []fila=new Object[8];
         Integer renglones=null;
         int vehi=0;
         while(it.hasNext()){
@@ -314,11 +315,11 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                 //nexo.set(ped.getVehiculoAsignado(),peso);
             }
 
-            fila[5]=ped.getZonaDescripcion();
+            fila[6]=ped.getZonaDescripcion();
             if(ped.getAlertaAsignada()> 0){
-                fila[6]=ped.getAlertaDescripcion();
+                fila[7]=ped.getAlertaDescripcion();
             }else{
-                fila[6]="";
+                fila[7]="";
             }
             miModelo.addRow(fila);
         }
@@ -513,7 +514,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         pack();
@@ -562,7 +563,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //this.jButton2.setEnabled(false);    
-        jTable1.tableChanged(null);
+            jTable1.tableChanged(null);
             DecimalFormat formato=new DecimalFormat("####.#");
             Integer filas=0;
             int numeroVehiculo=0;
@@ -648,6 +649,28 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                 gArch.registrarErrores(cod1, "", "");
                 Logger.getLogger(ListadoDePedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int cantidad=jTable1.getRowCount();
+        int unida=0;
+        String vUni="";
+        for(int aa=1;aa < cantidad;aa++){
+            try{
+            vUni=(String)jTable1.getValueAt(aa,5);
+            }catch(Exception ex){
+            unida=(Integer)jTable1.getValueAt(aa,5);    
+            }
+            if(vUni==null){
+               unida=0;
+           }else{
+               //vUni=(String)jTable1.getValueAt(aa,5);
+           //unida=Integer.parseInt(vUni);
+           }
+           if(unida==0){
+               
+           }else{
+               jTable1.setValueAt(unida, aa, 3);
+               jTable1.setValueAt("", aa, 5);
+           }
+        }
             this.jButton2.setEnabled(true);
             this.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -666,10 +689,12 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
                 ped=(PedidosParaReparto) SiderconCapaatos.listaPedidos.get(posicionPedidos);
                 if(ped.getVehiculoAnterior()==uniSeleccionada){
                     ped.setVehiculoAsignado(uniSeleccionada);
+                    jTable1.setValueAt(uniSeleccionada, posicionPedidos,5);
                 }else{
                     int vAnt=ped.getVehiculoAsignado();
                     ped.setVehiculoAnterior(vAnt);
                     ped.setVehiculoAsignado(uniSeleccionada);
+                    jTable1.setValueAt(uniSeleccionada, posicionPedidos,5);
                 }
                 
             }
