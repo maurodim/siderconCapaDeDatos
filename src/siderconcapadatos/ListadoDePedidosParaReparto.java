@@ -285,7 +285,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         int vehi=0;
         while(it.hasNext()){
             ped=(PedidosParaReparto) it.next();
-            fila[0]=ped.getCodigoTangoDePedido();
+            fila[0]=ped.getCodigoTangoDePedido().substring(7);
             fila[1]=ped.getRazonSocial();
             //peso=formato.format(ped.getPesoTotal());
             //pesoParcial=Double.valueOf(peso).doubleValue();
@@ -1032,11 +1032,11 @@ modelo.addRow(fila6);
         tb.addColumn("Nueva Asignac de Vehiculo");
         tb.addColumn("Zona");
         tb.addColumn("Alerta");
-        Object[] fila2=new Object[7];
+        Object[] fila2=new Object[8];
         Double pesoAsignado=0.00;
         while(its.hasNext()){
             ped=(PedidosParaReparto) its.next();
-            fila2[0]=ped.getCodigoTangoDePedido();
+            fila2[0]=ped.getCodigoTangoDePedido().substring(7);
             fila2[1]=ped.getRazonSocial();
             //Double peso=pr.pesoTotalPedido(ped.getCodigoTangoDePedido(),seleccion);
             //ped.setPesoTotal(peso);
@@ -1048,7 +1048,7 @@ modelo.addRow(fila6);
             if((numVehiculo==0)||(numVehiculo < 0)){
                 fila2[4]=false;
             }else{
-                fila2[4]=true;
+                fila2[4]=false;
             unidad=(Vehiculos)vehiculos.get(ped.getVehiculoAsignado());
             Double capacidad=Math.ceil(unidad.getCapacidadDeCarga()+peso);
             unidad.setCapacidadDeCarga(capacidad);
