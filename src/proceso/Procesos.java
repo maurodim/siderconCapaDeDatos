@@ -43,7 +43,7 @@ import siderconcapadatos.SiderconCapaatos;
  * @author MAURO DI
  */
 public class Procesos {
-    static Connection cp=null;
+    static Connection cp;
     static ArrayList<PedidosParaReparto> listaPed=new ArrayList();
     static Coneccion cn=new Coneccion();
     static int ultimoNumeroDeListado=0;
@@ -345,7 +345,14 @@ public class Procesos {
           //  Connection cp=cn.ObtenerConeccion();
             ArrayList detalles=new ArrayList();
             String sql="select *,(SELECT vendedores.nombre FROM vendedores WHERE vendedores.numero = pedidos_carga1.COD_VENDED) AS vendedor from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPedido+"%' and entrega like '"+fecha+"%' and reparto=1";
-            PreparedStatement st=cp.prepareStatement(sql);
+            PreparedStatement st=null;
+            try{
+            st=cp.prepareStatement(sql);
+            }catch(Exception ex){
+                System.err.println("SE CORTO LA CONECCION");
+                cp=cn.getCn();
+                st=cp.prepareStatement(sql);
+            }
             ResultSet rs=st.executeQuery();
             while(rs.next()){
                 PedidosParaReparto pedido=new PedidosParaReparto();
