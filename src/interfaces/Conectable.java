@@ -23,6 +23,14 @@ public interface Conectable {
      * Para poder implementar esto deberia trabajar con constantes con el fin de poder generar una relacion objeto-tabla-constante y modificar los distintos 
      * aspectos
      * 
+     * EN PRINCIPIO DEBERÍA PROBAR CON EL PASO DE SENTENCIA Y LA DEVOLUCION DE (RESULTSET EN PRINCIPIO O BIEN DE UN ARRAYLIST)
+     * CON EL ARRAYLIST LA COMPLICACION VA A SER LOS DISTINTOS OBJETOS QUE SE VAN GENERANDO, PARA PODER LEER EL ARRAYLIST
+     * O IDEAL SERIA EL RESULTSET PERO NO SE SI ME ADMITIRA EL MISMO SIN CONEXION( LA IDEA ES MINIMIZAR LAS CONECCIONES AL SERVIDOR Y PODER ADMINISTRARLAS 
+     * DESDE UNA ÚNICA CLASE, CON EL FIN DE PODER CONTROLAR ESE ACCESO)
+     * LA ULTIMA ALTERNATIVA SERÍA, MIGRAR LA CLASE PROCESOS Y ADAPTARLA PARA QUE SEA UN PUENTE DE RESPUESTA A LAS DISTINTAS LLAMADAS
+     * EN PRINCIPIO LA ULTIMA ME PARECE LA OPCION MAS VIABLE COMO ADAPTACION MOMENTANEA
+     * 
+     * 
      *
      */
     public ArrayList leerPedidosMy(String sentencia);
@@ -31,7 +39,9 @@ public interface Conectable {
      */
     public Boolean actualizarPedidosMy(Object pedido);
     /*
-     * ACA SE REALIZA UN UPDATE DE LA TABLA PEDIDOS
+     * ACA SE REALIZA UN UPDATE DE LA TABLA PEDIDOS 
+     * 
+     * 
      */
     
     
