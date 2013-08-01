@@ -823,7 +823,8 @@ pedidosSeleccionados.add(fila);
         }
         System.out.println("saldo cliente "+resultado+" cliente "+ped.getCodigoCliente());
         //JOptionPane.showConfirmDialog(null,resultado+" cliente :"+ped.getCodigoCliente(),"SALDO CLIENTE",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(null,"SALDO DEL CLIENTE : $"+resultado+" cliente numero :"+ped.getCodigoCliente()+" FECHA ACTUALIZACION "+ped.getFechaActualizacionSaldoCliente(),"SALDO DEL CLIENTE ",JOptionPane.PLAIN_MESSAGE);
+        //JOptionPane.showMessageDialog(null,"SALDO DEL CLIENTE : $"+resultado+" cliente numero :"+ped.getCodigoCliente()+" FECHA ACTUALIZACION "+ped.getFechaActualizacionSaldoCliente(),"SALDO DEL CLIENTE ",JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null,"SALDO DEL CLIENTE : $"+resultado,"SALDO DEL CLIENTE ",JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void modComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_modComponentResized
