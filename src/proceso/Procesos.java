@@ -45,7 +45,7 @@ import siderconcapadatos.SiderconCapaatos;
 public class Procesos {
     static Connection cp;
     static ArrayList<PedidosParaReparto> listaPed=new ArrayList();
-    static Coneccion cn=new Coneccion();
+    private Coneccion cn=new Coneccion();
     static int ultimoNumeroDeListado=0;
     static int ultimaRevisionDeListado=0;
     static Connection cT=null;

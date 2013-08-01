@@ -220,7 +220,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="168" max="32767" attributes="0"/>
+              <EmptySpace pref="172" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -238,6 +238,7 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="tab.addColumn(&quot;Seleccion&quot;);&#xa;tab.addColumn(&quot;Vehiculo&quot;);&#xa;tab.addColumn(&quot;Cap. de Carga Actual&quot;);&#xa;tab.addColumn(&quot;HDR&quot;);&#xa;tab.addColumn(&quot;N&#xba; Listado&quot;);&#xa;Object []fila2=new Object[5];&#xa;while(ix.hasNext()){&#xa;unidad=(Vehiculos) ix.next();&#xa;numeroUnidad=unidad.getNumero();&#xa;fila2[0]=false;&#xa;fila2[1]=numeroUnidad+&quot; &quot;+unidad.getDescripcion();&#xa;Double pesoNexo=0.00;&#xa;//System.out.println(renglon);&#xa;//pesoNexo=(Double) nexo.get(renglon);&#xa;if(pesoNexo==0.00){&#xa;fila2[2]=unidad.getCapacidadDeCarga();&#xa;}else{&#xa;//Double pesoNexo=(Double)nexo.get(renglon);&#xa;fila2[2]=unidad.getCapacidadDeCarga()-pesoNexo;&#xa;}&#xa;fila2[3]=unidad.getNumeroHdr();&#xa;&#xa;//renglon++;&#xa;tab.addRow(fila2);&#xa;}">
               <Connection code="tab" type="code"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="listado de vehiculos disponibles para HDR"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -271,6 +272,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar Seleccion"/>
+        <Property name="toolTipText" type="java.lang.String" value="Almacena los pedidos se&#xf1;alado para el vehiculo marcado"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -288,6 +290,7 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="miModelo.addColumn(&quot;Nro de Pedido&quot;);&#xa;miModelo.addColumn(&quot;Razon Social&quot;);&#xa;miModelo.addColumn(&quot;Peso Pedido&quot;);&#xa;miModelo.addColumn(&quot;Vehiculo&quot;);&#xa;miModelo.addColumn(&quot;Seleccion&quot;);&#xa;miModelo.addColumn(&quot;Nueva Asignac de Vehiculo&quot;);&#xa;miModelo.addColumn(&quot;Zona&quot;);&#xa;miModelo.addColumn(&quot;Alerta&quot;);&#xa;Object []fila=new Object[8];&#xa;Integer renglones=null;&#xa;int vehi=0;&#xa;while(it.hasNext()){&#xa;    ped=(PedidosParaReparto) it.next();&#xa;    fila[0]=ped.getCodigoTangoDePedido().substring(7);&#xa;fila[1]=ped.getRazonSocial();&#xa;//peso=formato.format(ped.getPesoTotal());&#xa;//pesoParcial=Double.valueOf(peso).doubleValue();&#xa;//fila[2]=pesoParcial;&#xa;fila[2]=ped.getPesoTotal();&#xa;pesoTotal+=ped.getPesoTotal();&#xa;fila[3]=ped.getVehiculoAsignado();&#xa;vehi=ped.getVehiculoAsignado() -1;&#xa;if(vehi &lt; 0){&#xa;vehi=0;&#xa;}&#xa;jTable2.setValueAt(true,vehi,0);&#xa;if(vehi==0){&#xa;fila[4]=false;&#xa;}else{&#xa;//aca modifique&#xa;fila[4]=false;&#xa;int hilo=ped.getVehiculoAsignado();&#xa;hilo=hilo-1;&#xa;System.out.println(hilo);&#xa;jTable2.setValueAt(true,hilo ,0);&#xa;Double pesoVehiculo=(Double)jTable2.getValueAt(hilo,2);&#xa;pesoVehiculo=pesoVehiculo - ped.getPesoTotal();&#xa;jTable2.setValueAt(pesoVehiculo,hilo,2);&#xa;asignado+=ped.getPesoTotal();&#xa;//Double peso=(Double)nexo.get(ped.getVehiculoAsignado());&#xa;//peso=peso + ped.getPesoTotal();&#xa;//nexo.set(ped.getVehiculoAsignado(),peso);&#xa;}&#xa;&#xa;fila[6]=ped.getZonaDescripcion();&#xa;if(ped.getAlertaAsignada()&gt; 0){&#xa;fila[7]=ped.getAlertaDescripcion();&#xa;}else{&#xa;fila[7]=&quot;&quot;;&#xa;}&#xa;miModelo.addRow(fila);&#xa;}&#xa;peso=formato.format(pesoTotal);&#xa;//peso=String.valueOf(pesoParcial);&#xa;jTextField1.setText(peso);&#xa;String asig=formato.format(asignado);&#xa;jTextField2.setText(asig);&#xa;Double resultado=0.00;&#xa;resultado=pesoTotal - asignado;&#xa;String res=formato.format(resultado);&#xa;&#xa;jTextField3.setText(res);">
               <Connection code="miModelo" type="code"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Listado de pedidos correspondientes a la fecha seleccionada"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -332,6 +335,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Ver Carga"/>
+        <Property name="toolTipText" type="java.lang.String" value="Muestra la carga asignada al vehiculo se&#xf1;alado"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -343,6 +347,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Modificar Pedido"/>
+        <Property name="toolTipText" type="java.lang.String" value="Permite modificar el pedido se&#xf1;alado"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
@@ -354,6 +359,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Consultar Saldo "/>
+        <Property name="toolTipText" type="java.lang.String" value="Muestra el Saldo actual (seg&#xfa;n base Tango) del cliente marcado"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
@@ -373,6 +379,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="cantidad total de Kg. resultante del total de los pedidos para esta fecha"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -390,14 +399,21 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField2">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Total Kg. asignados a los vehiculos"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField3">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Total Kg. pendientes de asignaci&#xf3;n"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Listado de Zonas establecidas en los recorridos"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBox1.addItem(&quot;TODOS&quot;);&#xa;try{&#xa;&#xa;String sql=&quot;select zonas.descripcion from zonas order by numero&quot;;&#xa;Statement st=cone.createStatement();&#xa;st.execute(sql);&#xa;ResultSet rs=st.getResultSet();&#xa;while(rs.next()){&#xa;    jComboBox1.addItem(rs.getString(&quot;descripcion&quot;));&#xa;}&#xa;&#xa;}catch(Exception ex){&#xa;System.err.println(&quot;error &quot;+ex);&#xa;}"/>
@@ -409,6 +425,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Filtrar P/Zona"/>
+        <Property name="toolTipText" type="java.lang.String" value="muestra el listado de pedidos correspondientes a la zona seleccionada"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
@@ -429,6 +446,7 @@
           <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Anular LPM&#xb4;S"/>
+        <Property name="toolTipText" type="java.lang.String" value="Lista y permite la anulaci&#xf3;n de los LPM emitidos en la fecha"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
