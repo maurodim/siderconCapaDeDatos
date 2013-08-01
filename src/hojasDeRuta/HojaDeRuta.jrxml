@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HojaDeRuta" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="0">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="416"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="numeroHdr" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\src\\hojasDeRuta\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select hdr.listadoNumero,(select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),(select unidades.descripcion from unidades where numero=hdr.numeroVehiculo)as descV,round(hdr.pesoCarga,2) as pesoTot,(select unidades.kilometrosActuales from unidades where numero=hdr.numeroVehiculo),(select fleteros.nombre from fleteros where numero=hdr.numeroFletero),(select fleteros.celular from fleteros where numero=hdr.numeroFletero),left(replace(hdr.fechaEntrega,"/",""),4)as fechaTit,left((select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),5)as nombreV,substring((select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),6)as turnoV from hdr where numero=$P{numeroHdr}]]>
+		<![CDATA[select hdr.listadoNumero,(select listadosdemateriales.revision from listadosdemateriales where listadosdemateriales.numero=hdr.listadoNumero)as rev,(select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),(select unidades.descripcion from unidades where numero=hdr.numeroVehiculo)as descV,round(hdr.pesoCarga,2) as pesoTot,(select unidades.kilometrosActuales from unidades where numero=hdr.numeroVehiculo),(select fleteros.nombre from fleteros where numero=hdr.numeroFletero),(select fleteros.celular from fleteros where numero=hdr.numeroFletero),left(replace(hdr.fechaEntrega,"/",""),4)as fechaTit,left((select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),5)as nombreV,substring((select unidades.descripcion from unidades where numero=hdr.numeroVehiculo),6)as turnoV from hdr where numero=$P{numeroHdr}]]>
 	</queryString>
 	<field name="listadoNumero" class="java.lang.Integer"/>
+	<field name="rev" class="java.lang.Integer"/>
 	<field name="(select unidades.descripcion from unidades where numero=hdr.numeroVehiculo)" class="java.lang.String"/>
 	<field name="descV" class="java.lang.String"/>
 	<field name="pesoTot" class="java.lang.Double"/>
@@ -101,6 +102,20 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Peso Total Kg.:"+$F{pesoTot}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="218" y="28" width="100" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rev}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="192" y="28" width="26" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rev. /]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
