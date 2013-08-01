@@ -97,6 +97,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="hd" type="code"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Vista previa y editable de la Hoja de Ruta"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MiTablaHd hd=new MiTablaHd();&#xa;//jPanel4.setVisible(false);&#xa;PedidosParaReparto ped=new PedidosParaReparto();&#xa;String cli=null;&#xa;Procesos pr=new Procesos();&#xa;Iterator ih=ListadoDeCargaPorVehiculo.carga.listIterator();"/>
@@ -144,6 +145,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Imprimir Hoja De Ruta"/>
+            <Property name="toolTipText" type="java.lang.String" value="Genera PDF de la Hoja de Ruta"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -155,6 +157,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Guardar Cambios"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
@@ -163,6 +166,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar Item"/>
+            <Property name="toolTipText" type="java.lang.String" value="Para cargar un nuevo Items en el detalle"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
@@ -206,6 +210,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" postCode="Iterator il=ls.listIterator();&#xa;while(il.hasNext()){&#xa;fl=(Fleteros)il.next();&#xa;jComboBox1.addItem(fl.getNombreFletero());&#xa;}"/>
+            <Property name="toolTipText" type="java.lang.String" value="Listado de Fleteros habilitados "/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Fleteros fl=new Fleteros();&#xa;Procesos pra=new Procesos();&#xa;ArrayList ls=new ArrayList();&#xa;try{&#xa;ls=pr.ListarFleteros();&#xa;}catch(Exception ex){&#xa;System.out.println(&quot;no se listaron&quot;);&#xa;}"/>
@@ -270,7 +275,7 @@
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="103" max="32767" attributes="0"/>
+                  <EmptySpace pref="107" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -282,6 +287,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField1">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="destino del reparto"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -304,6 +312,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField2">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="BU o SD"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField3">
         </Component>
@@ -320,6 +331,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="AGREGAR A HOJA DE RUTA"/>
+            <Property name="toolTipText" type="java.lang.String" value="Agrega el rengl&#xf3;n con el detalle ingresado en la vista de la HDR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>

@@ -105,6 +105,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
         setResizable(true);
 
         jTable1.setModel(hd);
+        jTable1.setToolTipText("Vista previa y editable de la Hoja de Ruta");
         hd.addColumn("Cliente");
         hd.addColumn("Saldo");
         hd.addColumn("Comprobante");
@@ -151,6 +152,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton1.setText("Imprimir Hoja De Ruta");
+        jButton1.setToolTipText("Genera PDF de la Hoja de Ruta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -159,9 +161,11 @@ public class VistaHdr extends javax.swing.JInternalFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton2.setText("Guardar Cambios");
+        jButton2.setEnabled(false);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton3.setText("Agregar Item");
+        jButton3.setToolTipText("Para cargar un nuevo Items en el detalle");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -199,6 +203,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
             fl=(Fleteros)il.next();
             jComboBox1.addItem(fl.getNombreFletero());
         }
+        jComboBox1.setToolTipText("Listado de Fleteros habilitados ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -223,6 +228,8 @@ public class VistaHdr extends javax.swing.JInternalFrame {
 
         jLabel2.setText("RAZON SOCIAL :");
 
+        jTextField1.setToolTipText("destino del reparto");
+
         jLabel3.setText("EMPRESA");
 
         jLabel4.setText("COMPROBANTE");
@@ -230,6 +237,8 @@ public class VistaHdr extends javax.swing.JInternalFrame {
         jLabel5.setText("MONTO");
 
         jLabel6.setText("OBSERVACIONES");
+
+        jTextField2.setToolTipText("BU o SD");
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +248,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton4.setText("AGREGAR A HOJA DE RUTA");
+        jButton4.setToolTipText("Agrega el renglón con el detalle ingresado en la vista de la HDR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -292,7 +302,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(jButton4)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

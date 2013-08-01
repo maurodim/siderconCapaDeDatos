@@ -133,6 +133,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Imprimir Listado Consolidado"/>
+            <Property name="toolTipText" type="java.lang.String" value="Genera PDF del listado Consolidado de materiales"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -144,6 +145,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Emitir Listado de Preparacion"/>
+            <Property name="toolTipText" type="java.lang.String" value="Genera PDF del listado detallado de materiales"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
@@ -155,6 +157,7 @@
               <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Emitir Hoja de Ruta"/>
+            <Property name="toolTipText" type="java.lang.String" value="Generar HDR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>

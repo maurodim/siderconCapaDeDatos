@@ -169,6 +169,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton2.setText("Imprimir Listado Consolidado");
+        jButton2.setToolTipText("Genera PDF del listado Consolidado de materiales");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -177,6 +178,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton3.setText("Emitir Listado de Preparacion");
+        jButton3.setToolTipText("Genera PDF del listado detallado de materiales");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -185,6 +187,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
         jButton4.setText("Emitir Hoja de Ruta");
+        jButton4.setToolTipText("Generar HDR");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
