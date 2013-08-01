@@ -110,7 +110,8 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("<html>\nPARA LA MODIFICACION DE PEDIDOS:<br>\n\t- Para modificar la cantidad a enviar: En la columna con el mismo nombre, borrar el valor<br>\n\ty cargar la cantidad a enviar, luego presionar Guardar<br>\n\t( El sistema calcula automáticamente la cantidad sin fecha asignada)<br>\n\t- Para modificar la fecha de entrega: modificar directamente en la columna de fecha, el <br>\n\tvalor correspondiente a dia/mes/año, según sea lo correspondiente respetando dicho formato<br>\nPARA LA ELIMINACION DE UNO O VARIOS ITEMS:<br>\n\t-Marcar el checkbox correspondiente al item a eliminar<br>\n\t-Una vez marcado el/los items, presionar Guardar<br>\n</html>");
+        jLabel1.setText("<html>\nPARA LA MODIFICACION DE PEDIDOS:<br>\n\t- Para modificar la cantidad a enviar: En la columna con el mismo nombre, borrar el valor<br>\n\ty cargar la cantidad a enviar, luego presionar Guardar<br>\n\t( El sistema calcula automáticamente la cantidad sin fecha asignada)<br>\n\t- Para modificar la fecha de entrega: modificar directamente en la columna de fecha, el <br>\n\tvalor correspondiente a dia/mes/año, según sea lo correspondiente respetando dicho formato<br>\"\n\t\nPARA LA ELIMINACION DE UNO O VARIOS ITEMS:<br>\n\t-Marcar el checkbox correspondiente al item a eliminar<br>\n\t-Una vez marcado el/los items, presionar Guardar<br>\n</html>");
+        jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,7 +126,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -146,7 +147,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -154,7 +155,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
