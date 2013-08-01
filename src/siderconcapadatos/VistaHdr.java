@@ -103,6 +103,8 @@ public class VistaHdr extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Vista Editable HDR");
+        setToolTipText("Detalle de la carga actual del sistema");
 
         jTable1.setModel(hd);
         jTable1.setToolTipText("Vista previa y editable de la Hoja de Ruta");
