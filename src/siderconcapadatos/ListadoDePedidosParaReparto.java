@@ -804,6 +804,8 @@ pedidosSeleccionados.add(fila);
             //mod.setLocation(this);
             mod1.toFront();
             mod1.setVisible(true);
+            jTable1.setValueAt(false,pedidoModificable,4);
+            pedidosSeleccionados.clear();
             //mod1.pack();
             //this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -825,6 +827,8 @@ pedidosSeleccionados.add(fila);
         //JOptionPane.showConfirmDialog(null,resultado+" cliente :"+ped.getCodigoCliente(),"SALDO CLIENTE",JOptionPane.INFORMATION_MESSAGE);
         //JOptionPane.showMessageDialog(null,"SALDO DEL CLIENTE : $"+resultado+" cliente numero :"+ped.getCodigoCliente()+" FECHA ACTUALIZACION "+ped.getFechaActualizacionSaldoCliente(),"SALDO DEL CLIENTE ",JOptionPane.PLAIN_MESSAGE);
         JOptionPane.showMessageDialog(null,"SALDO DEL CLIENTE : $"+resultado,"SALDO DEL CLIENTE ",JOptionPane.PLAIN_MESSAGE);
+        jTable1.setValueAt(false,pedidoSaldo,4);
+        pedidosSeleccionados.clear();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void modComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_modComponentResized
@@ -836,7 +840,7 @@ pedidosSeleccionados.add(fila);
     }//GEN-LAST:event_modComponentShown
 
     private void jTable3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable3ComponentShown
-                      String fecha=ListadoDePedidosParaReparto.fechaPedido;
+        String fecha=ListadoDePedidosParaReparto.fechaPedido;
         String nPedido=ListadoDePedidosParaReparto.numeroDePedido;
         System.out.println(" fecha "+fecha+" num pedido "+nPedido);
         miTablaModificacion modelo=new miTablaModificacion();
