@@ -170,9 +170,10 @@ public class Procesos {
                                 sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
                                 break;
                         }
+                        if(SiderconCapaatos.falloConecion==0){
                             sald=(Double) actCli.actualizarDatosSaldos(sqlC, empresa, pedidos.getCodigoCliente());
                             //sald=cli.getSaldo();
-                        
+                        }
                         
                         pedidos.setSaldoCliente(sald);
                         sald=0.00;
@@ -200,8 +201,12 @@ public class Procesos {
                         if(pedidos.getAlertaAsignada() > 0){
                         pedidos.setAlertaDescripcion(rs.getString("alertasDescripcion"));
                         }
+                        if(SiderconCapaatos.falloConecion==1){
+                            
+                        }else{
                         ChequearCantidadesPedidos chCli=new Clientes();
                         chCli.check(chCli.actualizar(clie));
+                        }
                         listaPed.add(pedidos);
 		}
                 rs.close();

@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import seguimientos.Archivador;
 import seguimientos.GuardarMovimientos;
 import siderconcapadatos.SiderconCapaatos;
@@ -43,7 +45,7 @@ public class ConeccionSqlTango {
 		
 
     }
-public static Connection ObtenerConeccion(int bb) throws SQLException, ClassNotFoundException{
+public static Connection ObtenerConeccion(int bb) throws ClassNotFoundException{
             Class.forName(ConeccionSqlTango.driver);
         String filename="\\\\Server\\bases Caja (SERVER)\\hdr.mdb";
         String databse="jdbc:odbc:Driver={Microsoft Access Driver(*.mdb)};DBQ=";
@@ -80,7 +82,16 @@ public static Connection ObtenerConeccion(int bb) throws SQLException, ClassNotF
                         break;
                 }
         String cadenn=ConeccionSqlTango.url+";user="+ConeccionSqlTango.usuario+";password="+ConeccionSqlTango.clave+";";
-        Connection ccnn=DriverManager.getConnection(cadenn);//this.url,this.usuario,this.clave);
+        String cadenax="";
+        Connection ccnn=null;
+        try {
+            ccnn = DriverManager.getConnection(cadenn); //this.url,this.usuario,this.clave);
+            SiderconCapaatos.falloConecion=0;
+        } catch (SQLException ex) {
+            SiderconCapaatos.falloConecion=1;
+            JOptionPane.showMessageDialog(null,"SE HA DETECTADO UN ERROR EN LA CONEXION AL SERVERTANGO\n CERRAR EL PROCESO Y VOLVER A INTENTARLO","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(ConeccionSqlTango.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return ccnn;
 }    
 public static Boolean CerrarConeccion(Connection cn){
@@ -94,4 +105,7 @@ public static Boolean CerrarConeccion(Connection cn){
         return false;
     }
 }
+ private void emitirMensaje(){
+        JOptionPane.showMessageDialog(null,"","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+    }
 }
