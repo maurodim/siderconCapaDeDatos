@@ -227,12 +227,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,7 +321,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
          * 
          */
         
-        this.jButton2.setEnabled(false);
+        //this.jButton2.setEnabled(false);
         int totalFilas=jTable1.getRowCount();
         
         //Double totalKg=0.00;
@@ -583,7 +583,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         Runtime r=Runtime.getRuntime();
         r.gc();
         //ls=null;
-        this.jButton2.setEnabled(true);
+        //this.jButton2.setEnabled(true);
         //this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 

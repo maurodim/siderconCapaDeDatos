@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.xml.parsers.ParserConfigurationException;
 import objetos.Articulos;
@@ -70,6 +71,7 @@ public class SiderconCapaatos {
     public static String formularioDetallado=null;
     public static String formularioDescarga=null;
     public static String formularioHdr=null;
+    public static int falloConecion;
 	/**
 	 * @param args the command line arguments
 	 */
@@ -77,6 +79,7 @@ public class SiderconCapaatos {
             //System.out.println(System.getProperty("java.classpath"));
             String codigo;
             String clave;
+            falloConecion=0;
             Double valor = null;
             String cli;
             Double Saldo=0.00;
@@ -145,10 +148,18 @@ public class SiderconCapaatos {
 }); 
         timer.start();
         ConeccionSqlTango cSql=new ConeccionSqlTango(1);
+        
+        try{
         sqlBu=(Connection) ConeccionSqlTango.ObtenerConeccion(1);
         sqlSd=(Connection) ConeccionSqlTango.ObtenerConeccion(2);
         sqlSdSrl=(Connection) ConeccionSqlTango.ObtenerConeccion(3);
-        
+        }catch(Exception ex){
+            falloConecion=1;
+            sqlBu=null;
+            sqlSd=null;
+            sqlSdSrl=null;
+            JOptionPane.showMessageDialog(null,"CONEXION A SERVERTANGO NO ESTABLECIDA \n REVISE LAS MISMAS","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+        }
         /*
         Connection cSql = (Connection) sqlBu;
         try {
@@ -181,7 +192,11 @@ public class SiderconCapaatos {
         Clientes cl=new Clientes();
         art.cargarListado(); 
         Procesos pro=new Procesos();
-        saldoCliente=pro.cargarSaldosDeClientes();
+        if(falloConecion==0){
+        saldoCliente=pro.cargarSaldosDeClientes();    
+        }else{
+        
+        }
         ar=pro.cargarPesosDeArticulos();
         DecimalFormat fr=new DecimalFormat("00");
         Calendar c1=Calendar.getInstance();
