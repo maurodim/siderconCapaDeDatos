@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetos.PedidosParaReparto;
 import proceso.Coneccion;
 import siderconcapadatos.SiderconCapaatos;
@@ -45,7 +46,7 @@ public class Checking implements ChequearCantidadesPedidos{
         String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO,GVA03.ID_GVA03 from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"'";
         
         Statement xt=null;
-        
+        if(SiderconCapaatos.falloConecion==0){
         int numeroConeccion=0;
                         if(empresa.equals("BU")){
                             numeroConeccion=1;
@@ -76,14 +77,17 @@ public class Checking implements ChequearCantidadesPedidos{
                                 break;
                             case 3:
                                 sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
+                                
                                 try {
                                     xt=sqlC.createStatement();
                                 } catch (SQLException ex) {
+                                    emitirMensaje();
                                     Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 break;
                         }
                         try {
+                            //xt=null;
                             xt.execute(sql);
                             ResultSet rs=xt.getResultSet();
                             Double cantidadT=0.00;
@@ -129,12 +133,17 @@ public class Checking implements ChequearCantidadesPedidos{
                             ped.setCantidadArticulosTotales(cantidadTotal);
                             }
                         } catch (SQLException ex) {
+                            emitirMensaje();
                             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                            System.err.println(" OJO QUE SE CORTO LA CONEXION A TANGO ");
+                            
                         }
-        
+        }
         return ped;
     }
-
+    public void emitirMensaje(){
+        JOptionPane.showMessageDialog(null,"","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+    }
  
     @Override
     public void verificar() {
@@ -157,7 +166,9 @@ public class Checking implements ChequearCantidadesPedidos{
                                 break;
                             case 2:
                                 sqlC=(Connection)SiderconCapaatos.sqlSd;
+                                
                                 try {
+                                    emitirMensaje();
                                     xt=sqlC.createStatement();
                                 } catch (SQLException ex) {
                                     Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,6 +203,7 @@ public class Checking implements ChequearCantidadesPedidos{
                 rs.close();
                 xt.close();
             } catch (SQLException ex) {
+                emitirMensaje();
                 Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -217,6 +229,7 @@ public class Checking implements ChequearCantidadesPedidos{
             xt1.close();
             rs.close();
         } catch (SQLException ex) {
+            emitirMensaje();
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
         PedidosParaReparto pedid=new PedidosParaReparto();
