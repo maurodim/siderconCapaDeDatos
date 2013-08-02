@@ -116,7 +116,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
     public Double actualizarDatosSaldos(Connection ccn, String empresa, String codigo) {
         Double cli=0.00;
         try {
-            
+            if(SiderconCapaatos.falloConecion==0){
             String sql="select GVA14.SALDO_CC,GVA14.COD_CLIENT,GVA14.RAZON_SOCI from GVA14 where COD_CLIENT = '"+codigo+"'";
             Statement st=ccn.createStatement();
             st.execute(sql);
@@ -126,7 +126,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
                 System.out.println(" COD CLIENTE Y SALDO :"+rs.getString("COD_CLIENT")+" "+rs.getString("RAZON_SOCI")+"saldo "+cli);
             }
             st.close();
-            
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("!!!! ERROR EN LA ACTUALIZACION DE SALDO "+ex);
