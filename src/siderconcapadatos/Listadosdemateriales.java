@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 /**
  *
- * @author hernan
+ * @author mauro
  */
 @Entity
 @Table(name = "listadosdemateriales", catalog = "siderpruebas", schema = "")

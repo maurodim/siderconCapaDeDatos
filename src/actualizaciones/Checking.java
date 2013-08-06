@@ -20,15 +20,24 @@ import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class Checking implements ChequearCantidadesPedidos{
     private Coneccion con;
-    private Connection cnMy;
+    private static Connection cnMy;
+    private Integer numeroIdMysql;
+    private Double cantidadMysql;
+    private String codigoMy;
+    private Integer idNumeroTango;
+    private Double cantidadTango;
+    private String codigoTango;
+    
 
     public Checking() {
         con=new Coneccion();
         cnMy=con.getCn();
+        cantidadMysql=0.00;
+        numeroIdMysql=0;
     }
     
     @Override
@@ -42,8 +51,9 @@ public class Checking implements ChequearCantidadesPedidos{
         Double cantidadTotal=(Double)ped.getCantidadArticulosTotales();
         String codigoArticulo=ped.getCodigoArticulo();
         ArrayList idTango=new ArrayList();
+        ArrayList cantidadesTango=new ArrayList();
         Integer idTT=0;
-        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO,GVA03.ID_GVA03 from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"'";
+        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' order by GVA03.ID_GVA03";
         
         Statement xt=null;
         if(SiderconCapaatos.falloConecion==0){
@@ -81,7 +91,7 @@ public class Checking implements ChequearCantidadesPedidos{
                                 try {
                                     xt=sqlC.createStatement();
                                 } catch (SQLException ex) {
-                                    emitirMensaje();
+                                    
                                     Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 break;
@@ -95,23 +105,33 @@ public class Checking implements ChequearCantidadesPedidos{
                             Double cantidadEq=0.00;
                             int cantidadesItemsTango=0;
                             while(rs.next()){
+                                Checking tgCh=new Checking();
                                 cantidadT=rs.getDouble("CANT_A_DES");
                                 cantidadTPendiente=rs.getDouble("CANT_PEDID");
                                 cantidadEq=rs.getDouble("CAN_EQUI_V");
-                                idTT=rs.getInt("ID_GVA03");
-                                System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU")+" pedido "+rs.getString("NRO_PEDIDO"));
+                                //idTT=rs.getInt("ID_GVA03");
+                                System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU"));
                                 cantidadesItemsTango++;
-                                idTango.add(idTT);
+                               cantidadT=cantidadT/cantidadEq;
+                                cantidadTPendiente=cantidadTPendiente / cantidadEq;
+                                tgCh.cantidadTango=cantidadTPendiente;
+                                tgCh.idNumeroTango=idTT;
+                                tgCh.codigoTango=rs.getString("COD_ARTICU");
+                                cantidadesTango.add(tgCh);
+                                //idTango.add(idTT);
                             }
                             
                             rs.close();
                             //xt.close();
                             
-                            cantidadT=cantidadT/cantidadEq;
-                            cantidadTPendiente=cantidadTPendiente / cantidadEq;
+                            
                             /*
                              * TENGO QUE BUSCAR DE DONDE VIENE EL LLAMADO AL CHECKING - PARA PODER RENOVAR LOS DATOS DEL PEDIDO/PEDIDOS PARA MODIFICARLOS
                              */
+                            ArrayList pdMy=revisarMyPedidos(ped);
+                            System.out.println("RESULTADO DEL CHEQUEO :"+verificarMatrices(pdMy,cantidadesTango));
+                                
+                            
                             if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
@@ -133,7 +153,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             ped.setCantidadArticulosTotales(cantidadTotal);
                             }
                         } catch (SQLException ex) {
-                            emitirMensaje();
+                           
                             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                             System.err.println(" OJO QUE SE CORTO LA CONEXION A TANGO ");
                             
@@ -142,7 +162,7 @@ public class Checking implements ChequearCantidadesPedidos{
         return ped;
     }
     public void emitirMensaje(){
-        JOptionPane.showMessageDialog(null,"","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+        
     }
  
     @Override
@@ -168,7 +188,7 @@ public class Checking implements ChequearCantidadesPedidos{
                                 sqlC=(Connection)SiderconCapaatos.sqlSd;
                                 
                                 try {
-                                    emitirMensaje();
+                                    
                                     xt=sqlC.createStatement();
                                 } catch (SQLException ex) {
                                     Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,7 +223,7 @@ public class Checking implements ChequearCantidadesPedidos{
                 rs.close();
                 xt.close();
             } catch (SQLException ex) {
-                emitirMensaje();
+                
                 Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -212,7 +232,7 @@ public class Checking implements ChequearCantidadesPedidos{
         /* PRIMERO BLANQUEAR LAS CANTIDADES DE LOS PEDIDOS PENDIENTES Y LUEGO MODIFICAR LAS CANTIDADES CHECKEADAS
          */
          
-        sqlC=Coneccion.ObtenerConeccion();
+        sqlC=cnMy;
         sql="select pedidos_carga1.CANT_FACT,pedidos_carga1.COD_ARTIC,pedidos_carga1.NRO_PEDIDO,pedidos_carga1.CANT_FACT,pedidos_carga1.CANT_DESC,pedidos_carga1.CANT_PEDID from pedidos_carga1 where CANT_FACT > 0";
         String sql1="";
         try {
@@ -229,7 +249,7 @@ public class Checking implements ChequearCantidadesPedidos{
             xt1.close();
             rs.close();
         } catch (SQLException ex) {
-            emitirMensaje();
+            
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
         PedidosParaReparto pedid=new PedidosParaReparto();
@@ -348,6 +368,58 @@ public class Checking implements ChequearCantidadesPedidos{
         return ped;
 
     }
+    private Boolean verificarMatrices(ArrayList mys,ArrayList tang){
+        
+            Boolean vMat=false;
+            int tamaMy=mys.size();
+            int tamaTg=tang.size();
+            int fTamano=0;
+            int fcantidades=0;
+            int fDetalle=0;
+            int fTangoMenor=0;
+            Checking ccK=null;
+            String sql="";
+            try {
+            if(tamaMy==tamaTg){
+                fTamano=1;
+            }
+            int bucle=0;
+            if(fTamano==1){
+                bucle=fTamano;
+                
+            }else{
+            if(tamaMy > tamaTg){
+                bucle=tamaMy;
+                fTangoMenor=1;
+            }else{
+                bucle=tamaTg;
+                fTangoMenor=0;
+            }
+            }
+            Statement st=cnMy.createStatement();
+            for(int i=0;i <= bucle;i++){
+                
+                   if(i > tamaTg){ 
+                       int aa=i-1;
+                       ccK=(Checking)mys.get(aa);
+                       //tamaTg=tamaTg - 1;
+                        sql = "delete from pedidos_carga1 where numero="+ccK.numeroIdMysql;
+                        System.out.println(sql);
+                        st.executeUpdate(sql);
+                       //mys.remove(i);
+                       
+                   } 
+                
+            }
+            st.close();
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return vMat;
+        
+    }
     private Boolean verif(Object pedido,Statement conTango,int cantidadItemTango,Double cantidadesTango,ArrayList idT){
         Boolean resultado=false;
         int cantidadItemsMysql=0;
@@ -398,10 +470,10 @@ public class Checking implements ChequearCantidadesPedidos{
         }else{
            Iterator iCant=cantidad.listIterator();
            Statement stt=conTango;
-           
+           Double compTango=0.00;
            while(iCant.hasNext()){
                cantidadesMy=(Double)iCant.next();
-               Double compTango=0.00;
+               compTango=0.00;
               if(cantidadItemTango > a){
                    idPedidoTango=(Integer)idT.get(a);
                    codigoHd=(String)codigoH.get(a);
@@ -449,7 +521,7 @@ public class Checking implements ChequearCantidadesPedidos{
                    } catch (SQLException ex) {
                        Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                    }
-                  Integer id_Pedido=ped.getiDPedido();
+                  int id_Pedido = ped.getiDPedido();
                   if(id_Pedido==idPedido){
                       ped.setCantidadArticulo(compTango);
                   }
@@ -472,5 +544,29 @@ public class Checking implements ChequearCantidadesPedidos{
         
         return resultado;
     }
-    
+    private ArrayList revisarMyPedidos(PedidosParaReparto ped){
+        ArrayList cantidadesMy=new ArrayList();
+        try {
+            Double cantidadM=0.00;
+            String numeroPedido=ped.getCodigoTangoDePedido().substring(2);
+            String sql="select pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.COD_ARTIC from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPedido+"' and entrega like '"+ped.getFechaEnvio()+"%' order by numero";
+            Statement st=cnMy.createStatement();
+            st.executeQuery(sql);
+            ResultSet rs=st.getResultSet();
+            while(rs.next()){
+                Checking cK=new Checking();
+                
+                cantidadM=rs.getDouble("CANT_PEDID");
+                cK.cantidadMysql=cantidadM;
+                cK.numeroIdMysql=rs.getInt("numero");
+                cK.codigoMy=rs.getString("COD_ARTIC");
+                cantidadesMy.add(cK);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cantidadesMy;
+    }
 }
