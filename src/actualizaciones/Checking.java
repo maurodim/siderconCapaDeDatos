@@ -114,7 +114,7 @@ public class Checking implements ChequearCantidadesPedidos{
                                 cantidadesItemsTango++;
                                cantidadT=cantidadT/cantidadEq;
                                 cantidadTPendiente=cantidadTPendiente / cantidadEq;
-                                tgCh.cantidadTango=cantidadTPendiente;
+                                tgCh.cantidadTango=cantidadT;
                                 tgCh.idNumeroTango=idTT;
                                 tgCh.codigoTango=rs.getString("COD_ARTICU");
                                 cantidadesTango.add(tgCh);
@@ -129,10 +129,10 @@ public class Checking implements ChequearCantidadesPedidos{
                              * TENGO QUE BUSCAR DE DONDE VIENE EL LLAMADO AL CHECKING - PARA PODER RENOVAR LOS DATOS DEL PEDIDO/PEDIDOS PARA MODIFICARLOS
                              */
                             ArrayList pdMy=revisarMyPedidos(ped);
-                            System.out.println("RESULTADO DEL CHEQUEO :"+verificarMatrices(pdMy,cantidadesTango));
+                            System.out.println("RESULTADO DEL CHEQUEO :"+verificarMatrices(pdMy,cantidadesTango,ped));
                                 
                             
-                            if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
+                           // if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
@@ -151,7 +151,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             ped.setCantidadArticulo(cantidad);
                             ped.setCantidadArticuloPendiente(cantidadPendiente);
                             ped.setCantidadArticulosTotales(cantidadTotal);
-                            }
+                            //}
                         } catch (SQLException ex) {
                            
                             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
@@ -368,7 +368,7 @@ public class Checking implements ChequearCantidadesPedidos{
         return ped;
 
     }
-    private Boolean verificarMatrices(ArrayList mys,ArrayList tang){
+    private Boolean verificarMatrices(ArrayList mys,ArrayList tang,PedidosParaReparto pd){
         
             Boolean vMat=false;
             int tamaMy=mys.size();
@@ -386,33 +386,38 @@ public class Checking implements ChequearCantidadesPedidos{
             int bucle=0;
             if(fTamano==1){
                 bucle=fTamano;
-                
+                //comparacionDeMatrices(mys,tang);
             }else{
             if(tamaMy > tamaTg){
                 bucle=tamaMy;
                 fTangoMenor=1;
+                   Statement st=cnMy.createStatement();
+                   int tamaTg1=tamaTg -1;
+                   for(int i=0;i < bucle;i++){
+
+                          if(i > tamaTg1){ 
+                              int aa=i;
+                              ccK=(Checking)mys.get(aa);
+                              //tamaTg=tamaTg - 1;
+                               sql = "delete from pedidos_carga1 where numero="+ccK.numeroIdMysql;
+                               System.out.println(sql);
+                               st.executeUpdate(sql);
+                              //mys.remove(i);
+
+                          } 
+
+                   }
+                   mys=revisarMyPedidos(pd);
+                   st.close();
+
             }else{
                 bucle=tamaTg;
                 fTangoMenor=0;
+                //comparacionDeMatrices(mys,tang);
             }
-             Statement st=cnMy.createStatement();
-            for(int i=0;i <= bucle;i++){
-                
-                   if(i > tamaTg){ 
-                       int aa=i-1;
-                       ccK=(Checking)mys.get(aa);
-                       //tamaTg=tamaTg - 1;
-                        sql = "delete from pedidos_carga1 where numero="+ccK.numeroIdMysql;
-                        System.out.println(sql);
-                        st.executeUpdate(sql);
-                       //mys.remove(i);
-                       
-                   } 
-                
-            }
-            st.close();
             
-            }  
+            }
+            comparacionDeMatrices(mys,tang);
         } catch (SQLException ex) {
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -575,7 +580,7 @@ public class Checking implements ChequearCantidadesPedidos{
      * AMBAS MATRICES YA ESTAN CARGADAS E IGUALADAS EN CANTIDADES O ES MENOR LA MY, AQUI TENGO QUE HACER LA COMPARACION
      */
     private Boolean comparacionDeMatrices(ArrayList my,ArrayList tg){
-        Boolean comparacion=false;
+        Boolean comparacion=true;
         int cantidadItemsAComparar=my.size();
         int cantidadItemsCargadosTg=tg.size();
         String codigoArticuloMy="";
@@ -586,15 +591,37 @@ public class Checking implements ChequearCantidadesPedidos{
         Checking tgC=new Checking();
         for(int i=0;i < cantidadItemsCargadosTg;i++){
             tgC=(Checking)tg.get(i);
-            
-            for(int aaa=i;aaa <cantidadItemsAComparar;aaa++){
+            codigoArticuloTg=tgC.codigoTango;
+            cantidadTg=tgC.cantidadTango;
+            for(int aaa=0;aaa <cantidadItemsAComparar;aaa++){
                 myC=(Checking)my.get(aaa);
-                
+                codigoArticuloMy=myC.codigoMy.trim();
+                cantidadMy=myC.cantidadMysql;
+                if(codigoArticuloMy.equals(codigoArticuloTg)){
+                    if(cantidadMy <= cantidadTg){
+                        
+                    }else{
+                        cantidadMy=cantidadTg;
+                        myC.cantidadMysql=cantidadTg;
+                        modificarItems(myC);
+                    }
+                }
                 
             }
             
         }
         
         return comparacion;
+    }
+    private void modificarItems(Checking cch){
+        try {
+            Statement st=cnMy.createStatement();
+            String sql="update pedidos_carga1 set CANT_PEDID ="+cch.cantidadMysql+" where numero = "+cch.numeroIdMysql;
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
