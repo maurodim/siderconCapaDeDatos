@@ -395,8 +395,7 @@ public class Checking implements ChequearCantidadesPedidos{
                 bucle=tamaTg;
                 fTangoMenor=0;
             }
-            }
-            Statement st=cnMy.createStatement();
+             Statement st=cnMy.createStatement();
             for(int i=0;i <= bucle;i++){
                 
                    if(i > tamaTg){ 
@@ -413,10 +412,12 @@ public class Checking implements ChequearCantidadesPedidos{
             }
             st.close();
             
-            
+            }  
         } catch (SQLException ex) {
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+           
             return vMat;
         
     }
@@ -568,5 +569,32 @@ public class Checking implements ChequearCantidadesPedidos{
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cantidadesMy;
+    }
+    /*
+     * FUNCION QUE SE ENCARGA DE VERIFICAR LA RELACION ITEMS A ITEMS ENTRE LOS PEDIDOS MYSQL Y TANGO
+     * AMBAS MATRICES YA ESTAN CARGADAS E IGUALADAS EN CANTIDADES O ES MENOR LA MY, AQUI TENGO QUE HACER LA COMPARACION
+     */
+    private Boolean comparacionDeMatrices(ArrayList my,ArrayList tg){
+        Boolean comparacion=false;
+        int cantidadItemsAComparar=my.size();
+        int cantidadItemsCargadosTg=tg.size();
+        String codigoArticuloMy="";
+        String codigoArticuloTg="";
+        Double cantidadMy=0.00;
+        Double cantidadTg=0.00;
+        Checking myC=new Checking();
+        Checking tgC=new Checking();
+        for(int i=0;i < cantidadItemsCargadosTg;i++){
+            tgC=(Checking)tg.get(i);
+            
+            for(int aaa=i;aaa <cantidadItemsAComparar;aaa++){
+                myC=(Checking)my.get(aaa);
+                
+                
+            }
+            
+        }
+        
+        return comparacion;
     }
 }
