@@ -107,6 +107,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -159,8 +160,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
-        jButton1.setText("Verificador");
         jButton1.setEnabled(false);
+        jButton1.setLabel("Imprimir Ultim Rev Consolidado");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -177,8 +178,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
-        jButton3.setText("Emitir Listado de Preparacion");
         jButton3.setToolTipText("Genera PDF del listado detallado de materiales");
+        jButton3.setLabel("Generar Listado de Preparacion");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -198,6 +199,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("VEHICULO :"+descUnidad1+" PARA FECHA :"+fecha2);
 
+        jButton5.setEnabled(false);
+        jButton5.setLabel("Imprimir Listado Detallado");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,13 +213,15 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))))
                         .addContainerGap(24, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -231,9 +237,11 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
                         .addComponent(jButton2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(19, 19, 19)
                 .addComponent(jButton4)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -585,7 +593,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         r.gc();
         //ls=null;
         //this.jButton2.setEnabled(true);
-        //this.jButton3.setEnabled(false);
+        this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -685,6 +693,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
