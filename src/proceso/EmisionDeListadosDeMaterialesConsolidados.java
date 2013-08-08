@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -20,6 +21,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import objetos.Mail;
 import siderconcapadatos.SiderconCapaatos;
 
 /**
@@ -70,6 +72,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
         System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado+" rev "+this.revision);
         String master=SiderconCapaatos.formularioConsolidado.trim();
         String destino="////Server//ventas//LPM//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
+        String destino2="C://listadosHdr//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
         System.err.println(master);
         JasperReport reporte = null;
         try {
@@ -97,7 +100,16 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
                  File f=new File(destino);
                  if(f.exists()){
             try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
+                Mail mail=new Mail();
+                mail.setDireccionFile(destino);
+                mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
+                mail.setAsunto("LPM CONSOLIDADA GENERADA N° "+this.numeroListado);
+                         try {
+                             mail.enviarMailRepartoCargaCompleta();
+                         } catch (MessagingException ex) {
+                             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+                         }
             } catch (IOException ex) {
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }

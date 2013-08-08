@@ -7,6 +7,7 @@ package proceso;
 import config.Configu;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,6 +70,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
         //configuracion.valueOf(master);
         System.out.println("DIRECCION DE DESTINO //////////////////////////////////// "+master);
         String destino="////Server//ventas//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
+        String destino2="C://listadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
@@ -85,6 +87,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                  JRExporter exporter=new JRPdfExporter();
                  exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
                  exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
+                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
         try {
             exporter.exportReport();
             //cnn.close();
@@ -92,15 +95,17 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("ERROR EN LA CREACION DEL ARCHIVO PDF :"+ex+" "+destino);
         }
-                 
-                 File f=new File(destino);
+                PrintWriter print = new PrintWriter(System.out, true);
+                 File f=new File(destino2);
                  if(f.exists()){
             try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
+                
+                System.out.println("DESTINO :::"+destino2+"---");
                 Mail mail=new Mail();
                 mail.setDireccionFile(destino);
                 mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
-                mail.setAsunto("LPM GENERADA :"+this.numeroListado);
+                mail.setAsunto("LPM DETALLADA GENERADA N° "+this.numeroListado);
                          try {
                              mail.enviarMailRepartoCargaCompleta();
                          } catch (MessagingException ex) {

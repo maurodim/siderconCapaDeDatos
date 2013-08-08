@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -26,6 +27,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
+import objetos.Mail;
 import objetos.PedidosParaReparto;
 import objetos.Vehiculos;
 import siderconcapadatos.SiderconCapaatos;
@@ -189,6 +191,7 @@ public class EmisionHojaDeRuta extends Thread{
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master=SiderconCapaatos.formularioHdr;
         String destino="////Server//ventas//Archivos HDR//"+num+"hdr.pdf";
+        String destino2="C://Hdr//"+num+"hdr.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
@@ -214,7 +217,16 @@ public class EmisionHojaDeRuta extends Thread{
             File f=new File(destino);
             if(f.exists()){
             try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino);
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
+                 Mail mail=new Mail();
+                mail.setDireccionFile(destino);
+                mail.setDetalleListado(num+"-Rev 0 - listado detallado de materiales.pdf");
+                mail.setAsunto("HDR GENERADA N° "+num);
+                         try {
+                             mail.enviarMailRepartoCargaCompleta();
+                         } catch (MessagingException ex) {
+                             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+                         }
             } catch (IOException ex) {
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
             }
