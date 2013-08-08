@@ -46,7 +46,7 @@ public class Mail {
     private void init(){
         propiedades.put("mail.smtp.host","mail.sidercon.com");
         propiedades.put("mail.smtp.starttls.enable","true");
-        propiedades.put("mail.smtp.pot",587);
+        propiedades.put("mail.smtp.port",587);
         propiedades.put("mail.smtp.mail.sender","administracion@sidercon.com");
         propiedades.put("mail.smtp.user","administracion@sidercon.com");
         propiedades.put("mail.smtp.auth","true");
