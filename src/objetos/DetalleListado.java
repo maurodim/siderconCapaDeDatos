@@ -6,7 +6,7 @@ package objetos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class DetalleListado {
     private String codigoArticulo;

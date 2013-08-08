@@ -6,7 +6,7 @@ package config;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 class Archivo {
     private String arc;

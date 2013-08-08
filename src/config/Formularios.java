@@ -12,7 +12,7 @@ import proceso.ConeccionRemotaMyS;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class Formularios {
     private String consolidado;

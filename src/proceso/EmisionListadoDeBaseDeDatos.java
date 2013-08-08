@@ -26,7 +26,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class EmisionListadoDeBaseDeDatos extends Thread{
     public void run(){

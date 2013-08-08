@@ -12,7 +12,7 @@ import seguimientos.GuardarMovimientos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class ConeccionRemotaMyS {
     private static Connection cn=null;

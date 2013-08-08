@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class StreamGobbler extends Thread{
       InputStream is;

@@ -17,7 +17,7 @@ import siderconcapadatos.tablas.lpmModel;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class abmLpm extends javax.swing.JInternalFrame {
     private String fecha;

@@ -6,7 +6,7 @@ package actualizaciones;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public interface ChequearCantidadesPedidos {
     public Object check(Object pedido);

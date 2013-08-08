@@ -103,7 +103,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                 
                 System.out.println("DESTINO :::"+destino2+"---");
                 Mail mail=new Mail();
-                mail.setDireccionFile(destino);
+                mail.setDireccionFile(destino2);
                 mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
                 mail.setAsunto("LPM DETALLADA GENERADA N° "+this.numeroListado);
                          try {

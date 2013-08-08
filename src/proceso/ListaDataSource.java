@@ -13,7 +13,7 @@ import objetos.DetalleListado;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class ListaDataSource implements JRDataSource{
     private List<DetalleListado> articulos=new ArrayList<DetalleListado>();

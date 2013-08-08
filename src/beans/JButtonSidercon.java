@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class JButtonSidercon extends JButton{
    

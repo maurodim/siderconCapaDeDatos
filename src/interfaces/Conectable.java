@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public interface Conectable {
     /*

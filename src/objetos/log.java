@@ -18,7 +18,7 @@ import seguimientos.GuardarMovimientos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class log {
     static Date fecha;

@@ -90,6 +90,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
         JRExporter exporter=new JRPdfExporter();
         exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
         exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
+        exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
         try {
             exporter.exportReport();
                      //cnn.close();
@@ -97,12 +98,12 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
         }
                  
-                 File f=new File(destino);
+                 File f=new File(destino2);
                  if(f.exists()){
             try {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                 Mail mail=new Mail();
-                mail.setDireccionFile(destino);
+                mail.setDireccionFile(destino2);
                 mail.setDetalleListado(this.numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf");
                 mail.setAsunto("LPM CONSOLIDADA GENERADA N° "+this.numeroListado);
                          try {

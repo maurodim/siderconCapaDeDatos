@@ -18,7 +18,7 @@ import siderconcapadatos.SiderconCapaatos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class ConeccionSqlTango {
     static String driver;

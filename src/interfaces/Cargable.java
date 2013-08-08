@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public interface Cargable {
     public Boolean agregarPedido(Object pedido);//AGREGA EL PEDIDO AL ARRAY DE PEDIDOS

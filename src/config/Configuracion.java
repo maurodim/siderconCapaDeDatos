@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class Configuracion {
     private String nombreConeccion;

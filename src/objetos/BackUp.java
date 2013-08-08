@@ -15,7 +15,7 @@ import proceso.Coneccion;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class BackUp {
     private int BUFFER = 10485760;  

@@ -8,7 +8,7 @@ import objetos.BackUp;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class RealizarBk extends Thread{
     @Override

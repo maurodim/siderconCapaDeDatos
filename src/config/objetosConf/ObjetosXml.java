@@ -6,7 +6,7 @@ package config.objetosConf;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class ObjetosXml {
     

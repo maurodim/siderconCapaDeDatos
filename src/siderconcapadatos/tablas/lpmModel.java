@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public class lpmModel extends DefaultTableModel{
     public Class getColumnClass(int colum){

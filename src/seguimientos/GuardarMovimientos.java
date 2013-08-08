@@ -6,7 +6,7 @@ package seguimientos;
 
 /**
  *
- * @author hernan
+ * @author mauro di
  */
 public interface GuardarMovimientos {
     public void registrarMovimiento(String texto,String nombre,String fecha);
