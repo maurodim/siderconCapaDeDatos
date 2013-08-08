@@ -103,7 +103,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                 Mail mail=new Mail();
                 mail.setDireccionFile(destino);
-                mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
+                mail.setDetalleListado(this.numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf");
                 mail.setAsunto("LPM CONSOLIDADA GENERADA N° "+this.numeroListado);
                          try {
                              mail.enviarMailRepartoCargaCompleta();
