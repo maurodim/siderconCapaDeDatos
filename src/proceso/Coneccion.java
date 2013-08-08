@@ -58,7 +58,7 @@ public class Coneccion {
 		String usuario="maurodim_mSider";
 		String clave="2428WEBmauro";
 */
-                String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
+                String url1="jdbc:mysql://192.168.0.111/sidercon";//"sidercon";
 		String usuario1="hdr";//"hdr";
 		String clave1="daniel";//daniel";
                 //Connection cn=null;

@@ -132,6 +132,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             
                            // if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
+                            /*
                             if(cantidad > cantidadT){
                                 cantidad=cantidadT;
                             }else{
@@ -150,6 +151,7 @@ public class Checking implements ChequearCantidadesPedidos{
                             ped.setCantidadArticuloPendiente(cantidadPendiente);
                             ped.setCantidadArticulosTotales(cantidadTotal);
                             //}
+                            */ 
                         } catch (SQLException ex) {
                            
                             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
