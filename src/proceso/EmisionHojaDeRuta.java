@@ -188,7 +188,7 @@ public class EmisionHojaDeRuta extends Thread{
         listConsolidado.put("numeroHdr",num);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master=SiderconCapaatos.formularioHdr;
-        String destino="C://Hdr//"+num+"hdr.pdf";
+        String destino="////Server//ventas//Archivos HDR//"+num+"hdr.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);

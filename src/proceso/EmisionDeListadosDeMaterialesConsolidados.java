@@ -69,7 +69,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
         listConsolidado.put("revision",this.revision);
         System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado+" rev "+this.revision);
         String master=SiderconCapaatos.formularioConsolidado.trim();
-        String destino="C://ListadosHdr//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
+        String destino="////Server//ventas//LPM//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
         System.err.println(master);
         JasperReport reporte = null;
         try {
