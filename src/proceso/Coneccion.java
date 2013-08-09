@@ -68,7 +68,7 @@ public class Coneccion {
 		try{
 			//Class.forName(driver1).newInstance();
                     dataSource.setUser(usuario1);
-                    dataSource.setDatabaseName("sidercon");
+                    dataSource.setDatabaseName("siderpruebas");
                     dataSource.setPassword(clave1);
                     dataSource.setServerName("192.168.0.111");
                     cn=dataSource.getConnection();

@@ -7,6 +7,7 @@ package siderconcapadatos;
 import actualizaciones.ActOt;
 import actualizaciones.ActualizacionPesos;
 import actualizaciones.Actualizar;
+import actualizaciones.ActualizarATango;
 import actualizaciones.ActualizarHdr;
 import actualizaciones.Checking;
 import actualizaciones.ChequearCantidadesPedidos;
@@ -14,6 +15,7 @@ import actualizaciones.ImportarPedidos;
 import actualizaciones.objetosActualizables.EncabezadoHdr;
 import config.Configuracion;
 import config.Formularios;
+import interfaces.Ideable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -160,6 +162,9 @@ public class SiderconCapaatos {
             sqlSdSrl=null;
             JOptionPane.showMessageDialog(null,"CONEXION A SERVERTANGO NO ESTABLECIDA \n REVISE LAS MISMAS","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
         }
+        
+        //Ideable id_act=new ActualizarATango();
+        //id_act.ActualizarIds();
         /*
         Connection cSql = (Connection) sqlBu;
         try {
