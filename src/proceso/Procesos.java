@@ -134,6 +134,7 @@ public class Procesos {
                         pedidos.setEmpresa(rs.getString("TALON_PEDI"));
                         pedidos.setVerificadorRevision(rs.getInt("revisionado"));
                         pedidos.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
+                        pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
                         //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
                         clie.setCodigoCliente(pedidos.getCodigoCliente());
                         clie.setRazonSocial(pedidos.getRazonSocial());

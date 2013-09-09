@@ -1,0 +1,55 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package actualizaciones;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import objetos.PedidosParaReparto;
+import proceso.Coneccion;
+
+/**
+ *
+ * @author mauro
+ */
+public class rastrearIdTango {
+    private Integer idTango;
+    private Integer idMy;
+    private int revisado;
+    private Statement st;
+    
+    public Boolean extraerIdTango(){
+        Boolean verificado=false;
+        try {
+            ArrayList listadoPedidos=new ArrayList();
+            String sql="select * from pedidos_carga1 where idcheck=0";
+            PedidosParaReparto ped=null;
+            Connection cp=Coneccion.ObtenerConeccion();
+            st=cp.createStatement();
+            st.execute(sql);
+            ResultSet rs=st.getResultSet();
+            
+            while(rs.next()){
+                ped=new PedidosParaReparto();
+                ped.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
+                ped.setCodigoArticulo(rs.getString("COD_ARTIC"));
+                ped.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
+                ped.setiDPedido(rs.getInt("numero"));
+                ped.setEmpresa(rs.getString("TALON_PEDI"));
+                listadoPedidos.add(ped);
+            }
+            rs.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(rastrearIdTango.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return verificado;
+    }
+    
+}

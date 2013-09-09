@@ -69,6 +69,16 @@ public class PedidosParaReparto {
         private String nombreVendedor;
         private int verificadorRevision;
         private int vehiculoAnterior;
+        private Integer idPedidoEnTango;
+
+    public Integer getIdPedidoEnTango() {
+        return idPedidoEnTango;
+    }
+
+    public void setIdPedidoEnTango(Integer idPedidoEnTango) {
+        this.idPedidoEnTango = idPedidoEnTango;
+    }
+        
 
     public int getVehiculoAnterior() {
         return vehiculoAnterior;
