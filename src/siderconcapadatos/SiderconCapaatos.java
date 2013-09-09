@@ -97,8 +97,7 @@ public class SiderconCapaatos {
             //listadoHdr=hd.leerEncabezados();
             //hd.copiarEncabezados(listadoHdr);
             //retorno.clear();
-            rastrearIdTango ras=new rastrearIdTango();
-            ras.extraerIdTango();
+            
             log l=new log();
              Configuracion conf=new Configuracion();
              Formularios form=new Formularios();
@@ -191,6 +190,8 @@ public class SiderconCapaatos {
         
         //ChequearCantidadesPedidos ch=new Checking();
         //ch.verificar();
+        rastrearIdTango ras=new rastrearIdTango();
+            ras.extraerIdTango();
         RealizarBk rBk=new RealizarBk();
         rBk.start();
         //ActualizacionPesos actPes=new ActualizacionPesos();
@@ -249,7 +250,7 @@ public class SiderconCapaatos {
                         String trim = codigo.trim(); 
                         pesoItems=ar.get(codigo);
                         cantidadItems=(Double) e.getValue();
-                           System.out.println("codigo "+codigo+" valor"+pesoItems+" "+totalPeso);
+                           //System.out.println("codigo "+codigo+" valor"+pesoItems+" "+totalPeso);
                            if(pesoItems==null){
                                pesoItems=0.00;
                            }
@@ -261,7 +262,7 @@ public class SiderconCapaatos {
                     cli=pedidos.getCodigoCliente();
                 String trim = cli.trim();
                     
-                    System.out.println(cli+" "+cli.length());
+                    //System.out.println(cli+" "+cli.length());
                     Clientes clie=new Clientes();
                     /*
                     Iterator cil=saldoCliente.listIterator();
@@ -286,7 +287,7 @@ public class SiderconCapaatos {
                     art.setPesoUnitario(pedidos.getPesoItems());
                     art.setPesoUnitario((Double)ar.get(pedidos.getCodigoArticulo()));
                     //System.out.println("El peso es :"+pesoItems+" "+codigo);
-                    System.out.println(numerador+" pedido numero "+pedidos.getCodigoTangoDePedido()+" razon social "+ pedidos.getRazonSocial()+" saldo :"+pedidos.getSaldoCliente()+" peso del items "+pedidos.getPesoTotal());
+                    //System.out.println(numerador+" pedido numero "+pedidos.getCodigoTangoDePedido()+" razon social "+ pedidos.getRazonSocial()+" saldo :"+pedidos.getSaldoCliente()+" peso del items "+pedidos.getPesoTotal());
 
                 }
                 InicioSiderconHdr inicio=new InicioSiderconHdr();

@@ -62,7 +62,7 @@ public class Archivador implements GuardarMovimientos{
             HSSFCell celda4=fila.createCell(4);
             int b=a+1;
             form="D"+b+"+E"+b;
-            System.out.println("FORMULA "+form);
+            //System.out.println("FORMULA "+form);
             celda4.setCellValue(25.24);
             
            

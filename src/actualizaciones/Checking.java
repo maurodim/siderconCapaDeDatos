@@ -686,11 +686,32 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
 
     @Override
     public Boolean guardarIdEnMysql(Integer idTango, Integer idMy) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Boolean veri=true;
+        try {
+            String sql="update pedidos_carga1 set ID_GVA03 ="+idTango+" where numero ="+idMy;
+            Statement st=cnMy.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+            veri=false;
+        }
+        return veri;
+        
     }
 
     @Override
     public Boolean marcarComoLeido(Integer idMy) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Boolean veri=true;
+        try {
+            String sql="update pedidos_carga1 set idcheck=1 where numero ="+idMy;
+            Statement st=cnMy.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+            veri=false;
+        }
+        return veri;
     }
 }

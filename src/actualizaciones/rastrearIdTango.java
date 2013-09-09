@@ -27,7 +27,7 @@ public class rastrearIdTango {
     public Boolean extraerIdTango(){
         Boolean verificado=true;
         try {
-            ArrayList listadoPedidos=new ArrayList();
+            //ArrayList listadoPedidos=new ArrayList();
             String sql="select * from pedidos_carga1 where idcheck=0";
             PedidosParaReparto ped=null;
             Connection cp=Coneccion.ObtenerConeccion();
@@ -42,9 +42,14 @@ public class rastrearIdTango {
                 ped.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 ped.setiDPedido(rs.getInt("numero"));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
+                ped.setCantidadArticulo(0.00);
+                System.out.println("DATOS RASTREABLES :"+ped.getCodigoTangoDePedido()+" "+ped.getCodigoArticulo()+" "+ped.getCantidadArticulo()+" "+ped.getDescripcionArticulo()+" "+ped.getEmpresa());
                 ped.setIdPedidoEnTango(chk.leerId(ped.getCodigoTangoDePedido(),ped.getCodigoArticulo(),ped.getCantidadArticulo(), ped.getDescripcionArticulo(),ped.getEmpresa()));
                 System.err.append("ID TANGO "+ped.getIdPedidoEnTango());
-                listadoPedidos.add(ped);
+                if(chk.guardarIdEnMysql(ped.getIdPedidoEnTango(),ped.getiDPedido())){
+                chk.marcarComoLeido(ped.getiDPedido());
+                }
+               
             }
             rs.close();
             
