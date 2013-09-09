@@ -25,7 +25,7 @@ public class rastrearIdTango {
     private Statement st;
     
     public Boolean extraerIdTango(){
-        Boolean verificado=false;
+        Boolean verificado=true;
         try {
             ArrayList listadoPedidos=new ArrayList();
             String sql="select * from pedidos_carga1 where idcheck=0";
@@ -34,7 +34,7 @@ public class rastrearIdTango {
             st=cp.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
-            
+            Ideable chk=new Checking();
             while(rs.next()){
                 ped=new PedidosParaReparto();
                 ped.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
@@ -42,12 +42,15 @@ public class rastrearIdTango {
                 ped.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 ped.setiDPedido(rs.getInt("numero"));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
+                ped.setIdPedidoEnTango(chk.leerId(ped.getCodigoTangoDePedido(),ped.getCodigoArticulo(),ped.getCantidadArticulo(), ped.getDescripcionArticulo(),ped.getEmpresa()));
+                System.err.append("ID TANGO "+ped.getIdPedidoEnTango());
                 listadoPedidos.add(ped);
             }
             rs.close();
             
         } catch (SQLException ex) {
             Logger.getLogger(rastrearIdTango.class.getName()).log(Level.SEVERE, null, ex);
+            verificado=false;
         }
         return verificado;
     }

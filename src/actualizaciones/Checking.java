@@ -20,7 +20,7 @@ import siderconcapadatos.SiderconCapaatos;
  *
  * @author mauro di
  */
-public class Checking implements ChequearCantidadesPedidos{
+public class Checking implements ChequearCantidadesPedidos,Ideable{
     private Coneccion con;
     private static Connection cnMy;
     private Integer numeroIdMysql;
@@ -623,5 +623,74 @@ public class Checking implements ChequearCantidadesPedidos{
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+
+    @Override
+    public Integer leerId(String numeroDePedido, String codigoDeArticulo, Double cantidad, String descripcionArticulo, String empresa) {
+        Statement xt=null;
+            Integer id=0;
+           int numeroConeccion=0;
+        try {
+            
+                           if(empresa.equals("BU")){
+                               numeroConeccion=1;
+                           }else{
+                               if(empresa.equals("SD")){
+                                   numeroConeccion=2;
+                               }else{
+                                   numeroConeccion=3;
+                               }
+                           }
+                           Connection sqlC=null;
+                           switch (numeroConeccion){
+                               case 1:
+                                   sqlC=(Connection)SiderconCapaatos.sqlBu;
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                               case 2:
+                                   sqlC=(Connection)SiderconCapaatos.sqlSd;
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                               case 3:
+                                   sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
+                                   
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                           }
+                           String sql="select GVA03.ID_GAV03 from GVA03 where COD_ARTIC like '"+codigoDeArticulo+"%' and NRO_PEDIDO like '%"+numeroDePedido+"' and DESC_ARTIC like '"+descripcionArticulo+"'";
+                           xt.execute(sql);
+                           ResultSet rs=xt.getResultSet();
+                           while(rs.next()){
+                               id=rs.getInt(1);
+                           }
+                           rs.close();
+                           
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+    @Override
+    public Boolean guardarIdEnMysql(Integer idTango, Integer idMy) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Boolean marcarComoLeido(Integer idMy) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

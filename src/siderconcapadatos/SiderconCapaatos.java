@@ -13,6 +13,7 @@ import actualizaciones.Checking;
 import actualizaciones.ChequearCantidadesPedidos;
 import actualizaciones.ImportarPedidos;
 import actualizaciones.objetosActualizables.EncabezadoHdr;
+import actualizaciones.rastrearIdTango;
 import config.Configuracion;
 import config.Formularios;
 import interfaces.Ideable;
@@ -96,6 +97,8 @@ public class SiderconCapaatos {
             //listadoHdr=hd.leerEncabezados();
             //hd.copiarEncabezados(listadoHdr);
             //retorno.clear();
+            rastrearIdTango ras=new rastrearIdTango();
+            ras.extraerIdTango();
             log l=new log();
              Configuracion conf=new Configuracion();
              Formularios form=new Formularios();
