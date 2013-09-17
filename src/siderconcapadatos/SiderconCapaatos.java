@@ -190,13 +190,14 @@ public class SiderconCapaatos {
         
         //ChequearCantidadesPedidos ch=new Checking();
         //ch.verificar();
+        Coneccion cn=new Coneccion(); 
         rastrearIdTango ras=new rastrearIdTango();
             ras.extraerIdTango();
         RealizarBk rBk=new RealizarBk();
         rBk.start();
         //ActualizacionPesos actPes=new ActualizacionPesos();
         //actPes.start();
-        Coneccion cn=new Coneccion();      
+             
         Articulos art=new Articulos(); 
         Clientes cl=new Clientes();
         art.cargarListado(); 

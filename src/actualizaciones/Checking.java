@@ -29,11 +29,17 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
     private Integer idNumeroTango;
     private Double cantidadTango;
     private String codigoTango;
+    private Statement sta;
     
 
     public Checking() {
         con=new Coneccion();
         cnMy=con.getCn();
+        try {
+            sta=cnMy.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cantidadMysql=0.00;
         numeroIdMysql=0;
     }
@@ -670,16 +676,20 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
                                    }
                                    break;
                            }
-                           String sql="select GVA03.ID_GAV03 from GVA03 where COD_ARTIC like '"+codigoDeArticulo+"%' and NRO_PEDIDO like '%"+numeroDePedido+"' and DESC_ARTIC like '"+descripcionArticulo+"'";
+                           String numPed=numeroDePedido.substring(1);
+                           String sql="select GVA03.ID_GVA03 from GVA03 where COD_ARTICU = '"+codigoDeArticulo+"' and NRO_PEDIDO like '%"+numPed+"'";
                            xt.execute(sql);
+                           System.out.println("SQL TANGO "+sql);
                            ResultSet rs=xt.getResultSet();
                            while(rs.next()){
-                               id=rs.getInt(1);
+                               id=rs.getInt("ID_GVA03");
+                               //System.out.println("SQL TANGO "+sql);
                            }
                            rs.close();
                            
         } catch (SQLException ex) {
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+            id=0;
         }
         return id;
     }
@@ -688,10 +698,10 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
     public Boolean guardarIdEnMysql(Integer idTango, Integer idMy) {
         Boolean veri=true;
         try {
-            String sql="update pedidos_carga1 set ID_GVA03 ="+idTango+" where numero ="+idMy;
-            Statement st=cnMy.createStatement();
-            st.executeUpdate(sql);
-            st.close();
+            String sql="update pedidos_carga1 set ID_GVA03="+idTango+" where numero ="+idMy;
+            //Statement sta=cnMy.createStatement();
+            sta.executeUpdate(sql);
+            //sta.close();
         } catch (SQLException ex) {
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
             veri=false;
@@ -705,9 +715,9 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
         Boolean veri=true;
         try {
             String sql="update pedidos_carga1 set idcheck=1 where numero ="+idMy;
-            Statement st=cnMy.createStatement();
-            st.executeUpdate(sql);
-            st.close();
+            //Statement sta=cnMy.createStatement();
+            sta.executeUpdate(sql);
+            //sta.close();
         } catch (SQLException ex) {
             Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
             veri=false;

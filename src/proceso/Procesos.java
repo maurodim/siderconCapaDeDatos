@@ -73,7 +73,7 @@ public class Procesos {
             //System.out.println(art.getCodigo());
             //pesoUnitario=String.valueOf(art.getPesoUnitario());
             String pesoUnitario=art.getCodigo();
-            System.out.println(pesoUnitario.length()+" "+pesoUnitario+" peso "+art.getPesoUnitario()+" "+art.getDescripcionArticulo()+" sinonimo "+art.getSinonimoArticulo());
+            //System.out.println(pesoUnitario.length()+" "+pesoUnitario+" peso "+art.getPesoUnitario()+" "+art.getDescripcionArticulo()+" sinonimo "+art.getSinonimoArticulo());
             //pesoUnitario++;
             articulos.put(pesoUnitario,art.getPesoUnitario());
         }
