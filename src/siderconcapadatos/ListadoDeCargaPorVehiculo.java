@@ -58,6 +58,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     static Integer rNum;
     private Coneccion con=null;
     static Connection ccn=null;
+    private ArrayList desc=new ArrayList();
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -116,16 +117,16 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameClosed(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -160,7 +161,6 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png")));
-        jButton1.setEnabled(false);
         jButton1.setLabel("Imprimir Ultim Rev Consolidado");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,8 +199,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("VEHICULO :"+descUnidad1+" PARA FECHA :"+fecha2);
 
-        jButton5.setEnabled(false);
         jButton5.setLabel("Imprimir Listado Detallado");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -241,7 +245,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 .addComponent(jButton5)
                 .addGap(19, 19, 19)
                 .addComponent(jButton4)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -265,24 +269,40 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         PedidosParaReparto pedi=new PedidosParaReparto();
-        Iterator ica=carga.listIterator();
-        int lpm=0;
-        String cartel=" PEDIDOS SIN LPM ASIGNADA :\n";
-        int flg=0;
-        while(ica.hasNext()){
-            pedi=(PedidosParaReparto)ica.next();
-            lpm=0;
-            lpm=pedi.getNumeroDeListadoDeMateriales();
-            if(lpm==0){
-                flg=1;
-                cartel+=pedi.getRazonSocial()+" "+pedi.getCodigoTangoDePedido()+"\n";
-                
+        EmisionDeListados em=new EmisionDeListados();
+        Procesos pr=new Procesos();
+                   if(desc.size() > 0){
+                System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
+                em.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,desc,vehiculosAnt,codigoCliente,nombreCliente);
+                desc.clear();
             }
+        
+        //Listados ls=new Listados();
+       int numeroListado=0;
+       numeroListado=nListado;
+       /*
+        try {
+            //ls=pr.GenerarNuevoListado(seleccion, fecha2);
+            numeroListado=ls.getNumeroListado();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(flg==1){
-            JOptionPane.showMessageDialog(this,cartel);
+        */ 
+       listadoNumero=numeroListado;
+        try {
+            
+            em.ImprimirListadoConsolidado(fecha2, seleccion, descUnidad, tKg,listadoNumero,ls.getNumeroRevision());
+        } catch (JRException ex) {
+            GuardarMovimientos gArch=new Archivador();
+                String cod1=String.valueOf(ex);
+                gArch.registrarErrores(cod1, "", "");
+                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            GuardarMovimientos gArch=new Archivador();
+                String cod1=String.valueOf(ex);
+                gArch.registrarErrores(cod1, "", "");
+                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         /*
@@ -544,27 +564,16 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         }
         System.out.println("EL NUMERO DE LISTADO ES "+numeroListado);
         cargaDetallada1.clear();
-        EmisionDeListados emision=new EmisionDeListados();
-        try {
-            emision.ImprimirListadoDetallado(numeroListado,tKg,revisionNum);
-            nListado=numeroListado;
+        /*
+         * A PARTIR DE ACA COMIENZA A EMITIRSE LOS LISTADOS DE REVISION Y DETALLADO, ESTO VA HABER QUE SACARLO Y DISSOCIARLO
+         * A PARTIR DE ACA DEBE IR UNA PARTE A EN EMISION DE DETALLADO - DEBO GENERAR EL FORMULARIO PARA EL CONSOLIDADO - Y VER COMO
+         * INDEPENDIZAR LA ULTIMA REVISION.
+         * 
+         */
+        nListado=numeroListado;
             rNum=revisionNum;
-            if(descarga.size() > 0){
-                System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
-                emision.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,descarga,vehiculosAnt,codigoCliente,nombreCliente);
-                descarga.clear();
-            }
-        } catch (IOException ex) {
-            GuardarMovimientos gArch=new Archivador();
-                String cod1=String.valueOf(ex);
-                gArch.registrarErrores(cod1, "", "");
-                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
-           GuardarMovimientos gArch=new Archivador();
-                String cod1=String.valueOf(ex);
-                gArch.registrarErrores(cod1, "", "");
-                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        desc=descarga;
+        
         //ACA SE LLAMA AL THREAD GUARDARLISTADOS Y SE GUARDA EL DATO DEL MISMO COMO EL NUMERO DE REVISION CORRESPONDIENTE EN EL CAMPO DE LA BD, EN LA TABLA
         // PEDIDOS_CARGA1
         /*
@@ -678,6 +687,24 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formInternalFrameClosed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       EmisionDeListados emision=new EmisionDeListados();
+        try {
+            try {
+                emision.ImprimirListadoDetallado(nListado,tKg,rNum);
+            } catch (IOException ex) {
+                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+ 
+        }catch (JRException ex) {
+           GuardarMovimientos gArch=new Archivador();
+                String cod1=String.valueOf(ex);
+                gArch.registrarErrores(cod1, "", "");
+                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
     private void actualizarCarga(){
         Iterator ic=carga.listIterator();
         PedidosParaReparto ped=new PedidosParaReparto();
