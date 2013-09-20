@@ -274,7 +274,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         Procesos pr=new Procesos();
                    if(desc.size() > 0){
                 System.out.println("ENTRO COMO EMISION DE DESCARGA DE MATERIALES ");
-                em.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,desc,vehiculosAnt,codigoCliente,nombreCliente);
+                //em.ImprimirListadoDeDescargaDeMateriales(numeroListado2,numeroRev2,desc,vehiculosAnt,codigoCliente,nombreCliente);
                 desc.clear();
             }
         
