@@ -75,6 +75,7 @@ public class SiderconCapaatos {
     public static String formularioDescarga=null;
     public static String formularioHdr=null;
     public static int falloConecion;
+    public static String formularioConsolidadoR=null;
 	/**
 	 * @param args the command line arguments
 	 */
@@ -105,6 +106,7 @@ public class SiderconCapaatos {
              formularioDetallado=form.getDetallado();
              formularioDescarga=form.getDescarga();
              formularioHdr=form.getHdr();
+             formularioConsolidadoR=form.getConsolidadoR();
         try {
             listadoDeConfiguraciones=conf.leerConfiguraciones();
         } catch (MalformedURLException ex) {

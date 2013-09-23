@@ -623,7 +623,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
        listadoNumero=numeroListado;
         try {
             
-            em.ImprimirListadoConsolidado(fecha2, seleccion, descUnidad, tKg,listadoNumero,ls.getNumeroRevision());
+            em.ImprimirListadoConsolidadoR(fecha2, seleccion, descUnidad, tKg,listadoNumero,ls.getNumeroRevision());
         } catch (JRException ex) {
             GuardarMovimientos gArch=new Archivador();
                 String cod1=String.valueOf(ex);

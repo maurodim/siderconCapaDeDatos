@@ -51,4 +51,14 @@ public class EmisionDeListados {
         }
         descM.start();
     }
+    public void ImprimirListadoConsolidadoR(String fechaEnvio,Integer numVehiculo,String descVehiculo,Double total,Integer numeroListado,Integer revision) throws JRException, IOException{
+        EmisionDeListadosDeMaterialesConsolidadosR emiList=new EmisionDeListadosDeMaterialesConsolidadosR();
+        emiList.setFechaEnvio(fechaEnvio);
+        emiList.setNumVehiculo(numVehiculo);
+        emiList.setDescVehiculo(descVehiculo);
+        emiList.setTotal(total);
+        emiList.setNumeroListado(numeroListado);
+        emiList.setRevision(revision);
+        emiList.start();
     }
+}
