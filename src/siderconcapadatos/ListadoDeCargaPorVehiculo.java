@@ -12,6 +12,7 @@ package siderconcapadatos;
 
 import actualizaciones.Checking;
 import actualizaciones.ChequearCantidadesPedidos;
+import interfaces.ActualizableTango;
 import interfaces.Revisionar;
 import java.io.IOException;
 import java.sql.Connection;
@@ -661,7 +662,14 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //dt.setCargados(carga);
             //dt.start();
             //carga=dt.getCargados();
-            
+            ActualizableTango actu=new Checking();
+            String res=actu.verificarRemitosTotales(carga);
+            if(res.equals("")){
+               System.out.println("NOOOOOOOOOOOOOOOOO INGRESO CON DIFERENCIAS "); 
+            }else{
+                System.out.println(res);
+                JOptionPane.showMessageDialog(null,res,"INCONSISTENCIAS CON TANGO ",JOptionPane.PLAIN_MESSAGE);
+            }
             VistaHdr vista=new VistaHdr(carga,seleccion);
             InicioSiderconHdr.jDesktopPane1.add(vista);
             vista.toFront();

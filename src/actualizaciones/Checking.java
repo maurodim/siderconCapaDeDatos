@@ -4,6 +4,7 @@
  */
 package actualizaciones;
 
+import interfaces.ActualizableTango;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import siderconcapadatos.SiderconCapaatos;
  *
  * @author mauro di
  */
-public class Checking implements ChequearCantidadesPedidos,Ideable{
+public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableTango{
     private Coneccion con;
     private static Connection cnMy;
     private Integer numeroIdMysql;
@@ -723,5 +724,88 @@ public class Checking implements ChequearCantidadesPedidos,Ideable{
             veri=false;
         }
         return veri;
+    }
+
+    @Override
+    public String verificarRemitosTotales(ArrayList listadoHdr) {
+        String resultados="";
+        Statement xt=null;
+        Iterator iLis=listadoHdr.listIterator();
+        while(iLis.hasNext()){
+            PedidosParaReparto ped=(PedidosParaReparto)iLis.next();
+            String empresa=ped.getEmpresa();
+          int numeroConeccion=0;
+
+            
+                           if(empresa.equals("BU")){
+                               numeroConeccion=1;
+                           }else{
+                               if(empresa.equals("SD")){
+                                   numeroConeccion=2;
+                               }else{
+                                   numeroConeccion=3;
+                               }
+                           }
+                           Connection sqlC=null;
+                           switch (numeroConeccion){
+                               case 1:
+                                   sqlC=(Connection)SiderconCapaatos.sqlBu;
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                               case 2:
+                                   sqlC=(Connection)SiderconCapaatos.sqlSd;
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                               case 3:
+                                   sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
+                                   
+                                   try {
+                                       xt=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   break;
+                           }
+                           String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_PEN_D from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango();
+            try {
+                xt.execute(sql);
+                ResultSet rr=xt.getResultSet();
+                Double cantTang=0.00;
+                Double cantEq=0.00;
+                Double cantTotal=0.00;
+                while(rr.next()){
+                    cantTang=rr.getDouble("CAN_PEN_D");
+                    cantEq=rr.getDouble("CAN_EQUI");
+                    cantTotal=cantTang / cantEq;
+                }
+                Double cantPed=ped.getCantidadArticulo();
+                if(cantTotal == cantPed){
+                    resultados+="";
+                }else{
+                    if (cantTotal > cantPed){
+                        resultados+="\n FALTA REMITIR :"+cantTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
+                    }
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return resultados;
+    }
+
+    @Override
+    public Boolean regenerarCantidadesTango(ArrayList pedidoDetalladoTango) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
