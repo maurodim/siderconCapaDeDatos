@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListadoDeMaterialesConsolidado" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1acc8cae-f943-4606-872d-81cb70192e23">
+	<property name="ireport.zoom" value="7.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="478"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numListado" class="java.lang.Integer"/>
+	<parameter name="totalKg" class="java.lang.Double"/>
+	<parameter name="revision" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.COD_CLIENT,pedidos_carga1.listado,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as total,(select sum(movimientoslpm.cantidadNueva) from movimientoslpm where movimientoslpm.numeroListado=$P{numListado} and codigoArticulo=pedidos_carga1.COD_ARTIC) as cantidadNueva,(select sum(movimientoslpm.cantidadNueva) from movimientoslpm where movimientoslpm.numeroListado=$P{numListado}  and revision < $P{revision} and codigoArticulo=pedidos_carga1.COD_ARTIC) as cantidadVieja,left(pedidos_carga1.entrega,10)as entrega,pedidos_carga1.vehiculo,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as descripcion,sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as totalList from pedidos_carga1 where listado=$P{numListado} and COD_ARTIC not like '999%' and COD_ARTIC not like '30030011%' and COD_ARTIC not like '90020010%' and orden_num=0 group by COD_ARTIC]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="listado" class="java.lang.Integer"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="cantidadNueva" class="java.lang.Double"/>
+	<field name="cantidadVieja" class="java.lang.Double"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="vehiculo" class="java.lang.Integer"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="totalList" class="java.lang.Double"/>
+	<variable name="totalKk" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="kgPedidos" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9be82ba4-a549-43a9-ad86-766536555b02" x="0" y="0" width="173" height="20"/>
+				<textElement/>
+				<text><![CDATA[Listado de Preparacion de Carga Nº]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement uuid="0ec6d46b-5a47-4167-ad60-184a34279378" x="316" y="0" width="239" height="55"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="e14760a7-3de6-4bf3-9f15-2f1f4ff47a96" x="0" y="82" width="553" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="ffd8e8e6-3b95-44ea-9733-fc12ea3ee393" x="2" y="61" width="553" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="dfc96e91-2bef-422e-ae72-effe8ab299a4" x="193" y="62" width="100" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSOLIDADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="657f6a73-792d-4e9a-8bfb-b18a54019969" x="173" y="0" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{numListado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5330e033-9db9-4bf7-9614-6807daab2d03" x="329" y="0" width="204" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["VEHICULO "+$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e50391cd-98cc-41d7-a8aa-c4cd772352c9" x="329" y="20" width="204" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FECHA REPARTO :"+$F{entrega}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="71a60c39-487b-4337-bc69-a353c08e0339" x="46" y="20" width="69" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalKg}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="f08b82d8-2010-43d7-894e-e0320f393a42" x="2" y="35" width="191" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha y Hora de Impresion "+new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="53e5b330-5545-470c-951a-d3866359d92e" x="0" y="20" width="46" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kg :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5931730c-ebd8-4669-bd08-e79874c3ed7a" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ARTICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6eda9b8e-6ed9-482e-83a8-1d9b47680ffc" x="111" y="0" width="162" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="837c5f4e-d592-41b1-b4da-f60eb45a714b" x="273" y="0" width="70" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="213eb237-eda6-42ea-b33d-7088636eaf2c" x="455" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PESO / KG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="704d6593-9b20-4bc1-a253-94f628b003de" x="343" y="0" width="110" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cant NUEVA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement uuid="81fd3296-8875-4d2b-a29a-ff196fdb0ec8" x="0" y="0" width="100" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="97ebee15-7afc-4ae2-b29f-84d9cfb3e8c1" x="111" y="0" width="162" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="682278f4-919f-49f1-895d-3b1d30a67acf" x="343" y="0" width="110" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidadNueva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement uuid="456691d4-63ba-4d4a-bbc9-d63991c5c51d" x="453" y="0" width="44" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="65d09597-f999-4e0c-bf4b-e9e83a6d9a84" x="273" y="1" width="70" height="14"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidadVieja}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement uuid="14e704af-83f1-4265-9179-c43adea9d27b" x="2" y="0" width="553" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5a1c3e05-be3a-438f-b9f3-abbf7a164727" x="2" y="0" width="393" height="41"/>
+				<textElement/>
+				<text><![CDATA[Cochabamba 4252 - 3000 Santa Fe - Tel/fax rotativo:(0342) 453-3362
+Líneas rotativas : (0342) 453-2022 / 400-8686. Línea Gratuita Local :0800-222-9646
+sidercon@sidercon.com - www.sidercon.com]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="261" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="34b7be4d-9c21-46db-85c7-4a650bd5ca66" x="2" y="210" width="553" height="51"/>
+				<subreportParameter name="revision">
+					<subreportParameterExpression><![CDATA[$P{revision}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="numeroListado">
+					<subreportParameterExpression><![CDATA[$F{listado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"DetalleClientes.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="0a34bda5-4a29-439f-8d37-3af86c8bfa85" x="0" y="24" width="551" height="97" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="revision">
+					<subreportParameterExpression><![CDATA[$P{revision}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="listadoNumero">
+					<subreportParameterExpression><![CDATA[$P{numListado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetalleOrdenesDeTrabajo.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="ac83e405-c622-4374-9c87-7de72ae845a1" x="2" y="4" width="377" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE ORDENES DE TRABAJO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c45f75ed-73e1-40f7-9dea-13a92e0ada14" x="0" y="164" width="421" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE CLIENTES]]></text>
+			</staticText>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="58becc68-0a59-4f71-a97b-d868de6cc8e2" x="453" y="5" width="44" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{kgPedidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="70553f39-7bcb-4994-a673-8b79abe20ac9" x="395" y="5" width="58" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kg. Rev.:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="14fe25a4-312f-4460-b79a-2d92534d6752" x="343" y="2" width="154" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
