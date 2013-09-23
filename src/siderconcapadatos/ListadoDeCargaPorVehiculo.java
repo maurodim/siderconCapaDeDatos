@@ -76,6 +76,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         descUnidad=descripcion;
         descUnidad1=descripcion.substring(1);
         ls=new Listados();
+        ls=Listados.ultimoListado(unidad, fecha);
         initComponents();
     }
 

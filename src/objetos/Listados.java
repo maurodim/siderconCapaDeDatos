@@ -187,5 +187,24 @@ public static Boolean eliminarLpm(Object listado){
         }
         return confirmacion;
 }
-
+public static Listados ultimoListado(Integer vehiculo,String fecha){
+    Listados ch=new Listados();
+    String sql="select * from listadosdemateriales where vehiculo="+vehiculo+" and fechaEntrega like '"+fecha+"'";
+    System.err.println(" SENTENCIA "+sql);
+        try {
+            Statement st=con.createStatement();
+            st.execute(sql);
+            ResultSet rs=st.getResultSet();
+            while(rs.next()){
+                ch.setNumeroDeVehiculo(vehiculo);
+                ch.setNumeroListado(rs.getInt("numero"));
+                ch.setNumeroRevision(rs.getInt("revision"));
+                System.out.println(" ULTIMO LISTADO :"+ch.getNumeroListado()+" revision "+ch.getNumeroRevision()+" VEHICULO "+vehiculo+" fecha "+fecha);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Listados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return ch;
+}
 }
