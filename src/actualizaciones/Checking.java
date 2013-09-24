@@ -730,70 +730,83 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
     public String verificarRemitosTotales(ArrayList listadoHdr) {
         String resultados="";
         Statement xt=null;
+        Statement xt1=null;
+        Statement xt2=null;
+        
         Iterator iLis=listadoHdr.listIterator();
-        while(iLis.hasNext()){
-            PedidosParaReparto ped=(PedidosParaReparto)iLis.next();
-            String empresa=ped.getEmpresa();
-          int numeroConeccion=0;
-
-            
-                           if(empresa.equals("BU")){
-                               numeroConeccion=1;
-                           }else{
-                               if(empresa.equals("SD")){
-                                   numeroConeccion=2;
-                               }else{
-                                   numeroConeccion=3;
-                               }
-                           }
+        
+                           
                            Connection sqlC=null;
-                           switch (numeroConeccion){
-                               case 1:
+                           Connection sqlC1=null;
+                           Connection sqlC2=null;
+                           //System.out.println("numero de conexionnnnnnnnn "+numeroConeccion+" "+empresa);
+                           
                                    sqlC=(Connection)SiderconCapaatos.sqlBu;
-                                   try {
-                                       xt=sqlC.createStatement();
-                                   } catch (SQLException ex) {
-                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
-                                   }
-                                   break;
-                               case 2:
-                                   sqlC=(Connection)SiderconCapaatos.sqlSd;
-                                   try {
-                                       xt=sqlC.createStatement();
-                                   } catch (SQLException ex) {
-                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
-                                   }
-                                   break;
-                               case 3:
-                                   sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
                                    
                                    try {
                                        xt=sqlC.createStatement();
                                    } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                   
+                                   sqlC1=(Connection)SiderconCapaatos.sqlSd;
+                                   try {
+                                       xt1=sqlC.createStatement();
+                                   } catch (SQLException ex) {
+                                       Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                  
+                                   sqlC2=(Connection)SiderconCapaatos.sqlSdSrl;
+                                   
+                                   try {
+                                       xt2=sqlC.createStatement();
+                                   } catch (SQLException ex) {
                                        
                                        Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                                    }
-                                   break;
-                           }
-                           String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_PEN_D from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango();
+            
+        while(iLis.hasNext()){
+            PedidosParaReparto ped=(PedidosParaReparto)iLis.next();
+            String empresa=ped.getEmpresa().trim();
+            
+          int numeroConeccion=0;
+          
+            
+                           String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango();
             try {
-                xt.execute(sql);
-                ResultSet rr=xt.getResultSet();
+                System.out.println("ENTENCIAAAAA "+sql);
+                ResultSet rr=null;
+                if(empresa.equals("BU")){
+                               xt.execute(sql);
+                                rr=xt.getResultSet();
+                                System.out.println("ENTRO EN BUUUUUUUUUU");
+                           }else{
+                               if(empresa.equals("SD")){
+                                  xt1.execute(sql);
+                                 rr=xt1.getResultSet();
+                               }else{
+                                  xt2.execute(sql);
+                                 rr=xt2.getResultSet();
+                               }
+                           }
+                
                 Double cantTang=0.00;
                 Double cantEq=0.00;
                 Double cantTotal=0.00;
                 while(rr.next()){
-                    cantTang=rr.getDouble("CAN_PEN_D");
-                    cantEq=rr.getDouble("CAN_EQUI");
+                    cantTang=rr.getDouble("CANT_A_DES");
+                    cantEq=rr.getDouble("CAN_EQUI_V");
                     cantTotal=cantTang / cantEq;
+                    System.out.println("ENTENCIAAAAA "+ped.getIdPedidoEnTango()+" "+ped.getCodigoTangoDePedido()+" "+cantTotal+" a desc "+cantTang+" equiv "+cantEq);    
                 }
                 Double cantPed=ped.getCantidadArticulo();
-                if(cantTotal == cantPed){
+                
+                if(cantTotal == 0.00){
                     resultados+="";
                 }else{
-                    if (cantTotal > cantPed){
+                    
                         resultados+="\n FALTA REMITIR :"+cantTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
-                    }
+                    
                     
                 }
             } catch (SQLException ex) {

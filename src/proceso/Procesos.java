@@ -379,6 +379,7 @@ public class Procesos {
                 pedido.setVehiculoAsignado(rs.getInt("vehiculo"));
                 pedido.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
                 pedido.setPesoTotal(rs.getDouble("peso"));
+                pedido.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
                 System.out.println("pedido :"+numeroPedido+" fecha"+fecha+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
             }
@@ -410,7 +411,7 @@ public class Procesos {
             ResultSet rs=st.executeQuery();
             while(rs.next()){
               // PedidosParaReparto ped1 = null;
- 			PedidosParaReparto pedidos=null;
+ 			PedidosParaReparto pedidos=new PedidosParaReparto();
 			pedidos.setiDPedido(rs.getInt("numero"));
 			pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
 			pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
@@ -425,6 +426,8 @@ public class Procesos {
                         String pendiente=String.valueOf(rs.getDouble("CANT_FACT"));
                         pedidos.setNumeroDeListadoDeMateriales(rs.getInt("listado"));
                         pedidos.setNumeroDeRevisionDeListado(rs.getInt("revision"));
+                        pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                        pedidos.setEmpresa(rs.getString("TALON_PEDI"));
                         Double articulosPendientes=0.00;
                         if(pendiente==null){
                             articulosPendientes=0.00;

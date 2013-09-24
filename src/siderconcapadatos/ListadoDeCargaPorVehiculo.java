@@ -78,6 +78,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         descUnidad1=descripcion.substring(1);
         ls=new Listados();
         ls=Listados.ultimoListado(unidad, fecha);
+        nListado=ls.getNumeroListado();
         initComponents();
     }
 
@@ -662,10 +663,27 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             //dt.setCargados(carga);
             //dt.start();
             //carga=dt.getCargados();
+             ArrayList detall1=new ArrayList();
+            try {
+                /*
+                Iterator ica=carga.listIterator();
+                while(ica.hasNext()){
+                    PedidosParaReparto ped=(PedidosParaReparto)ica.next();
+                   try {
+                       detall1.add(pr.detallePedidoParaCorreccion(ped.getCodigoTangoDePedido(),ped.getFechaEnvio()));
+                   } catch (SQLException ex) {
+                       Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                }
+                */
+                detall1=pr.listadoDetalladoPorVehiculo(seleccion, fecha2);
+            } catch (SQLException ex) {
+                Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ActualizableTango actu=new Checking();
-            String res=actu.verificarRemitosTotales(carga);
+            String res=actu.verificarRemitosTotales(detall1);
             if(res.equals("")){
-               System.out.println("NOOOOOOOOOOOOOOOOO INGRESO CON DIFERENCIAS "); 
+               System.out.println("NOOOOOOOOOOOOOOOOO INGRESO CON DIFERENCIAS "+res); 
             }else{
                 System.out.println(res);
                 JOptionPane.showMessageDialog(null,res,"INCONSISTENCIAS CON TANGO ",JOptionPane.PLAIN_MESSAGE);
