@@ -1236,4 +1236,31 @@ public class Procesos {
            */
             return cc;
         }
+
+    public ArrayList DetallePedidoCompleto(String numeroPedido) throws SQLException {
+                    ArrayList detalles=new ArrayList();
+            String sql="select * from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPedido+"%' and reparto=1";
+            PreparedStatement st=cp.prepareStatement(sql);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                PedidosParaReparto pedido=new PedidosParaReparto();
+                pedido.setCodigoTangoDePedido(numeroPedido);
+                pedido.setCodigoArticulo(rs.getString("COD_ARTIC"));
+                pedido.setDescripcionArticulo(rs.getString("DESC_ARTIC")+rs.getString("DESC_ADIC"));
+                pedido.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
+                pedido.setCantidadArticuloPendiente(rs.getDouble("CANT_FACT"));
+                if(pedido.getCantidadArticuloPendiente()==null){
+                    pedido.setCantidadArticuloPendiente(0.00);
+                }
+                pedido.setFechaEnvio(rs.getString("entrega"));
+                pedido.setiDPedido(rs.getInt("numero"));
+                pedido.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                System.out.println("pedido :"+numeroPedido+" articulo: "+pedido.getDescripcionArticulo());
+                detalles.add(pedido);
+            }
+            rs.close();
+          //  cn.CerrarConneccion(cp);
+            return detalles;
+
+    }
 }
