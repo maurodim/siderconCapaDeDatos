@@ -748,7 +748,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
                 int pedidoModificable=jTable1.getSelectedRow();
-            String numePedido=(String) jTable1.getValueAt(pedidoModificable,0);
+            String numePedido=(String) jTable1.getValueAt(pedidoModificable,1);
             pedidoSeleccionado=numePedido;
             ModificacionDePedidos mod=new ModificacionDePedidos(1);
             InicioSiderconHdr.jDesktopPane1.add(mod);

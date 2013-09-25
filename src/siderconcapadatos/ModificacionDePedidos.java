@@ -38,6 +38,10 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     public ModificacionDePedidos(int or) {
         origen=or;
         initComponents();
+        if(origen==1){
+            this.jLabel1.setText("");
+            this.jButton1.setEnabled(false);
+        }
     }
 
     /** This method is called from within the constructor to
