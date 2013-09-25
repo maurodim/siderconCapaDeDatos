@@ -751,7 +751,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                                    
                                    sqlC1=(Connection)SiderconCapaatos.sqlSd;
                                    try {
-                                       xt1=sqlC.createStatement();
+                                       xt1=sqlC1.createStatement();
                                    } catch (SQLException ex) {
                                        Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
                                    }
@@ -759,7 +759,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                                    sqlC2=(Connection)SiderconCapaatos.sqlSdSrl;
                                    
                                    try {
-                                       xt2=sqlC.createStatement();
+                                       xt2=sqlC2.createStatement();
                                    } catch (SQLException ex) {
                                        
                                        Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
@@ -770,43 +770,74 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
             String empresa=ped.getEmpresa().trim();
             
           int numeroConeccion=0;
-          
+          Integer idTan=ped.getIdPedidoEnTango();
+          String codigoDeArticulo=ped.getCodigoArticulo().trim();
+          String numPed=ped.getCodigoTangoDePedido().substring(3);
             
-                           String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango();
+                           String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES from GVA03 where COD_ARTICU = '"+codigoDeArticulo+"' and NRO_PEDIDO like '%"+numPed+"'";
             try {
                 System.out.println("ENTENCIAAAAA "+sql);
                 ResultSet rr=null;
+                Double cantTang=0.00;
+                Double cantEq=0.00;
+                Double cantTotal=0.00;
                 if(empresa.equals("BU")){
                                xt.execute(sql);
                                 rr=xt.getResultSet();
                                 System.out.println("ENTRO EN BUUUUUUUUUU");
+                                
+                while(rr.next()){
+                    cantTang=rr.getDouble("CANT_A_DES");
+                    cantEq=rr.getDouble("CAN_EQUI_V");
+                    
+                    System.out.println("ENTENCIAAAAA "+ped.getIdPedidoEnTango()+" "+ped.getCodigoTangoDePedido()+" "+cantTotal+" a desc "+cantTang+" equiv "+cantEq);    
+                    cantTotal=cantTang/cantEq;
+                }
+                rr.close();
                            }else{
                                if(empresa.equals("SD")){
                                   xt1.execute(sql);
                                  rr=xt1.getResultSet();
-                               }else{
-                                  xt2.execute(sql);
-                                 rr=xt2.getResultSet();
-                               }
-                           }
-                
-                Double cantTang=0.00;
-                Double cantEq=0.00;
-                Double cantTotal=0.00;
+                                 
                 while(rr.next()){
                     cantTang=rr.getDouble("CANT_A_DES");
                     cantEq=rr.getDouble("CAN_EQUI_V");
-                    cantTotal=cantTang / cantEq;
+                    
                     System.out.println("ENTENCIAAAAA "+ped.getIdPedidoEnTango()+" "+ped.getCodigoTangoDePedido()+" "+cantTotal+" a desc "+cantTang+" equiv "+cantEq);    
+                    cantTotal=cantTang/cantEq;
                 }
+                rr.close();
+                               }else{
+                                  xt2.execute(sql);
+                                 rr=xt2.getResultSet();
+                                 
+                while(rr.next()){
+                    cantTang=rr.getDouble("CANT_A_DES");
+                    cantEq=rr.getDouble("CAN_EQUI_V");
+                    
+                    System.out.println("ENTENCIAAAAA "+ped.getIdPedidoEnTango()+" "+ped.getCodigoTangoDePedido()+" "+cantTotal+" a desc "+cantTang+" equiv "+cantEq);    
+                    cantTotal=cantTang/cantEq;
+                }
+                rr.close();
+                               }
+                           }
+                
+                
+                
                 Double cantPed=ped.getCantidadArticulo();
                 
                 if(cantTotal == 0.00){
+                    if(cantPed == 0.00){
                     resultados+="";
+                    }else{
+                        resultados+="\n FALTA EN LPM :"+cantPed+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
+                    }
                 }else{
-                    
-                        resultados+="\n FALTA REMITIR :"+cantTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
-                    
+                    //if(cantPed ==0.00){
+                        resultados+="\n FALTA REMITIR : "+cantTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
+                    //}else{
+                     //   resultados+="\n FALTA EN LPM :"+cantPed+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
+                   // }
                     
                 }
             } catch (SQLException ex) {

@@ -793,7 +793,7 @@ pedidosSeleccionados.add(fila);
             System.out.println("MODIFICACION DE PEDIDO Nº "+numeroDePedido);
             //fechaPedido=SiderconCapaatos.fecha;
             
-            ModificacionDePedidos mod1=new ModificacionDePedidos();
+            ModificacionDePedidos mod1=new ModificacionDePedidos(0);
             //mod1.setNmPedido(numePedido);
             //ModPedidos mod=null;
             //JFrame.addComponent(mod);

@@ -43,7 +43,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="295" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -52,7 +52,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" pref="161" max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="miTablaModificacion mod=new miTablaModificacion();&#xa;PedidosParaReparto pedid=new PedidosParaReparto();&#xa;Procesos pro=new Procesos();&#xa;ArrayList listado=new ArrayList();&#xa;try{&#xa;listado=pro.detallePedidoParaCorreccion(ListadoDePedidosParaReparto.numeroDePedido,ListadoDePedidosParaReparto.fechaPedido);&#xa;listadoDelPedido=listado;&#xa;System.out.println(&quot;Pedido NUMERO :&quot;+ListadoDePedidosParaReparto.numeroDePedido+&quot;fehca &quot;+ListadoDePedidosParaReparto.fechaPedido);&#xa;}catch(Exception ex){&#xa;System.out.println(&quot;no se cargo el detalle &quot;+ex);&#xa;}&#xa;Iterator ii=listado.listIterator();"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="miTablaModificacion mod=new miTablaModificacion();&#xa;PedidosParaReparto pedid=new PedidosParaReparto();&#xa;Procesos pro=new Procesos();&#xa;ArrayList listado=new ArrayList();&#xa;try{&#xa;if(origen==0){&#xa;listado=pro.detallePedidoParaCorreccion(ListadoDePedidosParaReparto.numeroDePedido,ListadoDePedidosParaReparto.fechaPedido);&#xa;}else{&#xa;listado=pro.DetallePedidoCompleto(ListadoDeCargaPorVehiculo.pedidoSeleccionado);&#xa;}&#xa;listadoDelPedido=listado;&#xa;System.out.println(&quot;Pedido NUMERO :&quot;+ListadoDePedidosParaReparto.numeroDePedido+&quot;fehca &quot;+ListadoDePedidosParaReparto.fechaPedido);&#xa;}catch(Exception ex){&#xa;System.out.println(&quot;no se cargo el detalle &quot;+ex);&#xa;}&#xa;Iterator ii=listado.listIterator();"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="mod.addColumn(&quot;Nro Pedido&quot;);&#xa;mod.addColumn(&quot;Cod Articulo&quot;);&#xa;mod.addColumn(&quot;descrip Articulo&quot;);&#xa;mod.addColumn(&quot;cant a enviar&quot;);&#xa;mod.addColumn(&quot;cant s/fecha&quot;);&#xa;mod.addColumn(&quot;fecha de entrega&quot;);&#xa;mod.addColumn(&quot;eliminar Item&quot;);&#xa;mod.addColumn(&quot;Vendedor&quot;);&#xa;Object[] fila=new Object[8];&#xa;while(ii.hasNext()){&#xa;pedid=(PedidosParaReparto)ii.next();&#xa;fila[0]=pedid.getCodigoTangoDePedido();&#xa;fila[1]=pedid.getCodigoArticulo();&#xa;fila[2]=pedid.getDescripcionArticulo();&#xa;fila[3]=pedid.getCantidadArticulo();&#xa;fila[4]=pedid.getCantidadArticuloPendiente();&#xa;fila[5]=pedid.getFechaEnvio();&#xa;fila[6]=false;&#xa;fila[7]=pedid.getNombreVendedor();&#xa;mod.addRow(fila);&#xa;}"/>
           </AuxValues>
         </Component>
@@ -112,7 +112,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jLabel1" pref="139" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

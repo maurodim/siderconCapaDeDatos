@@ -29,12 +29,14 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
     /** Creates new form ModificacionDePedidos */
     static ArrayList listadoDelPedido;
     static String nmPedido;
+    static int origen;
 
     public static void setNmPedido(String nmPedido) {
         ModificacionDePedidos.nmPedido = nmPedido;
     }
     
-    public ModificacionDePedidos() {
+    public ModificacionDePedidos(int or) {
+        origen=or;
         initComponents();
     }
 
@@ -53,7 +55,11 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         Procesos pro=new Procesos();
         ArrayList listado=new ArrayList();
         try{
-            listado=pro.detallePedidoParaCorreccion(ListadoDePedidosParaReparto.numeroDePedido,ListadoDePedidosParaReparto.fechaPedido);
+            if(origen==0){
+                listado=pro.detallePedidoParaCorreccion(ListadoDePedidosParaReparto.numeroDePedido,ListadoDePedidosParaReparto.fechaPedido);
+            }else{
+                listado=pro.DetallePedidoCompleto(ListadoDeCargaPorVehiculo.pedidoSeleccionado);
+            }
             listadoDelPedido=listado;
             System.out.println("Pedido NUMERO :"+ListadoDePedidosParaReparto.numeroDePedido+"fehca "+ListadoDePedidosParaReparto.fechaPedido);
         }catch(Exception ex){
@@ -126,7 +132,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -147,7 +153,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -155,7 +161,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 

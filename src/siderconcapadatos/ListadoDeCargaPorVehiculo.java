@@ -60,6 +60,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     private Coneccion con=null;
     static Connection ccn=null;
     private ArrayList desc=new ArrayList();
+    static String pedidoSeleccionado;
     //static ArrayList revis=new ArrayList();
     //static int numeroListado;
     /** Creates new form ListadoDeCargaPorVehiculo */
@@ -112,12 +113,20 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Listado de la Carga de Materiales del Vehiculo");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
@@ -125,13 +134,6 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameClosed(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -209,6 +211,13 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton6.setText("Detalle de Pedido");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -224,7 +233,9 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -245,10 +256,12 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                         .addComponent(jButton1)
                         .addComponent(jButton2)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6))
                 .addGap(19, 19, 19)
                 .addComponent(jButton4)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -732,6 +745,16 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Logger.getLogger(ListadoDeCargaPorVehiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+                int pedidoModificable=jTable1.getSelectedRow();
+            String numePedido=(String) jTable1.getValueAt(pedidoModificable,0);
+            pedidoSeleccionado=numePedido;
+            ModificacionDePedidos mod=new ModificacionDePedidos(1);
+            InicioSiderconHdr.jDesktopPane1.add(mod);
+            mod.setVisible(true);
+            mod.toFront();
+    }//GEN-LAST:event_jButton6ActionPerformed
     private void actualizarCarga(){
         Iterator ic=carga.listIterator();
         PedidosParaReparto ped=new PedidosParaReparto();
@@ -748,6 +771,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
