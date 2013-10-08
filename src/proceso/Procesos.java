@@ -847,13 +847,13 @@ public class Procesos {
             PedidosParaReparto pe=new PedidosParaReparto();
             PedidosParaReparto pedi=new PedidosParaReparto();
             ChequearCantidadesPedidos ch=new Checking();
-            FileWriter revisiones=null;
+            //FileWriter revisiones=null;
             String fch=fecha.replaceAll("/","_");
-            String ruta="C://bases//STHDR//revHdr//"+fch+"testRevision.txt";
-            revisiones=new FileWriter(ruta);
+            //String ruta="C://bases//STHDR//revHdr//"+fch+"testRevision.txt";
+            //revisiones=new FileWriter(ruta);
             String txx="";
-             Runtime r=Runtime.getRuntime();
-        r.gc();
+             //Runtime r=Runtime.getRuntime();
+        //r.gc();
             
             while(iip.hasNext()){
                 pe=(PedidosParaReparto)iip.next();
@@ -864,7 +864,7 @@ public class Procesos {
                 txx+=revision+" - "+pe.getCodigoTangoDePedido()+"\r\n";
                 
             
-                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+",vehiculoAnterior="+pe.getVehiculoAsignado()+" where numero ="+pe.getiDPedido(); 
+                sql="update pedidos_carga1 set revision="+revision+",revisionado=1,listado="+pe.getNumeroDeListadoDeMateriales()+",CANT_PEDID="+pe.getCantidadArticulo()+",vehiculoAnterior="+pe.getVehiculoAsignado()+",cantOriginal="+pe.getCantidadArticulo()+" where numero ="+pe.getiDPedido(); 
                 Statement st=cp.createStatement();
                 st.executeUpdate(sql);
                 
@@ -876,8 +876,8 @@ public class Procesos {
                 
                 System.err.println(sql+" NUMERO ID "+pe.getiDPedido()+" articulo "+pe.getCodigoArticulo()+"cantidad "+pe.getCantidadArticulo());
             }
-            revisiones.write(txx);
-            revisiones.close();
+            //revisiones.write(txx);
+            //revisiones.close();
             
         }
         public ArrayList UltimaHdr() throws SQLException{
