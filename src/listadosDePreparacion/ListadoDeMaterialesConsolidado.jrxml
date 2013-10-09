@@ -215,7 +215,7 @@ sidercon@sidercon.com - www.sidercon.com]]></text>
 					<subreportParameterExpression><![CDATA[$F{listado}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"DetalleClientes.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\DetalleClientes.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="0" y="24" width="551" height="97" isRemoveLineWhenBlank="true"/>
@@ -226,7 +226,7 @@ sidercon@sidercon.com - www.sidercon.com]]></text>
 					<subreportParameterExpression><![CDATA[$P{numListado}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetalleOrdenesDeTrabajo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\DetalleOrdenesDeTrabajo.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="2" y="4" width="377" height="20"/>

@@ -55,7 +55,7 @@ public class EmisionDeInformesPorHdr extends Thread{
         listConsolidado.put("fechaDesde",fD);
         listConsolidado.put("fechaHasta",fH);
         System.out.println(fD+" "+fH);
-        String master=System.getProperty("user.dir")+"//src//informes//InformePorHdr.jasper";
+        String master="C://src//informes//InformePorHdr.jasper";
         String destino=null;
         if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes por Hoja de Ruta.pdf";

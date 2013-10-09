@@ -56,15 +56,15 @@ public class EmisionDeInformesPorRepartidor extends Thread{
     public synchronized void run(){
         Map listConsolidado=new HashMap();
         int num=0;
-         
-        Connection ch=Coneccion.ObtenerConeccion();
+        Coneccion con=new Coneccion();
+        Connection ch=con.getCn();
         listConsolidado.put("fechaDesde",fD);
         listConsolidado.put("fechaHasta",fH);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master=null;
         String destino=null;
         if(this.numeroRepartidor==0||this.numeroRepartidor==null){
-            master=System.getProperty("user.dir")+"//src//informes//InformePorRepartidos.jasper";
+            master="C://src//informes//InformePorRepartidos.jasper";
         if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes por repartidor.pdf";
         }else{
@@ -72,7 +72,7 @@ public class EmisionDeInformesPorRepartidor extends Thread{
         }
         }else{
             listConsolidado.put("numeroFletero",this.numeroRepartidor);
-            master=System.getProperty("user.dir")+"//src//informes//InformePorRepartidorIndividual.jasper";
+            master="C://src//informes//InformePorRepartidorIndividual.jasper";
             if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes por repartidor "+this.numeroRepartidor+".pdf";
         }else{

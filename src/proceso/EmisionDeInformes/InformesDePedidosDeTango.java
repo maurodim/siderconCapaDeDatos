@@ -58,7 +58,7 @@ public class InformesDePedidosDeTango extends Thread{
         listConsolidado.put("fechaDesde",fD);
         listConsolidado.put("fechaHasta",fH);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
-        String master=System.getProperty("user.dir")+"//src//informes//InformesDePedidosDeTango.jasper";
+        String master="C://src//informes//InformesDePedidosDeTango.jasper";
         String destino=null;
         if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes de pedidos de tango.pdf";

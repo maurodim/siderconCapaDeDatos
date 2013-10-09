@@ -64,7 +64,7 @@ public class EmisionDeInformesPorVehiculo extends Thread{
         String master=null;
         String destino=null;
         if(this.numeroVehiculo==0||this.numeroVehiculo==null){
-            master=System.getProperty("user.dir")+"//src//informes//InformesPorVehiculo.jasper";
+            master="C://src//informes//InformesPorVehiculo.jasper";
         if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes por vehiculo.pdf";
         }else{
@@ -73,7 +73,7 @@ public class EmisionDeInformesPorVehiculo extends Thread{
         }else{
             System.out.println("VEHICULO NUMERO :"+this.numeroVehiculo);
             listConsolidado.put("numeroVehiculo",this.numeroVehiculo);
-            master=System.getProperty("user.dir")+"//src//informes//InformesPorVehiculoIndividual.jasper";
+            master="C://src//informes//InformesPorVehiculoIndividual.jasper";
             if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes por vehiculo "+this.numeroVehiculo+".pdf";
         }else{

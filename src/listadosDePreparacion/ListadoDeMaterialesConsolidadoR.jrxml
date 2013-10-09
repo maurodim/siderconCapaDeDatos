@@ -210,7 +210,7 @@ sidercon@sidercon.com - www.sidercon.com]]></text>
 					<subreportParameterExpression><![CDATA[$F{listado}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"DetalleClientes.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\DetalleClientes.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement uuid="0a34bda5-4a29-439f-8d37-3af86c8bfa85" x="0" y="24" width="551" height="97" isRemoveLineWhenBlank="true"/>
@@ -221,7 +221,7 @@ sidercon@sidercon.com - www.sidercon.com]]></text>
 					<subreportParameterExpression><![CDATA[$P{numListado}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetalleOrdenesDeTrabajo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\DetalleOrdenesDeTrabajo.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement uuid="ac83e405-c622-4374-9c87-7de72ae845a1" x="2" y="4" width="377" height="20"/>
