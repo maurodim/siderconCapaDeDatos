@@ -699,7 +699,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                System.out.println("NOOOOOOOOOOOOOOOOO INGRESO CON DIFERENCIAS "+res); 
             }else{
                 System.out.println(res);
-                JOptionPane.showMessageDialog(null,res,"INCONSISTENCIAS CON TANGO ",JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null,res,"EXISTENCIA CANT PENDIENTES DE REMITIR DE LOS PEDIDOS DE LA HDR ",JOptionPane.PLAIN_MESSAGE);
             }
             VistaHdr vista=new VistaHdr(carga,seleccion);
             InicioSiderconHdr.jDesktopPane1.add(vista);

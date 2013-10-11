@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -732,7 +733,8 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         Statement xt=null;
         Statement xt1=null;
         Statement xt2=null;
-        
+        DecimalFormat formato=new DecimalFormat("####.#");
+        String cTotal="";
         Iterator iLis=listadoHdr.listIterator();
         
                            
@@ -834,7 +836,8 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                     }
                 }else{
                     //if(cantPed ==0.00){
-                        resultados+="\n FALTA REMITIR : "+cantTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
+                    cTotal=formato.format(cantTotal);
+                        resultados+="\n FALTA REMITIR : "+cTotal+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
                     //}else{
                      //   resultados+="\n FALTA EN LPM :"+cantPed+" unidades de "+ped.getDescripcionArticulo()+" del pedido nª "+ped.getCodigoTangoDePedido()+" del cliente "+ped.getRazonSocial()+"\n";
                    // }

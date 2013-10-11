@@ -669,9 +669,9 @@ public class Procesos {
                 ped.setiDPedido(rs.getInt(9));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
                 //pedi=(PedidosParaReparto) ch.check(ped);
-                if(ped.getCantidadArticulo()> 0){
+                //if(ped.getCantidadArticulo()> 0){
                 listado.add(ped);
-                }
+                //}
                 System.out.println("pendientes "+pendiente+"/"+totales+"/"+art);
                 
             }
