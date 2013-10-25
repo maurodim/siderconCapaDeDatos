@@ -43,16 +43,22 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
             String dia=null;
             String mes=null;
             String ano=null;
+            String nofe="00/00/0000";
+            String nofe1="01/01/1910";
             ConversionesFecha conv1=new ConversionesFecha();
-            String sql="select pedidos_carga1.entrega,pedidos_carga1.numero,str_to_date(pedidos_carga1.entrega,'%d/%m/%Y') from pedidos_carga1 where entregaConv is null";
+            String sql="select pedidos_carga1.entrega,pedidos_carga1.numero,if(pedidos_carga1.entrega='"+nofe+"',str_to_date('"+nofe1+"','%d/%m/%Y'),str_to_date(pedidos_carga1.entrega,'%d/%m/%Y'))as conv from pedidos_carga1 where entregaConv is null";
+            //update pedidos_carga1 set pedidos_carga1.entrega=str_to_date(pedidos_carga1.entrega,'%d/%m/%Y') where entregaConv is null
             Statement st=cp.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
             while(rs.next()){
             ConversionesFecha conv=new ConversionesFecha();
                 conv.setNumeroDeCampo(rs.getInt(2));
-                System.out.println("REGISTRO DE ENTREGA "+conv.getNumeroDeCampo());
-                conv.setFechaOriginal(rs.getString(3).substring(0,10));
+                System.out.println("REGISTRO DE ENTREGA "+conv.getNumeroDeCampo()+"fecha "+rs.getString(3)+"numero "+rs.getInt(2));
+                if(rs.getDate("conv").equals("0000-00-00")){
+                    
+                }else{
+                conv.setFechaOriginal(rs.getString("conv").substring(0,10));
                 
                 /*
                 dia=rs.getString(3).substring(0,2);
@@ -61,19 +67,22 @@ public class ProcesoDeConversionDeFechasDeEntrega extends Thread{
                 fec=ano+"-"+mes+"-"+dia;
                 */
                   //Date fec1=fd.format(fec);
-                conv.setFechaConvertida(rs.getDate(3));
+                conv.setFechaConvertida(rs.getDate("conv"));
                 
                 System.err.println(" NUMEROOOOOOO "+conv.getFechaConvertida()+" fecha origianl "+rs.getString(1)+" foramto"+fec);
                 listadoConv.add(conv);
+                }
             }
             
             rs.close();
             Iterator ipp=listadoConv.listIterator();
             while(ipp.hasNext()){
                 conv1=(ConversionesFecha)ipp.next();
+                
                 sql="update pedidos_carga1 set entregaConv ='"+conv1.getFechaConvertida()+"' where numero="+conv1.getNumeroDeCampo();
                 System.err.println("sql de fechas :"+sql);
                 st.executeUpdate(sql);
+                
             }
             st.close();
             con.CerrarCn(cp);

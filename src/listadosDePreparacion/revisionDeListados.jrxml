@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26a55579-3720-408b-8fcf-32edf99a3cee">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="69"/>
 	<property name="ireport.y" value="144"/>
@@ -29,7 +29,7 @@
 		<defaultValueExpression><![CDATA["C:\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision limit 0,1)as maxRevision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision desc limit 0,1)as maxRevision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} limit 0,1)as kilos,(select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado )as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -56,7 +56,7 @@
 	<title>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="3" width="455" height="20"/>
+				<reportElement uuid="c2847b71-3099-48b8-aa79-a0aa3e23f31e" x="0" y="3" width="455" height="20"/>
 				<textElement textAlignment="Left">
 					<font size="13" isBold="true"/>
 				</textElement>
@@ -67,70 +67,70 @@
 	<pageHeader>
 		<band height="94" splitType="Stretch">
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="48" y="0" width="107" height="16"/>
+				<reportElement uuid="41f11807-ea74-409a-8532-835c1b784259" x="48" y="0" width="107" height="16"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalKg}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="48" height="16"/>
+				<reportElement uuid="fe36d9e0-38b9-484c-a074-577e403f12c5" x="0" y="0" width="48" height="16"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Kg.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="349" y="0" width="125" height="10"/>
+				<reportElement uuid="9dd847f5-9b58-4062-b7cc-d3f32e5263cf" x="349" y="0" width="125" height="10"/>
 				<textElement textAlignment="Right">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="474" y="0" width="81" height="10"/>
+				<reportElement uuid="50a3dc3e-cef6-44e8-b26f-0685847101ee" x="474" y="0" width="81" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="0" y="16" width="225" height="20"/>
+				<reportElement uuid="03fe9050-259e-4cb8-b240-e2ba2c68d07e" x="0" y="16" width="225" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Fecha y Hora de Impresión :"+new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="249" y="10" width="306" height="60"/>
+				<reportElement uuid="5dabcb2d-184b-440d-94be-a18034035703" x="249" y="10" width="306" height="60"/>
 			</rectangle>
 			<textField>
-				<reportElement x="263" y="16" width="192" height="15"/>
+				<reportElement uuid="3094456f-ef62-4efb-8aca-fceda2e4f3cb" x="263" y="16" width="192" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["VEHICULO :"+$F{nombreVehiculo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="31" width="192" height="19"/>
+				<reportElement uuid="b4a82356-2777-469d-8e6b-e96b6d2b5776" x="263" y="31" width="192" height="19"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Fecha de Entrega :"+$F{entrega}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="73" width="555" height="1"/>
+				<reportElement uuid="66cf4c24-fb25-4538-90ea-7c3c4e90a95f" x="0" y="73" width="555" height="1"/>
 			</line>
 			<line>
-				<reportElement x="0" y="93" width="555" height="1"/>
+				<reportElement uuid="fe443488-25c3-47c8-b203-6515892c6692" x="0" y="93" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="225" y="74" width="193" height="20"/>
+				<reportElement uuid="56356a9a-5bef-4cc6-ab50-9f465659bb80" x="225" y="74" width="193" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DETALLADO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="36" width="225" height="20"/>
+				<reportElement uuid="42b6535c-27f4-495a-88b5-7021882b7c63" x="0" y="36" width="225" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA["Se corresponde con Rev. :"+$F{maxRevision}]]></textFieldExpression>
 			</textField>
@@ -139,35 +139,35 @@
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="0" y="0" width="100" height="15"/>
+				<reportElement uuid="56b079ad-e2f8-4de8-ba59-eccfe7315ff6" style="encabezadosColumnas" x="0" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° DE PEDIDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="455" y="0" width="100" height="15"/>
+				<reportElement uuid="f3bfeda0-3654-4925-a14a-13e0fd04a29f" style="encabezadosColumnas" x="455" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Peso total del pedido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="100" y="0" width="44" height="15"/>
+				<reportElement uuid="e01c43c9-c3ab-46a6-93a6-2f153ae98571" style="encabezadosColumnas" x="100" y="0" width="44" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VEND]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="144" y="0" width="100" height="15"/>
+				<reportElement uuid="8ea68245-6bb2-4079-af9e-15fa2095439f" style="encabezadosColumnas" x="144" y="0" width="100" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="244" y="0" width="100" height="15"/>
+				<reportElement uuid="2db1a635-33b1-45c2-9078-90c8321bdc12" style="encabezadosColumnas" x="244" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -178,80 +178,80 @@
 	<detail>
 		<band height="81" splitType="Stretch">
 			<textField>
-				<reportElement style="subEncabezado" x="0" y="0" width="100" height="15"/>
+				<reportElement uuid="b064d923-8fe8-45ca-a4f2-8314aa0296c4" style="subEncabezado" x="0" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement style="subEncabezado" x="455" y="0" width="100" height="15"/>
+				<reportElement uuid="7440f6a3-0fed-4a76-b3df-5484ab4133b4" style="subEncabezado" x="455" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{kilos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="subEncabezado" x="144" y="0" width="100" height="15"/>
+				<reportElement uuid="69f33549-ce11-4619-8c1e-24bd6f2f3222" style="subEncabezado" x="144" y="0" width="100" height="15"/>
 				<textElement textAlignment="Left">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="subEncabezado" x="244" y="0" width="211" height="15"/>
+				<reportElement uuid="4d9c686d-c9c2-4501-8e29-f745d5e19549" style="subEncabezado" x="244" y="0" width="211" height="15"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{LEYENDA_1}=="null" ? " " : $F{LEYENDA_1} )]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="15" width="206" height="15"/>
+				<reportElement uuid="aeb4662c-5fac-48a6-ade5-fe60239624b7" x="249" y="15" width="206" height="15"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{LEYENDA_2}=="null" ? " " : $F{LEYENDA_2} )]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="30" width="206" height="15"/>
+				<reportElement uuid="b16435c4-53af-4b79-8794-0f374ad94aad" x="249" y="30" width="206" height="15"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{LEYENDA_3}=="null" ? " " : $F{LEYENDA_3} )]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="455" y="15" width="100" height="30"/>
+				<reportElement uuid="cc603097-b607-4a05-aaa5-06de1612b2c8" x="455" y="15" width="100" height="30"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="455" y="15" width="100" height="15"/>
+				<reportElement uuid="e3369d5f-a36e-434b-ba2b-3a0b199a2883" x="455" y="15" width="100" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reparto]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="455" y="30" width="100" height="15"/>
+				<reportElement uuid="58fbdb29-c2a1-4d5d-a430-58ee07651c90" x="455" y="30" width="100" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{destino}==null ? "Santa Fe" : $F{destino} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="144" y="15" width="100" height="15"/>
+				<reportElement uuid="9f7b30ef-a6e3-4886-81da-0c9f400ead4d" x="144" y="15" width="100" height="15"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{domicilio}=="null" ? " " : $F{domicilio} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="144" y="30" width="100" height="15"/>
+				<reportElement uuid="f1e94daf-84c4-4ded-a9b6-3ce3448c75f7" x="144" y="30" width="100" height="15"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{localidad}=="null" ? " " : $F{localidad} )]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="45" width="555" height="36"/>
+				<reportElement uuid="bf52947d-5ad8-45cf-aa3c-a87e20025889" x="0" y="45" width="555" height="36"/>
 				<subreportParameter name="numeroDePedido">
 					<subreportParameterExpression><![CDATA[$F{NRO_PEDIDO}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -265,35 +265,35 @@
 				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\revisionDetalle.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement style="subEncabezado" mode="Transparent" x="100" y="0" width="44" height="15" backcolor="#CCCCCC"/>
+				<reportElement uuid="e8c6bc9a-22ac-4680-8021-0b01c9a21d19" style="subEncabezado" mode="Transparent" x="100" y="0" width="44" height="15" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Left">
 					<font size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreVendedor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="15" width="48" height="10"/>
+				<reportElement uuid="1aa7024f-06c4-47b4-925c-7d469be48523" x="0" y="15" width="48" height="10"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[revision]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="15" width="96" height="10"/>
+				<reportElement uuid="113d0f95-f615-4c5b-af45-c1855e8031a5" x="48" y="15" width="96" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="25" width="58" height="10"/>
+				<reportElement uuid="7f76c74c-5465-478a-be6d-833f9f0ddfea" x="0" y="25" width="58" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[Fecha del Pedido:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="58" y="25" width="86" height="10"/>
+				<reportElement uuid="deeebc21-18d4-4c6f-b600-4825de4ff693" x="58" y="25" width="86" height="10"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
@@ -310,7 +310,7 @@
 	<summary>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="311" height="30"/>
+				<reportElement uuid="8771a3fa-887f-4693-bef9-5f964814b38d" x="0" y="0" width="311" height="30"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>

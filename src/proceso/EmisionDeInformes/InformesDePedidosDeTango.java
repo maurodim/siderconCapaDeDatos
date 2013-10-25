@@ -63,7 +63,8 @@ public class InformesDePedidosDeTango extends Thread{
         if(this.tipoDeInforme==1){
             destino="C://Informes//"+"informes de pedidos de tango.pdf";
         }else{
-            destino="C://Informes//"+"informes de pedidos de tango.xls";    
+            destino="C://Informes//"+"informes de pedidos de tango.xls";  
+            
         }
         JasperReport reporte = null;
         try {
@@ -127,6 +128,10 @@ public class InformesDePedidosDeTango extends Thread{
 }
     
  
+    }
+    private void EmitirXls(){
+        String sql="select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.CANT_PEDID,if(pedidos_carga1.CANT_FACT >0,"+"Entrega Parcial"+","+"Entrega Total"+"),pedidos_carga1.TALON_PEDI,pedidos_carga1.FEC_PEDIDO,pedidos_carga1.hdr1,pedidos_carga1.entrega,STR_TO_DATE(entrega,'%d.%m.%Y') as fech,pedidos_carga1.N_REMITO as comprobante from pedidos_carga1 where entregaConv between '"+fD+"' and '"+fH+"' and reparto=1 group by NRO_PEDIDO";
+        
     }
     
 }

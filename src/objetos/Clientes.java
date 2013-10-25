@@ -149,7 +149,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         try {
             Statement st=cc.createStatement();
             String sql="update clientes set DOMICILIO='"+cll.getDomicilio()+"',LOCALIDAD='"+cll.getLocalidad()+"',TELEFONO_1='"+cll.getTelefono()+"' where COD_CLIENT ='"+cll.getCodigoCliente()+"' and RAZON_SOCI like '"+cll.getRazonSocial()+"'";
-            System.out.println("UPDATE EN MYSQL "+sql);
+            //System.out.println("UPDATE EN MYSQL "+sql);
             st.executeUpdate(sql);
             st.close();
         } catch (SQLException ex) {

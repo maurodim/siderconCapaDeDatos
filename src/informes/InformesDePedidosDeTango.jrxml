@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformesDePedidosDeTango" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformesDePedidosDeTango" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d0c7c041-0ed7-47a6-a4c8-016ea52cf753">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -23,7 +23,7 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Table Dataset 1">
+	<subDataset name="Table Dataset 1" uuid="e0f7a0f0-0885-45ed-82d4-580469a5796e">
 		<parameter name="fecha" class="java.lang.String"/>
 		<queryString>
 			<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.CANT_PEDID,pedidos_carga1.CANT_FACT,pedidos_carga1.hdr1,pedidos_carga1.entrega from pedidos_carga1 group by NRO_PEDIDO]]>
@@ -53,63 +53,63 @@
 	<title>
 		<band height="9">
 			<staticText>
-				<reportElement x="0" y="0" width="76" height="9"/>
+				<reportElement uuid="4d0b0d92-0d04-4252-ab3c-20bbbeee3108" x="0" y="0" width="76" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Numero de Pedido Tango]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="76" y="0" width="70" height="9"/>
+				<reportElement uuid="24ba2cdf-0486-4292-a286-e31fa56dd34d" x="76" y="0" width="70" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Razon Social]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="324" y="0" width="53" height="9"/>
+				<reportElement uuid="407e57de-bc78-4c27-9927-3e0eb6911064" x="324" y="0" width="53" height="9"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HDR Nª]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="377" y="0" width="51" height="9"/>
+				<reportElement uuid="ebb9b739-b04f-4424-a385-78c6c3d71f84" x="377" y="0" width="51" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[HDR Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="0" width="43" height="9"/>
+				<reportElement uuid="cc85576b-0ee5-47ec-8227-5a41535d67d9" x="187" y="0" width="43" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado del pedido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="230" y="0" width="94" height="9"/>
+				<reportElement uuid="8b6781f3-9ec1-4fd8-9738-d7c373e18edd" x="230" y="0" width="94" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Ingreso Pedido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="428" y="0" width="60" height="9"/>
+				<reportElement uuid="3ac78de5-561e-4f8a-9729-d4ea794a579d" x="428" y="0" width="60" height="9"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RTO Nº]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="489" y="0" width="66" height="9"/>
+				<reportElement uuid="60af5ef1-12af-4172-8a40-0c1486989782" x="489" y="0" width="66" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado Rto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="0" width="41" height="9"/>
+				<reportElement uuid="ca0f3323-5465-4b61-91d0-44f7e9c8bfd3" x="146" y="0" width="41" height="9"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
@@ -120,56 +120,56 @@
 	<detail>
 		<band height="9" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="76" height="9"/>
+				<reportElement uuid="14b913e1-cbeb-4a18-95f2-442e11c304db" x="0" y="0" width="76" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="0" width="70" height="9"/>
+				<reportElement uuid="c01f09b5-00ad-46f9-ae2a-42b6119fc513" x="76" y="0" width="70" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="324" y="0" width="53" height="9"/>
+				<reportElement uuid="ca2a5126-9d94-4a7d-bc61-61eb9fce06e9" x="324" y="0" width="53" height="9"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{hdr1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="0" width="94" height="9"/>
+				<reportElement uuid="4634941d-7cf1-41a5-920b-dab31f22aa49" x="230" y="0" width="94" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FEC_PEDIDO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="377" y="0" width="51" height="9"/>
+				<reportElement uuid="4daadb35-9046-4d13-93f0-bedd5ed21936" x="377" y="0" width="51" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{entrega}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="428" y="0" width="60" height="9"/>
+				<reportElement uuid="394c7a0b-97a0-4eb1-9a65-becfdcfa5cf9" x="428" y="0" width="60" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="187" y="0" width="43" height="9"/>
+				<reportElement uuid="25f400ac-7ceb-4ee1-9f9b-683fcd8c88f9" x="187" y="0" width="43" height="9"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{if(pedidos_carga1.CANT_FACT >0,"Entrega Parcial","Entrega Total")}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="146" y="0" width="41" height="9"/>
+				<reportElement uuid="d0bb5587-3916-470c-86a5-19cb8b1f0685" x="146" y="0" width="41" height="9"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
