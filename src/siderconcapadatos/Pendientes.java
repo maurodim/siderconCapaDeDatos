@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetos.PedidosParaReparto;
 import proceso.Procesos;
 import siderconcapadatos.tablas.MiModeloTablaPendientes;
@@ -258,12 +259,14 @@ public class Pendientes extends javax.swing.JInternalFrame {
        }
         try {
             pr.GuardarModificacionesPendientes(pedidosPendientes);
+            JOptionPane.showMessageDialog(null,"Sr. Operador, el sistema se cerrará para que los cambios sean permanentes");
         } catch (SQLException ex) {
             Logger.getLogger(Pendientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
         try {
             setClosed(true);
+            System.exit(1);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Pendientes.class.getName()).log(Level.SEVERE, null, ex);
         }

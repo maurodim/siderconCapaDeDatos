@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformePorRepartidos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b4c76fa0-3b25-43f9-b7bf-23767b39dd59">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="10"/>
+	<property name="ireport.y" value="160"/>
 	<parameter name="fechaDesde" class="java.util.Date"/>
 	<parameter name="fechaHasta" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.N_REMITO,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID)as peso,pedidos_carga1.hdr1,trim((select hdr.numeroFletero from hdr where hdr.numero=pedidos_carga1.hdr1))as fletero,(select fleteros.nombre from fleteros where fleteros.numero=fletero)as nombFletero,pedidos_carga1.entrega,pedidos_carga1.TALON_PEDI as empresa,pedidos_carga1.RAZON_SOC as cliente,if(pedidos_carga1.CANT_FACT >0,"Entrega Parcial","Entregado")as Estado,sum(peso)as totalPeso,count(*)as cantidadP from pedidos_carga1 where hdr1 >0 and entregaConv between $P{fechaDesde} and $P{fechaHasta} group by NRO_PEDIDO order by fletero,entregaConv asc]]>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.N_REMITO,sum(pedidos_carga1.peso * pedidos_carga1.cantOriginal)as peso,pedidos_carga1.hdr1,trim((select hdr.numeroFletero from hdr where hdr.numero=pedidos_carga1.hdr1))as fletero,(select fleteros.nombre from fleteros where fleteros.numero=fletero)as nombFletero,pedidos_carga1.entrega,pedidos_carga1.TALON_PEDI as empresa,pedidos_carga1.RAZON_SOC as cliente,if(pedidos_carga1.CANT_FACT >0,"Entrega Parcial","Entregado")as Estado,sum(peso)as totalPeso,count(*)as cantidadP from pedidos_carga1 where hdr1 >0 and entregaConv between $P{fechaDesde} and $P{fechaHasta} group by NRO_PEDIDO order by fletero,entregaConv asc]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="N_REMITO" class="java.lang.String"/>
@@ -23,7 +23,7 @@
 	<variable name="sumaPesos" class="java.lang.Double" resetType="Column" calculation="Sum"/>
 	<variable name="totalRepartidos" class="java.lang.Integer" calculation="Count"/>
 	<variable name="totalPeso_1" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{totalPeso}]]></variableExpression>
+		<variableExpression><![CDATA[$F{peso}]]></variableExpression>
 	</variable>
 	<title>
 		<band height="20">
@@ -147,11 +147,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{N_REMITO}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00;-###0.00">
-				<reportElement uuid="a7ec99ed-5744-4ab3-a67a-a7249cadc493" x="209" y="0" width="50" height="20"/>
-				<textElement textAlignment="Center">
-					<font size="10"/>
-				</textElement>
+			<textField>
+				<reportElement uuid="8d5535aa-0179-4d96-9467-f2d999a21dca" x="209" y="0" width="50" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
 			</textField>
 		</band>
