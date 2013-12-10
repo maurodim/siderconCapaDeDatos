@@ -1074,7 +1074,7 @@ public class Procesos {
                         }
                 */
                     cli=ped.getCodigoCliente();
-                        String trim = cli.trim();
+                    String trim = cli.trim();
                     Clientes cliente=new Clientes();
                     Actualizable actCli=new Clientes();
                     saldo=(Double)actCli.actualizarDatosSaldos(sqlC, empresa1,cli);

@@ -23,7 +23,7 @@
     </coneccion>
     <coneccion id="4">
         <nombre>Coneccion Tango SD_SRL</nombre>
-        <url>jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON_SRL</url>
+        <url>jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON_S_R_L</url>
         <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
         <usuario>Axoft</usuario>
         <clave>Axoft</clave>
