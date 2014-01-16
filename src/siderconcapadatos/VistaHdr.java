@@ -347,7 +347,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
         PedidosParaReparto ped=new PedidosParaReparto();
         DecimalFormat fr=new DecimalFormat("####.##");
         int numFt=jComboBox1.getSelectedIndex();
-        numFt++;
+        //numFt++;
         hdr.setNumeroFletero(numFt);
         hdr.setNumeroVehiculo(unidad);
         String numeroComprobante=null;
