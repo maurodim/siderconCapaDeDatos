@@ -71,7 +71,7 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
         listConsolidado.put("revision",this.revision);
         System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado+" rev "+this.revision);
         String master=SiderconCapaatos.formularioConsolidado.trim();
-        String destino="////Server//ventas//LPM//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
+        String destino="////SERVER//ventas//LPM//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
         String destino2="C://listadosHdr//"+numeroListado+" R "+this.revision+" Listado consolidado de materiales.pdf";
         System.err.println(master);
         JasperReport reporte = null;
@@ -88,11 +88,14 @@ public class EmisionDeListadosDeMaterialesConsolidados extends Thread{
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
         }
         JRExporter exporter=new JRPdfExporter();
-        exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
-        exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
-        exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
+                 JRExporter exporter1=new JRPdfExporter();
+                 exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
+                 exporter1.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
+                 exporter1.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
+                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
         try {
             exporter.exportReport();
+            exporter1.exportReport();
                      //cnn.close();
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);

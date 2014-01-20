@@ -69,7 +69,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
         String master = SiderconCapaatos.formularioDetallado;//"C://src//listadosDePreparacion//revisionDeListados.jasper";
         //configuracion.valueOf(master);
         System.out.println("DIRECCION DE DESTINO //////////////////////////////////// "+master);
-        String destino="////Server//ventas//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
+        String destino="////SERVER//ventas//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         String destino2="C://listadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         JasperReport reporte = null;
         try {
@@ -85,11 +85,14 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             System.err.println("ERROR EN LA IMPRSION :"+ex);
         }
                  JRExporter exporter=new JRPdfExporter();
+                 JRExporter exporter1=new JRPdfExporter();
                  exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
-                 exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
+                 exporter1.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
+                 exporter1.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
                  exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
         try {
             exporter.exportReport();
+            exporter1.exportReport();
             //cnn.close();
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
