@@ -693,7 +693,7 @@ public class Procesos {
                 switch(pedidos.getEstado()){
                     case 1:
                         st=cp.createStatement();
-                        sql="insert into pedidos_carga1 (NRO_PEDIDO,CANT_PEDID,entrega,CANT_DESC,COD_CLIENT,RAZON_SOC,COD_ARTIC,DESC_ARTIC,vehiculo,peso,reparto,numeroOriginal) values ('"+pedidos.getCodigoTangoDePedido()+"',"+pedidos.getCantidadArticulo()+",'"+pedidos.getFechaEnvio()+"',"+pedidos.getCantidadArticulosTotales()+",'"+pedidos.getCodigoCliente()+"','"+pedidos.getRazonSocial().trim()+"','"+pedidos.getCodigoArticulo()+"','"+pedidos.getDescripcionArticulo()+"',0,0.00,1,"+pedidos.getiDPedido()+")";
+                        sql="insert into pedidos_carga1 (NRO_PEDIDO,CANT_PEDID,entrega,CANT_DESC,COD_CLIENT,RAZON_SOC,COD_ARTIC,DESC_ARTIC,vehiculo,peso,reparto,numeroOriginal,TALON_PEDI) values ('"+pedidos.getCodigoTangoDePedido()+"',"+pedidos.getCantidadArticulo()+",'"+pedidos.getFechaEnvio()+"',"+pedidos.getCantidadArticulosTotales()+",'"+pedidos.getCodigoCliente()+"','"+pedidos.getRazonSocial().trim()+"','"+pedidos.getCodigoArticulo()+"','"+pedidos.getDescripcionArticulo()+"',0,0.00,1,"+pedidos.getiDPedido()+",'"+pedidos.getEmpresa()+"')";
                         //sql="update pedidos_carga1 set NRO_PEDIDO='"+pedidos.getCodigoTangoDePedido()+"',CANT_PEDID="+pedidos.getCantidadArticulo()+",CANT_FACT="+pedidos.getCantidadArticuloPendiente()+",entrega='"+pedidos.getFechaEnvio()+"' where numero="+pedidos.getiDPedido();
                         System.out.println(sql);
                         
