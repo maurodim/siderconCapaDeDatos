@@ -610,7 +610,7 @@ public class Procesos {
             }
          //   cn.CerrarConneccion(cp);
         }
-        public void GuardarNuevoArticulo(Articulos ar) throws SQLException{
+        public void GuardarNuevoArticulo(Articulos ar,String medida) throws SQLException{
          //   Connection cp=cn.ObtenerConeccion();    
             String sql="insert into pesos (codigo,peso) values("+ar.getCodigo()+","+ar.getPesoUnitario()+")";
                 System.out.println(sql);        
@@ -619,6 +619,9 @@ public class Procesos {
                 sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ("+ar.getCodigo()+",'"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
                 System.out.println(sql);
                 sh.executeUpdate(sql);
+                sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"','KGS','"+medida+"')";
+                sh.executeUpdate(sql);
+                System.out.println(sql);
                 sh.close();
          //       cn.CerrarConneccion(cp);
         }

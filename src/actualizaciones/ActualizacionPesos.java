@@ -53,7 +53,7 @@ public class ActualizacionPesos extends Thread{
             while(il.hasNext()){
                 art=(Articulos)il.next();
                 arr=art.getCodigo().trim();
-                sql="update pedidos_carga1 set peso="+art.getPesoUnitario()+" where COD_ARTIC like '"+arr+"'";
+                sql="update pedidos_carga1 set peso="+art.getPesoUnitario()+" where COD_ARTIC ='"+arr+"'";
                 st.executeUpdate(sql);
                 System.out.println(" MODIFICACION DE PESOS "+sql);
                 
