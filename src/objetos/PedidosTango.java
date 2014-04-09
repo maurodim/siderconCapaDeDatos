@@ -58,7 +58,7 @@ public class PedidosTango {
         this.cantidad = cantidad;
     }
     
-    public Boolean verificarPedidos(ArrayList listadoDePedidos){
+    public Boolean verificarPedidos(ArrayList listadoDePedidos) throws SQLException{
         Iterator itL=listadoDePedidos.listIterator();
         PedidosParaReparto pedidos=new PedidosParaReparto();
         PedidosTango pedTango=null;
@@ -136,13 +136,13 @@ public class PedidosTango {
                             }
                             rs.close();
                             xt.close();
-                            verificarCantidadEnTango();
+                            
             } catch (SQLException ex) {
                 Logger.getLogger(PedidosTango.class.getName()).log(Level.SEVERE, null, ex);
             }
         
         }
-        
+        verificarCantidadEnTango();
         return null;
         
     }
@@ -155,6 +155,7 @@ public class PedidosTango {
         while(itS.hasNext()){
             sql=(String)itS.next();
             st.executeUpdate(sql);
+            System.out.println(sql);
         }
         st.close();
         con.CerrarCn(cp);

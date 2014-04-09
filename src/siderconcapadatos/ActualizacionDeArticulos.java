@@ -10,6 +10,7 @@
  */
 package siderconcapadatos;
 
+import Excel.ExListadoArticulos;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,6 +75,23 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Actualizacion de Datos de Articulos Cargados en el Sistema HDR");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153)));
 
@@ -105,7 +123,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,7 +136,12 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 153, 255), 1, true));
 
-        jButton1.setText("Imprimir Listado");
+        jButton1.setText("Generar Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Buscar Codigo");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +186,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +271,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 863, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -262,7 +285,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -327,6 +350,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         String sinonimo=JOptionPane.showInputDialog("POR FAVOR INGRESE EL SINONIMO :");
         //codigo+="      ";
         //System.out.println("codigo ingresado"+codigo+"largo"+codigo.length());
+        
         Articulos art=new Articulos();
         Boolean verificacion=false;
         Articulos seleccionado=null;
@@ -337,6 +361,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             art=(Articulos)ia.next();
             String codigoArt=art.getSinonimoArticulo();
             sinonimo.trim();
+            sinonimo=sinonimo.toUpperCase();
             int cantidad=sinonimo.length();
             System.out.println(codigoArt);
             //codigoArt.trim();
@@ -355,6 +380,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             }
         }
         if(verificacion){
+            
         jTable1.removeAll();
         MiTablaArticulos tablaA=new MiTablaArticulos();
 
@@ -432,7 +458,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         String codigo=jTextField1.getText();
         String sinonimo=jTextField3.getText();
         String descripcion=jTextField2.getText();
-        Double peso=Double.parseDouble(jTextField4.getText());
+        String pp=this.jTextField4.getText().replace(",",".");
+        Double peso=Double.parseDouble(pp);
         art.setCodigo(codigo.trim());
         art.setDescripcionArticulo(descripcion.trim());
         art.setSinonimoArticulo(sinonimo.trim());
@@ -452,6 +479,20 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         }     
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ExListadoArticulos ex=new ExListadoArticulos();
+        if(tablaCodigo.size() > 0){
+         ex.GenerarInforme(tablaCodigo);   
+        }else{
+        ex.GenerarInforme(articulos);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        tablaCodigo.clear();
+        articulos.clear();
+    }//GEN-LAST:event_formInternalFrameClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

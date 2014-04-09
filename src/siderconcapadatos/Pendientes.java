@@ -305,7 +305,11 @@ public class Pendientes extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // ACA DEBO CONECTAR CON TANGO Y PURGAR UNO OR UNO LOS PEDIDOS
         PedidosTango pedT=new PedidosTango();
-        pedT.verificarPedidos(pedidosPendientes);
+        try {
+            pedT.verificarPedidos(pedidosPendientes);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pendientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
         
     }//GEN-LAST:event_jButton3ActionPerformed

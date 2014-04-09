@@ -612,7 +612,7 @@ public class Procesos {
         }
         public void GuardarNuevoArticulo(Articulos ar) throws SQLException{
          //   Connection cp=cn.ObtenerConeccion();    
-            String sql="insert into PESOS (codigo,peso) values("+ar.getCodigo()+","+ar.getPesoUnitario()+")";
+            String sql="insert into pesos (codigo,peso) values("+ar.getCodigo()+","+ar.getPesoUnitario()+")";
                 System.out.println(sql);        
                 Statement sh=cp.createStatement();
                 sh.executeUpdate(sql);
@@ -708,7 +708,7 @@ public class Procesos {
                         break;
                     case 2:
                         st=cp.createStatement();
-                        sql="insert into pedidos_carga1 (NRO_PEDIDO,CANT_PEDID,entrega,CANT_DESC,COD_CLIENT,RAZON_SOC,COD_ARTIC,DESC_ARTIC,vehiculo,peso,reparto,motivo_anulacion) values ('"+pedidos.getCodigoTangoDePedido()+"',0,'00/00/0000',"+pedidos.getCantidadArticulosTotales()+",'"+pedidos.getCodigoCliente()+"','"+pedidos.getRazonSocial().trim()+"','"+pedidos.getCodigoArticulo()+"','"+pedidos.getDescripcionArticulo()+"',0,0.00,1,'eliminado por sistema hdr')";
+                        sql="insert into pedidos_carga1 (NRO_PEDIDO,CANT_PEDID,entrega,CANT_DESC,COD_CLIENT,RAZON_SOC,COD_ARTIC,DESC_ARTIC,vehiculo,peso,reparto,motivo_anulacion,TALON_PEDI) values ('"+pedidos.getCodigoTangoDePedido()+"',0,'00/00/0000',"+pedidos.getCantidadArticulosTotales()+",'"+pedidos.getCodigoCliente()+"','"+pedidos.getRazonSocial().trim()+"','"+pedidos.getCodigoArticulo()+"','"+pedidos.getDescripcionArticulo()+"',0,0.00,1,'eliminado por sistema hdr','"+pedidos.getEmpresa()+"')";
                         //sql="update pedidos_carga1 set NRO_PEDIDO='"+pedidos.getCodigoTangoDePedido()+"',CANT_PEDID="+pedidos.getCantidadArticulo()+",CANT_FACT="+pedidos.getCantidadArticuloPendiente()+",entrega='"+pedidos.getFechaEnvio()+"' where numero="+pedidos.getiDPedido();
                         System.out.println(sql);
                         
