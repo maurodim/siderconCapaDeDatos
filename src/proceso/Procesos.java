@@ -541,7 +541,7 @@ public class Procesos {
                              sql="delete from fleteros where numero="+numero;   
                             break;
                         case 3:
-                            sql="insert into fleteros (nombre,celular) values ('"+nombre+"','"+celular+"')";
+                            sql="insert into fleteros (nombre,celular,numero) values ('"+nombre+"','"+celular+"',"+numero+")";
                             break;
                         default:
                             sql="update fleteros set nombre ='"+nombre+"',celular='"+celular+"' where numero="+numero;
@@ -649,7 +649,7 @@ public class Procesos {
         public ArrayList listadoDeMaterialesPendientes() throws SQLException{
         //    Connection cp=cn.ObtenerConeccion();
             ArrayList listado=new ArrayList();
-            String sql="select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_CLIENT,pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,sum(pedidos_carga1.CANT_FACT),pedidos_carga1.CANT_DESC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.TALON_PEDI from pedidos_carga1 where CANT_FACT > 0 group by COD_ARTIC,RAZON_SOC order by RAZON_SOC";
+            String sql="select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_CLIENT,pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,sum(pedidos_carga1.CANT_FACT),pedidos_carga1.CANT_DESC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,pedidos_carga1.TALON_PEDI,pedidos_carga1.FEC_PEDIDO from pedidos_carga1 where CANT_FACT > 0 group by COD_ARTIC,RAZON_SOC order by RAZON_SOC";
             Statement st=cp.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
@@ -671,6 +671,7 @@ public class Procesos {
                 ped.setCantidadArticulo(art);
                 ped.setiDPedido(rs.getInt(9));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
+                ped.setFechaPedidosTango(rs.getString("FEC_PEDIDO"));
                 //pedi=(PedidosParaReparto) ch.check(ped);
                 //if(ped.getCantidadArticulo()> 0){
                 listado.add(ped);

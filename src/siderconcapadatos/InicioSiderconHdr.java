@@ -54,6 +54,7 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -119,6 +120,14 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem5);
 
+        jMenuItem12.setText("Datos Vendedores");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem12);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Pendientes");
@@ -128,7 +137,7 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem6.setText("Materiales sin fecha de entrega asignada");
+        jMenuItem6.setText("Materiales Pendientes sin fecha de entrega asignada");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -245,10 +254,10 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       ActualizacionDatosFleteros fleteros=new ActualizacionDatosFleteros();
-       jDesktopPane1.add(fleteros);
-       fleteros.setVisible(true);
-       fleteros.pack();
+       ActualizacionDatosFleteros fletero=new ActualizacionDatosFleteros();
+       jDesktopPane1.add(fletero);
+       fletero.setVisible(true);
+       fletero.pack();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -265,6 +274,7 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
           Pendientes pen=new Pendientes();
         jDesktopPane1.add(pen);
+        
         pen.setVisible(true);
         pen.pack();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -308,6 +318,13 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
         infV.toFront();
         infV.pack();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        ActualizacionDatosVendedores vend=new ActualizacionDatosVendedores();
+        jDesktopPane1.add(vend);
+        vend.setVisible(true);
+        vend.pack();
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,6 +377,7 @@ this.setIconImage(icono.getImage());
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

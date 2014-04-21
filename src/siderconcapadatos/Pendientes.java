@@ -58,12 +58,13 @@ public class Pendientes extends javax.swing.JInternalFrame {
         modeloPendientes.addColumn("Razon social");
         modeloPendientes.addColumn("Pedido Tango");
         modeloPendientes.addColumn("Descripcion Articulo");
-        modeloPendientes.addColumn("cantidad s/fecha");
-        modeloPendientes.addColumn("cantidad Asignadas");
-        modeloPendientes.addColumn("cantidad total");
+        modeloPendientes.addColumn("cant. s/fecha");
+        modeloPendientes.addColumn("cant. Asignadas");
+        modeloPendientes.addColumn("cant. total");
         modeloPendientes.addColumn("Fecha Entrega");
         modeloPendientes.addColumn("Eliminar");
-        Object[] fila=new Object[8];
+        modeloPendientes.addColumn("Fecha Ped.");
+        Object[] fila=new Object[9];
         while(ip.hasNext()){
             ped=(PedidosParaReparto)ip.next();
             fila[0]=ped.getRazonSocial();
@@ -74,6 +75,7 @@ public class Pendientes extends javax.swing.JInternalFrame {
             fila[5]=ped.getCantidadArticulosTotales();
             fila[6]="00/00/0000";
             fila[7]=false;
+            fila[8]=ped.getFechaPedidosTango();
             modeloPendientes.addRow(fila);
         }
         jTable1 = new javax.swing.JTable();
@@ -87,7 +89,7 @@ public class Pendientes extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Materiales sin fecha de entrega asignada");
+        setTitle("Materiales Pendientes sin fecha de entrega asignada");
 
         jTable1.setModel(modeloPendientes);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,8 +105,8 @@ public class Pendientes extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,14 +190,17 @@ public class Pendientes extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
