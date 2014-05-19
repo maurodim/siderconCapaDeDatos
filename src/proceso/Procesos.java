@@ -676,7 +676,7 @@ public class Procesos {
                 //if(ped.getCantidadArticulo()> 0){
                 listado.add(ped);
                 //}
-                System.out.println("pendientes "+pendiente+"/"+totales+"/"+art);
+                System.out.println("pendientes "+pendiente+"/"+totales+"/"+art+" tamaño matriz "+listado.size());
                 
             }
             rs.close();

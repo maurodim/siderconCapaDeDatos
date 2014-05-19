@@ -311,7 +311,11 @@ public class Pendientes extends javax.swing.JInternalFrame {
         // ACA DEBO CONECTAR CON TANGO Y PURGAR UNO OR UNO LOS PEDIDOS
         PedidosTango pedT=new PedidosTango();
         try {
-            pedT.verificarPedidos(pedidosPendientes);
+            try {
+                pedT.verificarPedidos(pedidosPendientes);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Pendientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Pendientes.class.getName()).log(Level.SEVERE, null, ex);
         }
