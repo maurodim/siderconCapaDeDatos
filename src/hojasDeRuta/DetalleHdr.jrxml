@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleHdr" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleHdr" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bf767a24-8dbf-4fcb-9c42-d81b622cf949">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<subDataset name="dataset1"/>
-	<subDataset name="dataset2"/>
+	<subDataset name="dataset1" uuid="c0cc428c-a365-482e-ad0d-9afec214fd1d"/>
+	<subDataset name="dataset2" uuid="e31c5919-964c-45f0-a941-7cb47721cc36"/>
 	<parameter name="numeroHdr" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select detalle_hdr.cliente,detalle_hdr.orden as contador,detalle_hdr.numero_cli,detalle_hdr.observaciones,detalle_hdr.comprobante,detalle_hdr.importe,detalle_hdr.vuelto,detalle_hdr.empresa,(select hdr.totalMonto from hdr where hdr.numero=$P{numeroHdr})as totalMonto,(select hdr.totalVuelto from hdr where hdr.numero=$P{numeroHdr} ) as totalVuelto from detalle_hdr where hdr=$P{numeroHdr} group by cliente,numero_cli order by orden]]>
+		<![CDATA[select detalle_hdr.cliente,detalle_hdr.vendedor,detalle_hdr.orden as contador,detalle_hdr.numero_cli,detalle_hdr.observaciones,detalle_hdr.comprobante,detalle_hdr.importe,detalle_hdr.vuelto,detalle_hdr.empresa,(select hdr.totalMonto from hdr where hdr.numero=$P{numeroHdr})as totalMonto,(select hdr.totalVuelto from hdr where hdr.numero=$P{numeroHdr} ) as totalVuelto from detalle_hdr where hdr=$P{numeroHdr} group by cliente,numero_cli order by orden]]>
 	</queryString>
 	<field name="cliente" class="java.lang.String"/>
 	<field name="contador" class="java.lang.Integer"/>
@@ -19,6 +19,7 @@
 	<field name="empresa" class="java.lang.String"/>
 	<field name="totalMonto" class="java.lang.Double"/>
 	<field name="totalVuelto" class="java.lang.Double"/>
+	<field name="vendedor" class="java.lang.String"/>
 	<variable name="importeVuelto" class="java.lang.Double"/>
 	<variable name="items" class="java.lang.Integer" resetType="Column" incrementType="Column" calculation="Sum">
 		<variableExpression><![CDATA[new Integer($V{items}++)]]></variableExpression>
@@ -27,155 +28,169 @@
 	<columnHeader>
 		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement x="39" y="0" width="53" height="15"/>
+				<reportElement uuid="d69b716d-8fd3-4d6f-a51a-203b15cc4a66" x="55" y="0" width="37" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cod Cliente]]></text>
+				<text><![CDATA[Cod Cte]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="92" y="0" width="100" height="15"/>
+				<reportElement uuid="5978c5e4-b4df-41bf-88a7-9453ff55a5d9" x="92" y="0" width="100" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cliente]]></text>
+				<text><![CDATA[ ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="192" y="0" width="36" height="15"/>
+				<reportElement uuid="7a649396-ac13-4138-a554-22272603d27d" x="192" y="0" width="36" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[empresa]]></text>
+				<text><![CDATA[ ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="228" y="0" width="72" height="15"/>
+				<reportElement uuid="edf837f0-319f-4805-8445-9fe18460aea6" x="228" y="0" width="72" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[comprobante]]></text>
+				<text><![CDATA[Rto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="0" width="50" height="15"/>
+				<reportElement uuid="72a0f61b-3b32-4424-9e9e-5267afbc89e6" x="300" y="0" width="50" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[importe]]></text>
+				<text><![CDATA[ ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="430" y="0" width="55" height="15"/>
+				<reportElement uuid="b0368629-31e0-4a93-b1a5-c2d9f50606f2" x="430" y="0" width="55" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[vuelto]]></text>
+				<text><![CDATA[Vto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="486" y="0" width="109" height="15"/>
+				<reportElement uuid="964666e1-7ff7-47ae-b3c5-c3beb338f1a7" x="486" y="0" width="109" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[observaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dbf8a973-15fa-4677-adb7-09f97af6fb1d" x="13" y="0" width="42" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vend.]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="39" y="0" width="53" height="12"/>
+				<reportElement uuid="2e661dca-4f0f-4775-b38a-0bdf88a7f983" x="55" y="0" width="37" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( ($F{numero_cli}=="null") ? " " : $F{numero_cli} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="0" width="100" height="12"/>
+				<reportElement uuid="e93f434f-4aa2-4b25-b37b-86f6eb5666bd" x="92" y="0" width="100" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="192" y="0" width="36" height="12"/>
+				<reportElement uuid="e611bd63-0260-4ec2-9c68-31ce7a09df8b" x="192" y="0" width="36" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="300" y="0" width="50" height="12"/>
+				<reportElement uuid="9a76260f-bd51-4087-b8cb-fc289d2f6e89" x="300" y="0" width="50" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="430" y="0" width="55" height="12"/>
+				<reportElement uuid="5a91bb5a-e27f-4954-8860-20442dd195df" x="430" y="0" width="55" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{vuelto}.compareTo("null") ? $F{vuelto} : " " )]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="485" y="0" width="110" height="12"/>
+				<reportElement uuid="62d6be67-36b2-4003-85a2-6115ac2835ef" x="485" y="0" width="110" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="228" y="0" width="72" height="12"/>
+				<reportElement uuid="5049023d-9f17-4182-bce4-e5600e55c900" x="228" y="0" width="72" height="12"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="39" height="12"/>
+				<reportElement uuid="7d344ae8-acc8-40d9-a010-1de282af84c0" x="0" y="0" width="13" height="12"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{contador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a61233f8-a052-4494-8a15-a0e63ec2a8ed" x="13" y="0" width="42" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="117">
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="300" y="15" width="50" height="20"/>
+				<reportElement uuid="6a2cd4af-2f4b-4879-9b34-5f9a5fe01a7c" x="300" y="15" width="50" height="20"/>
 				<textElement textAlignment="Left">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalMonto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="430" y="15" width="55" height="20"/>
+				<reportElement uuid="5faaeb20-31b4-4f1a-bcdc-5d32b95f1208" x="430" y="15" width="55" height="20"/>
 				<textElement>
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalVuelto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="300" y="0" width="50" height="15"/>
+				<reportElement uuid="e06e93ac-7d79-4922-a2db-95fbc7e8a77f" x="300" y="0" width="50" height="15"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="430" y="0" width="56" height="15"/>
+				<reportElement uuid="cb540061-986a-444a-9db8-b4908a2af871" x="430" y="0" width="56" height="15"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[VUELTOS]]></text>
+				<text><![CDATA[VTOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="97" width="192" height="20"/>
+				<reportElement uuid="4c56f58b-d822-4120-900e-843a1c48f0af" x="0" y="97" width="192" height="20"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[RINDIO:____________________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="77" width="192" height="20"/>
+				<reportElement uuid="767aa0b9-1eaa-42e2-a249-95ed499edee8" x="0" y="77" width="192" height="20"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>

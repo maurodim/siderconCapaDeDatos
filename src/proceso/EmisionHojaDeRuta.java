@@ -169,7 +169,7 @@ public class EmisionHojaDeRuta extends Thread{
             orden++;
             //String comp=ped.getNumeroComprobante().substring(0,15);
             //ped.setNumeroComprobante(comp);
-            sql="insert into detalle_hdr (cliente,numero_cli,comprobante,importe,vuelto,hdr,empresa,orden) values ('"+ped.getRazonSocial()+"','"+ped.getCodigoCliente()+"','"+ped.getNumeroComprobante()+"','"+ped.getSaldoACobrar()+"','"+ped.getVuelto()+"',"+ped.getNumeroDeHojaDeRuta()+",'"+ped.getEmpresa()+"',"+orden+")";
+            sql="insert into detalle_hdr (cliente,numero_cli,comprobante,importe,vuelto,hdr,empresa,orden,vendedor) values ('"+ped.getRazonSocial()+"','"+ped.getCodigoCliente()+"','"+ped.getNumeroComprobante()+"','"+ped.getSaldoACobrar()+"','"+ped.getVuelto()+"',"+ped.getNumeroDeHojaDeRuta()+",'"+ped.getEmpresa()+"',"+orden+","+ped.getNumeroVendedor()+")";
             System.out.println("codigo para hdr "+sql);
             //st.executeUpdate(sql);
            

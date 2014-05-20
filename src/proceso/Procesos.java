@@ -364,7 +364,7 @@ public class Procesos {
                 PedidosParaReparto pedido=new PedidosParaReparto();
                 pedido.setCodigoTangoDePedido(numeroPedido);
                 pedido.setCodigoArticulo(rs.getString("COD_ARTIC"));
-                pedido.setDescripcionArticulo(rs.getString("DESC_ARTIC")+rs.getString("DESC_ADIC"));
+                pedido.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 pedido.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
                 pedido.setCantidadArticuloPendiente(rs.getDouble("CANT_FACT"));
                 if(pedido.getCantidadArticuloPendiente()==null){
@@ -1250,7 +1250,7 @@ public class Procesos {
                 PedidosParaReparto pedido=new PedidosParaReparto();
                 pedido.setCodigoTangoDePedido(numeroPedido);
                 pedido.setCodigoArticulo(rs.getString("COD_ARTIC"));
-                pedido.setDescripcionArticulo(rs.getString("DESC_ARTIC")+rs.getString("DESC_ADIC"));
+                pedido.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 pedido.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
                 pedido.setCantidadArticuloPendiente(rs.getDouble("CANT_FACT"));
                 if(pedido.getCantidadArticuloPendiente()==null){
