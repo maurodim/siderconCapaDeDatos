@@ -7,7 +7,7 @@
 	<parameter name="numeroListado" class="java.lang.Integer"/>
 	<parameter name="numeroRevision" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select *,((select pesos.peso from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC)* CANT_PEDID)as pesoIndividual,(if(pedidos_carga1.COD_ARTIC ="30030011",'',if(pedidos_carga1.COD_ARTIC="30030010",'',(select sum(pedidoscantidadtotales.total) from pedidoscantidadtotales where pedidoscantidadtotales.NRO_PEDIDO like pedidos_carga1.NRO_PEDIDO and pedidoscantidadtotales.COD_ARTIC like pedidos_carga1.COD_ARTIC group by COD_ARTIC)-pedidos_carga1.CANT_PEDID)))as cantidadAntigua,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos,(select datos.UMV from datos where datos.COD_ARTICULO = pedidos_carga1.COD_ARTIC)AS medida from pedidos_carga1 where NRO_PEDIDO =$P{numeroDePedido} and listado=$P{numeroListado}]]>
+		<![CDATA[select *,((select pesos.peso from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC)* CANT_PEDID)as pesoIndividual,(if(pedidos_carga1.COD_ARTIC ="30030011",'',if(pedidos_carga1.COD_ARTIC="30030010",'',(select sum(pedidoscantidadtotales.total) from pedidoscantidadtotales where pedidoscantidadtotales.NRO_PEDIDO like pedidos_carga1.NRO_PEDIDO and pedidoscantidadtotales.COD_ARTIC like pedidos_carga1.COD_ARTIC group by COD_ARTIC)-pedidos_carga1.CANT_PEDID)))as cantidadAntigua,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos,(select datos.UMV from datos where datos.COD_ARTICULO = pedidos_carga1.COD_ARTIC limit 0,1)AS medida from pedidos_carga1 where NRO_PEDIDO =$P{numeroDePedido} and listado=$P{numeroListado}]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="TALON_PEDI" class="java.lang.String"/>
