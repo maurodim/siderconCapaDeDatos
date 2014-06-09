@@ -471,6 +471,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
        ped.setEmpresa(empresa);
        ped.setNumeroComprobante(comprobante);
        ped.setSaldoCliente(monto);
+       ped.setNumeroVendedor(0);
        if(monto > 0){
            ped.setCondicionDeVenta(1);
        }
