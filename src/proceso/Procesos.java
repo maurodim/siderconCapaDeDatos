@@ -446,7 +446,7 @@ public class Procesos {
         public ArrayList ListadoDeArticulos() throws SQLException{
         //    Connection cp=cn.ObtenerConeccion();
             ArrayList articulos = new ArrayList();
-            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo) from PESOS order by codigo";
+            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1) from PESOS order by codigo";
             int cantidad=0;
         Statement st=cp.createStatement();
         st.execute(sql);
