@@ -29,7 +29,7 @@
 		<defaultValueExpression><![CDATA["C:\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision desc limit 0,1)as maxRevision,vehiculo,(select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} order by listado desc limit 0,1)as kilos,round((select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado ),2)as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision desc limit 0,1)as maxRevision,vehiculo,round((select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} order by listado desc limit 0,1),2)as kilos,round((select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado ),2)as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -71,7 +71,7 @@
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalKg}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalKg}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="48" height="16"/>
