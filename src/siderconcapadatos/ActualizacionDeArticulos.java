@@ -384,7 +384,14 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             if(codigoArt==null){
             cd="";
             }else{
+                System.out.println(codigoArt+" cantidad "+cantidad);
+                //cantidad=cantidad - 1;
+                try{
                 cd=codigoArt.substring(0,cantidad);
+                }catch(java.lang.IndexOutOfBoundsException e){
+                    cd="";
+                    System.out.println(e+"articulo  "+art.getDescripcionArticulo());
+                }
             }
                 System.out.println("codigo Articulos"+cd+art.getCodigo()+" tamaño: "+cd.length()+" cod ing "+sinonimo+" tamaño :"+sinonimo.length());
             if(sinonimo.equals(cd)){
