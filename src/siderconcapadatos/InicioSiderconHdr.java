@@ -12,6 +12,9 @@ package siderconcapadatos;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import siderconcapadatos.interfacesInformes.InformesPorCliente;
 import siderconcapadatos.interfacesInformes.InformesPorEntregas;
@@ -249,8 +252,15 @@ public class InicioSiderconHdr extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         ActualizacionDeArticulos actArt=new ActualizacionDeArticulos();
         jDesktopPane1.add(actArt);
+        
         actArt.setVisible(true);
         actArt.pack();
+        try {
+            //inicio.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            actArt.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(InicioSiderconHdr.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed

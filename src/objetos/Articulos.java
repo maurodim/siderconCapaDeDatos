@@ -28,6 +28,16 @@ public class Articulos {
     private String descripcionArticulo;
     private String sinonimoArticulo;
     private int estado;
+    private String unidadDeMedida;
+
+    public String getUnidadDeMedida() {
+        return unidadDeMedida;
+    }
+
+    public void setUnidadDeMedida(String unidadDeMedida) {
+        this.unidadDeMedida = unidadDeMedida;
+    }
+    
 
     public int getEstado() {
         return estado;

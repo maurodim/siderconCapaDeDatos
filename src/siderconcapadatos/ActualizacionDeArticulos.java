@@ -80,16 +80,16 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameClosed(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -103,7 +103,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         TablaArticulos.addColumn("Sinonimo");
         TablaArticulos.addColumn("Peso Cargado");
         TablaArticulos.addColumn("Eliminar Articulo");
-        Object[] fila=new Object[5];
+        TablaArticulos.addColumn("Unid. De Medida");
+        Object[] fila=new Object[6];
         Iterator ia=articulos.listIterator();
         while(ia.hasNext()){
             Articulos art=null;
@@ -113,6 +114,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             fila[2]=art.getSinonimoArticulo();
             fila[3]=art.getPesoUnitario();
             fila[4]=false;
+            fila[5]=art.getUnidadDeMedida();
             TablaArticulos.addRow(fila);
         }
         jPanel3.setVisible(false);
@@ -340,7 +342,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         tablaA.addColumn("Sinonimo");
         tablaA.addColumn("Peso Cargado");
         tablaA.addColumn("Eliminar Articulo");
-        Object[] fila=new Object[5];
+        tablaA.addColumn("Unid. De Medida");
+        Object[] fila=new Object[6];
         Iterator it=tablaCodigo.listIterator();
         while(it.hasNext()){
             seleccionado=(Articulos)it.next();
@@ -353,6 +356,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             fila[2]=sin;
             fila[3]=peso;
             fila[4]=false;
+            fila[5]=seleccionado.getUnidadDeMedida();
             tablaA.addRow(fila);
         }
         jTable1.setModel(tablaA);
@@ -411,7 +415,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         tablaA.addColumn("Sinonimo");
         tablaA.addColumn("Peso Cargado");
         tablaA.addColumn("Eliminar Articulo");
-        Object[] fila=new Object[5];
+        tablaA.addColumn("Unid. De Medida");
+        Object[] fila=new Object[6];
         Iterator it=tablaCodigo.listIterator();
         while(it.hasNext()){
             seleccionado=(Articulos)it.next();
@@ -424,6 +429,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             fila[2]=sin;
             fila[3]=peso;
             fila[4]=false;
+            fila[5]=seleccionado.getUnidadDeMedida();
             tablaA.addRow(fila);
         }
         jTable1.setModel(tablaA);
@@ -450,6 +456,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             String sinonimo=(String) jTable1.getValueAt(i,2);
             Double peso=(Double) jTable1.getValueAt(i,3);
             Boolean est=(Boolean) jTable1.getValueAt(i,4);
+            String unidad=(String)this.jTable1.getValueAt(i,5);
+            ar.setUnidadDeMedida(unidad);
             ar.setDescripcionArticulo(descripcion);
             ar.setSinonimoArticulo(sinonimo);
             ar.setPesoUnitario(peso);
@@ -462,12 +470,14 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
         try {
             setClosed(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }  
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -495,13 +505,18 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.jTextField1.setText("");
+        this.jTextField2.setText("");
+        this.jTextField3.setText("");
+        this.jTextField4.setText("");
+        /*
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
         try {
             setClosed(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }     
-        
+        */
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

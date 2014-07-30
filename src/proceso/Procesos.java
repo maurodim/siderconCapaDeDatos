@@ -446,7 +446,7 @@ public class Procesos {
         public ArrayList ListadoDeArticulos() throws SQLException{
         //    Connection cp=cn.ObtenerConeccion();
             ArrayList articulos = new ArrayList();
-            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1) from PESOS order by codigo";
+            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),(select datos.UMV from datos where datos.COD_ARTICULO=PESOS.codigo limit 0,1)as unidad from PESOS order by codigo";
             int cantidad=0;
         Statement st=cp.createStatement();
         st.execute(sql);
@@ -457,6 +457,7 @@ public class Procesos {
             art.setDescripcionArticulo(rs.getString(2));
             art.setPesoUnitario(rs.getDouble(3));
             art.setSinonimoArticulo(rs.getString(4));
+            art.setUnidadDeMedida(rs.getString("unidad"));
             //System.out.println(art.getCodigo());
             //pesoUnitario=String.valueOf(art.getPesoUnitario());
             String pesoUnitario=art.getCodigo();
@@ -603,6 +604,9 @@ public class Procesos {
                         //st.close();
                         sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo='"+ar.getCodigo()+"'";
                         //Statement st=cp.createStatement();
+                        sp.executeUpdate(sql);
+                        sql="update datos set UMV='"+ar.getUnidadDeMedida()+"' where COD_ARTICULO='"+ar.getCodigo()+"'";
+                        System.out.println(sql);
                         sp.executeUpdate(sql);
                         sp.close();
                         break;
