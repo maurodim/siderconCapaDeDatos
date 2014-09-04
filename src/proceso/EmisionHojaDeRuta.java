@@ -178,7 +178,8 @@ public class EmisionHojaDeRuta extends Thread{
                 sql="update pedidos_carga1 set hdr1="+ped.getNumeroDeHojaDeRuta()+", fletero="+ped.getNumeroDeFletero()+",N_REMITO='"+ped.getNumeroComprobante()+"' where numero="+ped.getiDPedido();
                 st.executeUpdate(sql);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "EL CAMPO COMPROBANTE ES DEMASIADO LARGO - REDUZCALO. GRACIAS");
+                //JOptionPane.showMessageDialog(null, "EL CAMPO COMPROBANTE ES DEMASIADO LARGO - REDUZCALO. GRACIAS");
+                System.out.println("EL CAMPO COMPROBANTE ES DEMASIADO LARGO - REDUZCALO. GRACIAS");
             }
         }
         try {
@@ -190,6 +191,7 @@ public class EmisionHojaDeRuta extends Thread{
         listConsolidado.put("numeroHdr",num);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master=SiderconCapaatos.formularioHdr;
+        System.out.println(SiderconCapaatos.formularioHdr);
         String destino="////Server//ventas//Archivos HDR//"+num+"hdr.pdf";
         String destino2="C://Hdr//"+num+"hdr.pdf";
         JasperReport reporte = null;
