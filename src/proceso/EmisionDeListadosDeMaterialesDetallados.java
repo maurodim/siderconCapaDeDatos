@@ -69,7 +69,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
         String master = SiderconCapaatos.formularioDetallado;//"C://src//listadosDePreparacion//revisionDeListados.jasper";
         //configuracion.valueOf(master);
         System.out.println("DIRECCION DE DESTINO //////////////////////////////////// "+master);
-        String destino="////SERVER//ventas//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
+        String destino="////COLOSSUS//ventas//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         String destino2="C://listadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         JasperReport reporte = null;
         try {

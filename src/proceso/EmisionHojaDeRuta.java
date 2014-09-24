@@ -192,7 +192,7 @@ public class EmisionHojaDeRuta extends Thread{
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master=SiderconCapaatos.formularioHdr;
         System.out.println(SiderconCapaatos.formularioHdr);
-        String destino="////Server//ventas//Archivos HDR//"+num+"hdr.pdf";
+        String destino="////COLOSSUS//ventas//Archivos HDR//"+num+"hdr.pdf";
         String destino2="C://Hdr//"+num+"hdr.pdf";
         JasperReport reporte = null;
         try {

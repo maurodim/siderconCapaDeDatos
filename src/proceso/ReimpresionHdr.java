@@ -32,7 +32,7 @@ public class ReimpresionHdr {
         listConsolidado.put("numeroHdr",this.numero);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
         String master="C://src//hojasDeRuta//HojaDeRuta.jasper";
-        String destino="////Server//ventas//Archivos HDR//"+this.numero+"hdr.pdf";
+        String destino="////COLOSSUS//ventas//Archivos HDR//"+this.numero+"hdr.pdf";
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
