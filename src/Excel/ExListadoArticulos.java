@@ -44,6 +44,7 @@ public class ExListadoArticulos {
         HSSFCell celda1;
         HSSFCell celda2;
         HSSFCell celda3;
+        HSSFCell celda4;
         HSSFFont fuente=libro.createFont();
         //fuente.setFontHeight((short)21);
         fuente.setFontName(fuente.FONT_ARIAL);
@@ -75,6 +76,9 @@ public class ExListadoArticulos {
             celda3=fila.createCell(3);
             celda3.setCellStyle(titulo);
             celda3.setCellValue("PESO CARGADO");
+            celda4=fila.createCell(4);
+            celda4.setCellStyle(titulo);
+            celda4.setCellValue("UN. MED");
             }
             Iterator rs=art.listIterator();
             Articulos articulo=null;
@@ -105,6 +109,9 @@ public class ExListadoArticulos {
             celda3=fila.createCell(3);
             celda3.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             celda3.setCellValue(articulo.getPesoUnitario());
+            celda4=fila.createCell(4);
+            celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda4.setCellValue(articulo.getUnidadDeMedida());
 
         }
             
