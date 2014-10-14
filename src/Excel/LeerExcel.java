@@ -5,22 +5,29 @@
  */
 package Excel;
 
+import Conversores.Numeros;
 import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import objetos.Articulos;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import proceso.Procesos;
 
 /**
  *
  * @author mauro di
  */
 public class LeerExcel {
-   public void leerExcel1(String fileName) {
+   public void leerExcel1(String fileName) throws SQLException {
        List cellDataList = new ArrayList();
 try
 {
@@ -71,18 +78,85 @@ printToConsole(cellDataList);
 */
 private void printToConsole(List cellDataList)
 {
-    System.out.println("cantidad de celdas "+cellDataList.size());
-for (int i = 0; i < cellDataList.size(); i++)
-{
-List cellTempList = (List) cellDataList.get(i);
-for (int j = 0; j < cellTempList.size(); j++)
-{
-HSSFCell hssfCell = (HSSFCell) cellTempList.get(j);
-String stringCellValue = hssfCell.toString();
-System.out.print(stringCellValue + "\t");
-
-}
-System.out.println();
-}
+       try {
+           Articulos articulo;
+           Procesos proceso=new Procesos();
+           HashMap listadoArticulos=new HashMap();
+           listadoArticulos=(HashMap) proceso.cargarPesosDeArticulos();
+           Boolean verif=false;
+           ArrayList lstArt=new ArrayList();
+           String unidadDeMedida="";
+           Double peso=0.00;
+           System.out.println("cantidad de celdas "+cellDataList.size()+" cantidad map "+listadoArticulos.size());
+           for (int i = 0; i < cellDataList.size(); i++)
+           {
+               List cellTempList = (List) cellDataList.get(i);
+               articulo=new Articulos();
+               
+               for (int j = 0; j < cellTempList.size(); j++)
+               {
+                   HSSFCell hssfCell = (HSSFCell) cellTempList.get(j);
+                   String stringCellValue = hssfCell.toString();
+                    if(i > 0){
+                   switch (j){
+                       case 0:
+                           articulo.setCodigo(stringCellValue.trim());
+                           System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+i);
+                          
+                           try{
+                               articulo=(Articulos)listadoArticulos.get(stringCellValue);
+                               verif=true;
+                               articulo.setEstado(3);
+                           }catch(java.lang.NullPointerException ex){
+                               System.out.println(ex);
+                               verif=false;
+                           }
+                           
+                           break;
+                       case 1:
+                           articulo.setDescripcionArticulo(stringCellValue);
+                           System.out.println(stringCellValue+" - 1");
+                           break;
+                       case 2:
+                           articulo.setSinonimoArticulo(stringCellValue);
+                           System.out.println(stringCellValue+" - 2");
+                           break;
+                       case 3:
+                           peso=Numeros.ConvertirStringADouble(stringCellValue);
+                           articulo.setPesoUnitario(peso);
+                           System.out.println(stringCellValue+" - 3");
+                           break;
+                       case 4:
+                           System.out.println("el tamaño del campo es "+stringCellValue.length());
+                           System.out.println(stringCellValue+" - 4");
+                           if(stringCellValue.equals("")){
+                               unidadDeMedida="UND";
+                           }else{
+                           unidadDeMedida=stringCellValue;
+                           }
+                           articulo.setUnidadDeMedida(unidadDeMedida);
+                           break;
+                   }
+                   
+                   System.out.print(stringCellValue +" "+ j+" fila "+i+ "\t");
+                   
+               }
+               }
+               if(i > 0){
+               if(verif){
+                       lstArt.add(articulo);
+                       proceso.ModificacionDeArticulos(lstArt);
+                   }else{
+                       System.out.println("la unidad de medida es "+unidadDeMedida);
+                       proceso.GuardarNuevoArticulo(articulo, unidadDeMedida);
+                   }
+               }
+                   verif=false;
+                   lstArt.clear();
+                   
+               System.out.println();
+           }      } catch (SQLException ex) {
+           Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+       }
    }
 }

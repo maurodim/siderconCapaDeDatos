@@ -498,6 +498,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
         Articulos art=new Articulos();
         String codigo=jTextField1.getText();
         String sinonimo=jTextField3.getText();
@@ -512,11 +513,7 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         art.setPesoUnitario(peso);
         art.setEstado(3);
         Procesos prart=new Procesos();
-        try {
-            prart.GuardarNuevoArticulo(art,unidMedida);
-        } catch (SQLException ex) {
-            Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        prart.GuardarNuevoArticulo(art,unidMedida);
         this.jTextField1.setText("");
         this.jTextField2.setText("");
         this.jTextField3.setText("");
@@ -549,7 +546,11 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
        LeerExcel leer=new LeerExcel();
        String ruta="c:"+File.separator+"src"+File.separator+"informes"+File.separator+"listadoArticulos.xls";
        System.out.println(ruta);
-       leer.leerExcel1(ruta);
+        try {
+            leer.leerExcel1(ruta);
+        } catch (SQLException ex) {
+            Logger.getLogger(ActualizacionDeArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

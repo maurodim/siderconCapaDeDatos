@@ -81,6 +81,32 @@ public class Procesos {
         //cn.CerrarConneccion(cp);
         return articulos;
     }
+    public Map cargarArticulos() throws SQLException{
+        Map<String,Double> articulos=new HashMap<String,Double>();
+        
+        //Integer pesoUnitario = 0;
+        //Connection cp=cn.ObtenerConeccion();
+        String sql="select CodArticulo,Descripcion,peso,Sinonimo from articulosv";
+        Statement st=cp.createStatement();
+        st.execute(sql);
+        ResultSet rs=st.getResultSet();
+        while(rs.next()){
+            Articulos art=new Articulos();
+            art.setCodigo(rs.getString(1));
+            art.setDescripcionArticulo(rs.getString(2));
+            art.setPesoUnitario(rs.getDouble(3));
+            art.setSinonimoArticulo(rs.getString(4));
+            //System.out.println(art.getCodigo());
+            //pesoUnitario=String.valueOf(art.getPesoUnitario());
+            String pesoUnitario=art.getCodigo();
+            //System.out.println(pesoUnitario.length()+" "+pesoUnitario+" peso "+art.getPesoUnitario()+" "+art.getDescripcionArticulo()+" sinonimo "+art.getSinonimoArticulo());
+            //pesoUnitario++;
+            articulos.put(pesoUnitario,art.getPesoUnitario());
+        }
+        rs.close();
+        //cn.CerrarConneccion(cp);
+        return articulos;
+    }
     public Map DetallePedido(String numeroPedido) throws SQLException{
         Map<String,Double> detalle=new HashMap<String,Double>();
         //Connection cp=cn.ObtenerConeccion();
@@ -600,7 +626,18 @@ public class Procesos {
                     default:
                         sql="update PESOS set peso="+ar.getPesoUnitario()+" where PESOS.codigo='"+ar.getCodigo()+"'";
                         Statement sp=cp.createStatement();
-                        sp.executeUpdate(sql);
+                        int hech=sp.executeUpdate(sql);
+                        System.out.println("cantidad devuelta por hech "+hech);
+                        /*
+                        if(hech==1){
+                            
+                        }else{
+                          sql="insert into PESOS (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
+                        
+                        hech=sp.executeUpdate(sql);  
+                        }
+                        */
+                        
                         //st.close();
                         sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo='"+ar.getCodigo()+"'";
                         //Statement st=cp.createStatement();
@@ -614,20 +651,24 @@ public class Procesos {
             }
          //   cn.CerrarConneccion(cp);
         }
-        public void GuardarNuevoArticulo(Articulos ar,String medida) throws SQLException{
-         //   Connection cp=cn.ObtenerConeccion();    
+        public void GuardarNuevoArticulo(Articulos ar,String medida){
+        try {
+            //   Connection cp=cn.ObtenerConeccion();
             String sql="insert into pesos (codigo,peso) values("+ar.getCodigo()+","+ar.getPesoUnitario()+")";
-                System.out.println(sql);        
-                Statement sh=cp.createStatement();
-                sh.executeUpdate(sql);
-                sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ("+ar.getCodigo()+",'"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
-                System.out.println(sql);
-                sh.executeUpdate(sql);
-                sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"','KGS','"+medida+"')";
-                sh.executeUpdate(sql);
-                System.out.println(sql);
-                sh.close();
-         //       cn.CerrarConneccion(cp);
+            System.out.println(sql);
+            Statement sh=cp.createStatement();
+            sh.executeUpdate(sql);
+            sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ("+ar.getCodigo()+",'"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
+            System.out.println(sql);
+            sh.executeUpdate(sql);
+            sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"','KGS','"+medida+"')";
+            sh.executeUpdate(sql);
+            System.out.println(sql);
+            sh.close();
+            //       cn.CerrarConneccion(cp);
+        } catch (SQLException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         public Double pesoTotalPedido(String numeroPedido,String fech) throws SQLException{
         //    Connection cp=cn.ObtenerConeccion();
