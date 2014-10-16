@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetos.Articulos;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -78,15 +79,18 @@ printToConsole(cellDataList);
 */
 private void printToConsole(List cellDataList)
 {
-       try {
+    String error=""; 
+    int fila=0;
+    try {
            Articulos articulo;
            Procesos proceso=new Procesos();
            HashMap listadoArticulos=new HashMap();
-           listadoArticulos=(HashMap) proceso.cargarPesosDeArticulos();
+           listadoArticulos=(HashMap) proceso.cargarArticulos();
            Boolean verif=false;
            ArrayList lstArt=new ArrayList();
            String unidadDeMedida="";
            Double peso=0.00;
+           
            System.out.println("cantidad de celdas "+cellDataList.size()+" cantidad map "+listadoArticulos.size());
            for (int i = 0; i < cellDataList.size(); i++)
            {
@@ -100,24 +104,34 @@ private void printToConsole(List cellDataList)
                     if(i > 0){
                    switch (j){
                        case 0:
-                           articulo.setCodigo(stringCellValue.trim());
-                           System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+i);
-                          
+                           articulo.setCodigo(stringCellValue);
+                           fila=i + 1;
+                           System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila);
+                          error="codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila;
                            try{
-                               articulo=(Articulos)listadoArticulos.get(stringCellValue);
+                               articulo=(Articulos)listadoArticulos.get(stringCellValue.trim());
                                verif=true;
-                               articulo.setEstado(3);
+                               articulo.setEstado(0);
                            }catch(java.lang.NullPointerException ex){
-                               System.out.println(ex);
+                               articulo=new Articulos();
+                               articulo.setCodigo(stringCellValue);
+                               System.out.println(ex+" codigo "+articulo.getCodigo());
                                verif=false;
+                               articulo.setEstado(3);
                            }
                            
                            break;
                        case 1:
+                           if(stringCellValue.isEmpty()){
+                               stringCellValue=" ";
+                           }
                            articulo.setDescripcionArticulo(stringCellValue);
                            System.out.println(stringCellValue+" - 1");
                            break;
                        case 2:
+                           if(stringCellValue.isEmpty()){
+                               stringCellValue=" ";
+                           }
                            articulo.setSinonimoArticulo(stringCellValue);
                            System.out.println(stringCellValue+" - 2");
                            break;
@@ -129,7 +143,8 @@ private void printToConsole(List cellDataList)
                        case 4:
                            System.out.println("el tamaño del campo es "+stringCellValue.length());
                            System.out.println(stringCellValue+" - 4");
-                           if(stringCellValue.equals("")){
+                           if(stringCellValue.length()== 0){
+                               articulo.setEstado(3);
                                unidadDeMedida="UND";
                            }else{
                            unidadDeMedida=stringCellValue;
@@ -155,8 +170,13 @@ private void printToConsole(List cellDataList)
                    lstArt.clear();
                    
                System.out.println();
-           }      } catch (SQLException ex) {
-           Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+          JOptionPane.showMessageDialog(null,"PROCESO EXITOSO \n CANTIDAD DE FILAS PROCESADAS "+fila); 
+    } catch (SQLException ex) {
+                System.out.println(" error en "+error);
+                JOptionPane.showMessageDialog(null,"ERROR GENERADO EN FILA "+fila);
+               Logger.getLogger(LeerExcel.class.getName()).log(Level.SEVERE, null, ex);
+           
        }
    }
 }
