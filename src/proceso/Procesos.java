@@ -58,6 +58,9 @@ public class Procesos {
     public Map cargarPesosDeArticulos() throws SQLException{
         Map<String,Double> articulos=new HashMap<String,Double>();
         
+        // codigo de vista articulosv
+        //select *,(select pesos.peso from pesos where pesos.codigo='articulosdesc.CodArticulo')as peso from articulosdesc
+        
         //Integer pesoUnitario = 0;
         //Connection cp=cn.ObtenerConeccion();
         String sql="select CodArticulo,Descripcion,peso,Sinonimo from articulosv";
@@ -72,7 +75,7 @@ public class Procesos {
             art.setSinonimoArticulo(rs.getString(4));
             //System.out.println(art.getCodigo());
             //pesoUnitario=String.valueOf(art.getPesoUnitario());
-            String pesoUnitario=art.getCodigo();
+            String pesoUnitario=art.getCodigo().trim();
             //System.out.println(pesoUnitario.length()+" "+pesoUnitario+" peso "+art.getPesoUnitario()+" "+art.getDescripcionArticulo()+" sinonimo "+art.getSinonimoArticulo());
             //pesoUnitario++;
             articulos.put(pesoUnitario,art.getPesoUnitario());

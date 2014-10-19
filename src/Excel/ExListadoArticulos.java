@@ -38,6 +38,7 @@ public class ExListadoArticulos {
          * 3- DETALLE DE GASTOS : MOVIMIENTOS DE CAJA DETALLANDO LOS GASTOS
          * 
          */
+        String codigo="";
         String ttx="celda numero :";
         HSSFRow fila=null;
         HSSFCell celda;
@@ -98,7 +99,12 @@ public class ExListadoArticulos {
             celda=fila.createCell(0);
             ttx=ttx;
             celda.setCellType(HSSFCell.CELL_TYPE_STRING);
-            celda.setCellValue(articulo.getCodigo());
+            codigo=articulo.getCodigo().trim();
+            if(codigo.length()==8){
+                celda.setCellValue(" 0"+codigo);
+            }else{
+                celda.setCellValue(" "+codigo);
+            }
             celda1=fila.createCell(1);
             ttx=ttx;
             celda1.setCellType(HSSFCell.CELL_TYPE_STRING);

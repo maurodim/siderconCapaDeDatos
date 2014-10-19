@@ -104,6 +104,8 @@ private void printToConsole(List cellDataList)
                     if(i > 0){
                    switch (j){
                        case 0:
+                           stringCellValue=stringCellValue.trim();
+                           if(stringCellValue.length()==8)stringCellValue="0"+stringCellValue;
                            articulo.setCodigo(stringCellValue);
                            fila=i + 1;
                            System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila);
