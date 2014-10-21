@@ -49,7 +49,7 @@ public class PesosPedidos extends Thread{
                 } catch (SQLException ex) {
                     Logger.getLogger(PesosPedidos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            String sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(pedidos_carga1.CANT_PEDID * (select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC))as peso from pedidos_carga1 where actualizacionPesos=0";
+            String sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as peso from pedidos_carga1 where actualizacionPesos=0";
                 Statement st=cp.createStatement();
                 st.execute(sql);
                 ResultSet rs=st.getResultSet();
