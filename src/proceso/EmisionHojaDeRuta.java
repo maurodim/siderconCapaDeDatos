@@ -106,7 +106,7 @@ public class EmisionHojaDeRuta extends Thread{
         while(il.hasNext()){
             ped=(PedidosParaReparto)il.next();
             ped.setNumeroDeHojaDeRuta(num);
-            pesoTotal+=ped.getPesoTotal();
+            pesoTotal+=ped.getPesoItems();
             listadoNum=ped.getNumeroDeListadoDeMateriales();
             System.out.println("listado numero "+listadoNum);
             if(listadoNum==null){
