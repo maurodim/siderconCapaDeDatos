@@ -96,28 +96,32 @@ private void printToConsole(List cellDataList)
            {
                List cellTempList = (List) cellDataList.get(i);
                articulo=new Articulos();
-               
+               String descrip="";
                for (int j = 0; j < cellTempList.size(); j++)
                {
                    HSSFCell hssfCell = (HSSFCell) cellTempList.get(j);
                    String stringCellValue = hssfCell.toString();
+                   descrip="";
                     if(i > 0){
                    switch (j){
                        case 0:
                            stringCellValue=stringCellValue.trim();
+                           descrip=stringCellValue.trim();
                            if(stringCellValue.length()==8)stringCellValue="0"+stringCellValue;
                            articulo.setCodigo(stringCellValue);
                            fila=i + 1;
                            System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila);
-                          error="codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila;
-                           try{
-                               articulo=(Articulos)listadoArticulos.get(stringCellValue.trim());
+                          error="codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila+" desc "+descrip;
+                           
+                          if(listadoArticulos.containsValue(descrip)){
+                               articulo=(Articulos)listadoArticulos.get(descrip);
+                               System.out.println("codigo leido "+articulo.getCodigo()+" desc "+articulo.getDescripcionArticulo());
                                verif=true;
                                articulo.setEstado(0);
-                           }catch(java.lang.NullPointerException ex){
+                           }else{
                                articulo=new Articulos();
                                articulo.setCodigo(stringCellValue);
-                               System.out.println(ex+" codigo "+articulo.getCodigo());
+                               System.out.println(" codigo "+articulo.getCodigo());
                                verif=false;
                                articulo.setEstado(3);
                            }

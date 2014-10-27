@@ -621,8 +621,16 @@ public class Procesos {
                         break;
                     case 3:
                         sql="insert into PESOS (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
-                        Statement sh=cp.createStatement();
-                        sh.executeUpdate(sql);
+                        Statement sh;
+                        try{
+                            sh=cp.createStatement();
+                            sh.executeUpdate(sql);
+                        }catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exxxx){
+                            System.err.println(" error en pesos "+exxxx);
+                            sql="update PESOS set peso="+ar.getPesoUnitario()+" where codigo='"+ar.getCodigo()+"'";
+                            sh=cp.createStatement();
+                            sh.executeUpdate(sql);
+                        }
                         sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
                         sh.executeUpdate(sql);
                         sh.close();
@@ -664,14 +672,27 @@ public class Procesos {
             //   Connection cp=cn.ObtenerConeccion();
             String sql="insert into pesos (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
             System.out.println(sql);
-            Statement sh=cp.createStatement();
+            Statement sh=cp.createStatement();;
+            try{
+                   
             sh.executeUpdate(sql);
-            sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
+            }catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exxxx){
+                            System.err.println(" error en pesos "+exxxx);
+                            sql="update PESOS set peso="+ar.getPesoUnitario()+" where codigo='"+ar.getCodigo()+"'";
+                            //sh=cp.createStatement();
+                            sh.executeUpdate(sql);
+                            System.out.println(sql);
+            }
+            System.out.println(" tamaño de la descripcion :"+ar.getDescripcionArticulo().length());
+            sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"')";
             System.out.println(sql);
             sh.executeUpdate(sql);
-            sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"','KGS','"+medida+"')";
+            
+            sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"','KGS','"+medida+"')";
             sh.executeUpdate(sql);
+            
             System.out.println(sql);
+            
             sh.close();
             //       cn.CerrarConneccion(cp);
         } catch (SQLException ex) {
