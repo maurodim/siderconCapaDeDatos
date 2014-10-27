@@ -476,6 +476,7 @@ public class VistaHdr extends javax.swing.JInternalFrame {
            ped.setCondicionDeVenta(1);
        }
        ped.setPesoTotal(0.00);
+       ped.setPesoItems(0.00);
        if(fechaE==null){
            DecimalFormat fr=new DecimalFormat("00");
            Calendar c1=Calendar.getInstance();
