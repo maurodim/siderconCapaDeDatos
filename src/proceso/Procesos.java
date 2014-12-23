@@ -147,10 +147,11 @@ public class Procesos {
 			pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
 			pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
 			pedidos.setVehiculoAsignado(rs.getInt("vehiculo"));
-			pedidos.setPesoTotal(rs.getDouble("total"));
+			//pedidos.setPesoTotal(rs.getDouble("total"));
                         pedidos.setCodigoArticulo(rs.getString("COD_ARTIC"));
                         pedidos.setDescripcionArticulo(rs.getString("DESC_ARTIC")+" "+rs.getString("DESC_ADIC"));
                         pedidos.setPesoItems(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
+                        pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
                         pedidos.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
 			pedidos.setCodigoCliente(rs.getString("COD_CLIENT"));
                         pedidos.setFechaEnvio(rs.getString("entrega"));
@@ -446,7 +447,7 @@ public class Procesos {
 			pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
 			pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
 			pedidos.setVehiculoAsignado(rs.getInt("vehiculo"));
-			pedidos.setPesoTotal(rs.getDouble("peso"));
+			pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
                         pedidos.setCodigoArticulo(rs.getString("COD_ARTIC"));
                         pedidos.setDescripcionArticulo(rs.getString("DESC_ARTIC")+" "+rs.getString("DESC_ADIC"));
                         pedidos.setPesoItems(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
@@ -606,6 +607,7 @@ public class Procesos {
         //    Connection cp=cn.ObtenerConeccion();
             String sql=null;
             Articulos ar=new Articulos();
+            int flagP=0;
             while(ita.hasNext()){
                 ar=(Articulos)ita.next();
                 switch(ar.getEstado()){
@@ -630,8 +632,23 @@ public class Procesos {
                             sql="update PESOS set peso="+ar.getPesoUnitario()+" where codigo='"+ar.getCodigo()+"'";
                             sh=cp.createStatement();
                             sh.executeUpdate(sql);
+                            flagP=1;
+                            System.out.println("FLAG ESTA EN : "+flagP);
                         }
+                        if(flagP==0){
                         sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
+                        }else{
+                        sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo ='"+ar.getCodigo()+"'";    
+                        
+                        }
+                        sh.executeUpdate(sql);
+                        if(flagP==0){
+                            sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"','KGS','"+ar.getUnidadDeMedida()+"')";
+            
+                        }else{
+                            sql="update datos set DESCRIPCION='"+ar.getDescripcionArticulo().trim()+"',SINONIMO='"+ar.getSinonimoArticulo().trim()+"',UMS='KGS',UMV='"+ar.getUnidadDeMedida()+"' where COD_ARTICULO='"+ar.getCodigo()+"'";
+                            flagP=0;
+                        }
                         sh.executeUpdate(sql);
                         sh.close();
                         break;
@@ -672,7 +689,8 @@ public class Procesos {
             //   Connection cp=cn.ObtenerConeccion();
             String sql="insert into pesos (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
             System.out.println(sql);
-            Statement sh=cp.createStatement();;
+            Statement sh=cp.createStatement();
+            int flagP=0;
             try{
                    
             sh.executeUpdate(sql);
@@ -682,13 +700,38 @@ public class Procesos {
                             //sh=cp.createStatement();
                             sh.executeUpdate(sql);
                             System.out.println(sql);
+                            flagP=1;
             }
             System.out.println(" tamaño de la descripcion :"+ar.getDescripcionArticulo().length());
+            
+            if(flagP==0){
+                        sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
+                        }else{
+                        sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo ='"+ar.getCodigo()+"'";    
+                        
+                        }
+                        sh.executeUpdate(sql);
+                        if(flagP==0){
+                            sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"','KGS','"+medida+"')";
+            
+                        }else{
+                            sql="update datos set DESCRIPCION='"+ar.getDescripcionArticulo().trim()+"',SINONIMO='"+ar.getSinonimoArticulo().trim()+"',UMS='KGS',UMV='"+medida+"' where COD_ARTICULO='"+ar.getCodigo()+"'";
+                            flagP=0;
+                        }
+            /*
+            if(flagP==0){
             sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"')";
+            }else{
+                
+            }
             System.out.println(sql);
             sh.executeUpdate(sql);
-            
+            if(flagP==0){
             sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"','KGS','"+medida+"')";
+            }else{
+                
+            }
+                        */
             sh.executeUpdate(sql);
             
             System.out.println(sql);
@@ -1189,7 +1232,7 @@ public class Procesos {
 			pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
 			pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
 			pedidos.setVehiculoAsignado(rs.getInt("vehiculo"));
-			pedidos.setPesoTotal(rs.getDouble("total"));
+			pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
                         pedidos.setCodigoArticulo(rs.getString("COD_ARTIC"));
                         pedidos.setDescripcionArticulo(rs.getString("DESC_ARTIC")+" "+rs.getString("DESC_ADIC"));
                         pedidos.setPesoItems(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));

@@ -29,7 +29,7 @@ public class ConeccionSqlTango {
  		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
                 switch (base){
                     case 1:
-                        url="jdbc:sqlserver://SERVERTANGO;databaseName=BU2";
+                        url="jdbc:sqlserver://SERVERTANGO;databaseName=BU3";
                         break;
                     case 2:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON";
