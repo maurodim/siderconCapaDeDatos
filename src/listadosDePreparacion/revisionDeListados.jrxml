@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDeListados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e49ffae7-0b37-4f2f-9cc8-848a93bbdbdb">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="107"/>
 	<style name="vendedore" forecolor="#999999" backcolor="#CCCCCC" radius="2" hAlign="Center" vAlign="Middle" fontSize="6" isUnderline="false">
 		<box leftPadding="1" rightPadding="1">
 			<pen lineWidth="0.0" lineColor="#999999"/>
@@ -29,7 +29,7 @@
 		<defaultValueExpression><![CDATA["C:\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision desc limit 0,1)as maxRevision,vehiculo,round((select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} order by listado desc limit 0,1),2)as kilos,round((select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado ),2)as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
+		<![CDATA[select NRO_PEDIDO,COD_CLIENT,RAZON_SOC,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_VENDED,revision,(select pedidos_carga1.revision from pedidos_carga1 where listado=$P{numeroListado} order by revision desc limit 0,1)as maxRevision,vehiculo,round((select pesolistadoped.suma from pesolistadoped where pesolistadoped.NRO_PEDIDO = pedidos_carga1.NRO_PEDIDO and pesolistadoped.listado=$P{numeroListado} order by listado desc limit 0,1),2)as kilos,round((select sum(pesoPedidosListados.totalItem) from pesoPedidosListados where pesoPedidosListados.listado=$P{numeroListado} group by pesopedidoslistados.listado ),2)as totalKg,(select unidades.descripcion from unidades where unidades.numero=pedidos_carga1.vehiculo)as nombreVehiculo,left(pedidos_carga1.entrega,10)as entrega,left(pedidos_carga1.FEC_PEDIDO,10)as fechaPedido,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as destino,(select clientesv.DOMICILIO from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT and clientesv.RAZON_SOCI like pedidos_carga1.RAZON_SOC limit 0,1)AS domicilio,(select clientesv.LOCALIDAD from clientesv where clientesv.COD_CLIENT = pedidos_carga1.COD_CLIENT limit 0,1)AS localidad,(SELECT vendedores.nombre from vendedores where vendedores.numero = pedidos_carga1.COD_VENDED)AS nombreVendedor from pedidos_carga1 where listado=$P{numeroListado} group by NRO_PEDIDO]]>
 	</queryString>
 	<field name="NRO_PEDIDO" class="java.lang.String"/>
 	<field name="COD_CLIENT" class="java.lang.String"/>
@@ -56,118 +56,116 @@
 	<title>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="3" width="455" height="20"/>
+				<reportElement x="0" y="3" width="455" height="20" uuid="116631c1-8f4d-42c7-9992-61a2a068637e"/>
 				<textElement textAlignment="Left">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Listado de Preparación de Carga N° :"+$P{numeroListado}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Listado de Preparación de Carga N° :"+$P{numeroListado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="94" splitType="Stretch">
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="48" y="0" width="107" height="16"/>
+				<reportElement x="48" y="0" width="107" height="16" uuid="2567710b-3c11-4412-844a-79c017409fae"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{totalKg}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalKg}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="48" height="16"/>
+				<reportElement x="0" y="0" width="48" height="16" uuid="54b27aae-ced6-406a-86d5-8e3f026b1e74"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Kg.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="349" y="0" width="125" height="10"/>
+				<reportElement x="349" y="0" width="125" height="10" uuid="e29fce52-0837-476e-8de7-b78fb1a2859a"/>
 				<textElement textAlignment="Right">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="474" y="0" width="81" height="10"/>
+				<reportElement x="474" y="0" width="81" height="10" uuid="16f67f8f-75f9-4907-a2bd-2a8603f8450a"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
-				<reportElement x="0" y="16" width="225" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Fecha y Hora de Impresión :"+new java.util.Date()]]></textFieldExpression>
+				<reportElement x="0" y="16" width="225" height="20" uuid="890437a2-eecb-4805-9763-237276fd0732"/>
+				<textFieldExpression><![CDATA["Fecha y Hora de Impresión :"+new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="249" y="10" width="306" height="60"/>
+				<reportElement x="249" y="10" width="306" height="60" uuid="adbd98b7-12ef-4f95-b92a-3bb8b4b8b473"/>
 			</rectangle>
 			<textField>
-				<reportElement x="263" y="16" width="192" height="15"/>
+				<reportElement x="263" y="16" width="192" height="15" uuid="30a2947c-59d3-4481-81ca-5f42efa51d86"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["VEHICULO :"+$F{nombreVehiculo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["VEHICULO :"+$F{nombreVehiculo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="31" width="192" height="19"/>
+				<reportElement x="263" y="31" width="192" height="19" uuid="10a6547e-da8e-49a3-9cd4-d42273183244"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Fecha de Entrega :"+$F{entrega}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha de Entrega :"+$F{entrega}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="73" width="555" height="1"/>
+				<reportElement x="0" y="73" width="555" height="1" uuid="ab7f99d8-20cd-438b-a47e-7c7e839cd5ba"/>
 			</line>
 			<line>
-				<reportElement x="0" y="93" width="555" height="1"/>
+				<reportElement x="0" y="93" width="555" height="1" uuid="d68c07da-6067-4610-b1c6-378587dd5661"/>
 			</line>
 			<staticText>
-				<reportElement x="225" y="74" width="193" height="20"/>
+				<reportElement x="225" y="74" width="193" height="20" uuid="2eda2262-433a-43fd-92e3-0624993e3738"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DETALLADO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="36" width="225" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Se corresponde con Rev. :"+$F{maxRevision}]]></textFieldExpression>
+				<reportElement x="0" y="36" width="225" height="20" uuid="52226d51-e3b6-487c-908e-a50851f00c81"/>
+				<textFieldExpression><![CDATA["Se corresponde con Rev. :"+$F{maxRevision}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="0" y="0" width="100" height="15"/>
+				<reportElement style="encabezadosColumnas" x="0" y="0" width="100" height="15" uuid="dda5d376-e9a5-4443-a2ff-dae25ab76b54"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° DE PEDIDO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="455" y="0" width="100" height="15"/>
+				<reportElement style="encabezadosColumnas" x="455" y="0" width="100" height="15" uuid="644702a8-d3c8-4546-8782-6d18c4c63790"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Peso total del pedido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="100" y="0" width="44" height="15"/>
+				<reportElement style="encabezadosColumnas" x="100" y="0" width="44" height="15" uuid="07ce0833-b826-4b47-9fd6-5b599e05ceab"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VEND]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="144" y="0" width="100" height="15"/>
+				<reportElement style="encabezadosColumnas" x="144" y="0" width="100" height="15" uuid="b1d544a4-8c67-42ee-9983-e959a7c60890"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="encabezadosColumnas" x="244" y="0" width="100" height="15"/>
+				<reportElement style="encabezadosColumnas" x="244" y="0" width="100" height="15" uuid="9cebeecd-09cc-4851-af3b-2823b3411f34"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -178,80 +176,80 @@
 	<detail>
 		<band height="81" splitType="Stretch">
 			<textField>
-				<reportElement style="subEncabezado" x="0" y="0" width="100" height="15"/>
+				<reportElement style="subEncabezado" x="0" y="0" width="100" height="15" uuid="46baf2da-d1b4-49e2-aa0f-636074f88ac4"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement style="subEncabezado" x="455" y="0" width="100" height="15"/>
+				<reportElement style="subEncabezado" x="455" y="0" width="100" height="15" uuid="b0d7c670-b2f6-4ee1-9127-efa75ef40ae3"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kilos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{kilos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="subEncabezado" x="144" y="0" width="100" height="15"/>
+				<reportElement style="subEncabezado" x="144" y="0" width="100" height="15" uuid="d6b20b83-dee8-4f82-b673-47ed18fd8c22"/>
 				<textElement textAlignment="Left">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="subEncabezado" x="244" y="0" width="211" height="15"/>
+				<reportElement style="subEncabezado" x="244" y="0" width="211" height="15" uuid="476c0270-8ee2-47e0-8e2a-67e4e442756e"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{LEYENDA_1}=="null" ? " " : $F{LEYENDA_1} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{LEYENDA_1}=="null" ? " " : $F{LEYENDA_1} )]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="15" width="206" height="15"/>
+				<reportElement x="249" y="15" width="206" height="15" uuid="4ebe2bac-62de-4fed-ad0e-c32c68ca02b0"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{LEYENDA_2}=="null" ? " " : $F{LEYENDA_2} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{LEYENDA_2}=="null" ? " " : $F{LEYENDA_2} )]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="249" y="30" width="206" height="15"/>
+				<reportElement x="249" y="30" width="206" height="15" uuid="4761675c-ed89-4177-9006-f727dcf0ce04"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{LEYENDA_3}=="null" ? " " : $F{LEYENDA_3} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{LEYENDA_3}=="null" ? " " : $F{LEYENDA_3} )]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="455" y="15" width="100" height="30"/>
+				<reportElement x="455" y="15" width="100" height="30" uuid="4e273c17-f6d0-4e04-801b-5da183ff2676"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="455" y="15" width="100" height="15"/>
+				<reportElement x="455" y="15" width="100" height="15" uuid="aeb6b783-0e4d-4db7-9e94-c68d4fc71023"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reparto]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="455" y="30" width="100" height="15"/>
+				<reportElement x="455" y="30" width="100" height="15" uuid="28746165-5e94-4ef1-825d-1c746b586cca"/>
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{destino}==null ? "Santa Fe" : $F{destino} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{destino}==null ? "Santa Fe" : $F{destino} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="144" y="15" width="100" height="15"/>
+				<reportElement x="144" y="15" width="100" height="15" uuid="2aade26f-1e13-4e1a-885b-3e27389075dd"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{domicilio}=="null" ? " " : $F{domicilio} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{domicilio}=="null" ? " " : $F{domicilio} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="144" y="30" width="100" height="15"/>
+				<reportElement x="144" y="30" width="100" height="15" uuid="8be6d206-b5b0-4a87-96ec-46f22cb61c8c"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{localidad}=="null" ? " " : $F{localidad} )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{localidad}=="null" ? " " : $F{localidad} )]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="45" width="555" height="36"/>
+				<reportElement x="0" y="45" width="555" height="36" uuid="61ddf73b-aa90-408a-a7a0-b96576265adf"/>
 				<subreportParameter name="numeroDePedido">
 					<subreportParameterExpression><![CDATA[$F{NRO_PEDIDO}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -262,42 +260,42 @@
 					<subreportParameterExpression><![CDATA[$P{numeroRevision}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA["C:\\src\\listadosDePreparacion\\revisionDetalle.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\src\\listadosDePreparacion\\revisionDetalle.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement style="subEncabezado" mode="Transparent" x="100" y="0" width="44" height="15" backcolor="#CCCCCC"/>
+				<reportElement style="subEncabezado" mode="Transparent" x="100" y="0" width="44" height="15" backcolor="#CCCCCC" uuid="e0751956-7fba-4de5-9c9a-5357618fe481"/>
 				<textElement textAlignment="Left">
 					<font size="6" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreVendedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombreVendedor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="15" width="48" height="10"/>
+				<reportElement x="0" y="15" width="48" height="10" uuid="6eac7f85-1623-4cfd-9c9a-d399ce8a8bf3"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[revision]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="15" width="96" height="10"/>
+				<reportElement x="48" y="15" width="96" height="10" uuid="e53436d5-3671-4479-be17-46ae088efb0a"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{revision}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="25" width="58" height="10"/>
+				<reportElement x="0" y="25" width="58" height="10" uuid="54fea508-32fd-45de-b02b-aa431ffee990"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[Fecha del Pedido:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="58" y="25" width="86" height="10"/>
+				<reportElement x="58" y="25" width="86" height="10" uuid="b32b88b3-92f2-46d0-9388-ec26e7a69e32"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{fechaPedido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaPedido}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -310,7 +308,7 @@
 	<summary>
 		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="311" height="30"/>
+				<reportElement x="0" y="0" width="311" height="30" uuid="ac66cf80-7a37-4e22-be2a-f710a9109b7e"/>
 				<textElement>
 					<font size="6" isBold="true"/>
 				</textElement>

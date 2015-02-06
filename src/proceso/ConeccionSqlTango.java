@@ -38,7 +38,7 @@ public class ConeccionSqlTango {
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON_S_R_L";
                         break;
                     default:
-                        url="jdbc:sqlserver://SERVERTANGO;databaseName=BU2";
+                        url="jdbc:sqlserver://SERVERTANGO;databaseName=BU3";
                         break;
                 }
 		  //"jdbc:mysql://201.235.253.65:3306/maurodim_sidercon";

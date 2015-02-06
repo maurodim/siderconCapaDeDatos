@@ -9,7 +9,7 @@
     </coneccion>
     <coneccion id="2">
         <nombre>Coneccion Tango BU</nombre>
-        <url>jdbc:sqlserver://SERVERTANGO;databaseName=BU2</url>
+        <url>jdbc:sqlserver://SERVERTANGO;databaseName=BU3</url>
         <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
         <usuario>Axoft</usuario>
         <clave>Axoft</clave>
