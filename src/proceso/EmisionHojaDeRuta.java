@@ -131,7 +131,12 @@ public class EmisionHojaDeRuta extends Thread{
         try {
             st.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex);
+            sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values(0.00,"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+            try {
+                st.executeUpdate(sql);
+            } catch (SQLException ex1) {
+                Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
         try {
             st.close();
