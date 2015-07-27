@@ -59,7 +59,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         ArrayList idTango=new ArrayList();
         ArrayList cantidadesTango=new ArrayList();
         Integer idTT=0;
-        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' order by GVA03.ID_GVA03";
+        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' order by GVA03.CANT_A_DESC desc";
         
         Statement xt=null;
         if(SiderconCapaatos.falloConecion==0){
