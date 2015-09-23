@@ -76,7 +76,7 @@ public class Configuracion {
     }
     public ArrayList leerConfiguraciones() throws MalformedURLException, IOException, ParserConfigurationException, SAXException{
      String arc="config.xml";
-        URL url=new URL("http://www.maurodi.com.ar/xml/config.xml");
+        URL url=new URL("http://www.bambusoft.com.ar/xml/config.xml");
         BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
         String entrada;
         String cadena="";

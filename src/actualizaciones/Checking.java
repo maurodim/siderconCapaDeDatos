@@ -59,7 +59,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         ArrayList idTango=new ArrayList();
         ArrayList cantidadesTango=new ArrayList();
         Integer idTT=0;
-        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' order by GVA03.CANT_A_DESC desc";
+        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU from GVA03 where NRO_PEDIDO like '%"+codigoPedido+"' order by GVA03.CANT_A_DES";
         
         Statement xt=null;
         if(SiderconCapaatos.falloConecion==0){
@@ -597,6 +597,8 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         Double cantidadTg=0.00;
         Checking myC=new Checking();
         Checking tgC=new Checking();
+        
+        
         for(int i=0;i < cantidadItemsCargadosTg;i++){
             tgC=(Checking)tg.get(i);
             codigoArticuloTg=tgC.codigoTango;
@@ -606,7 +608,23 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                 codigoArticuloMy=myC.codigoMy.trim();
                 cantidadMy=myC.cantidadMysql;
                 if(codigoArticuloMy.equals(codigoArticuloTg)){
-                    if(cantidadMy <= cantidadTg){
+                    Iterator tangI=tg.listIterator();
+                    Double mayor=0.00;
+                    Double mayor1=0.00;
+                    Checking tgC1=new Checking();
+                    while(tangI.hasNext()){
+                        tgC1=(Checking)tangI.next();
+                        
+                        mayor1=tgC1.cantidadTango;
+                        if(codigoArticuloMy.equals(tgC1.codigoTango)){
+                        if(mayor1 >= mayor){
+                            mayor=mayor1;
+                            mayor1=0.00;
+                        }
+                    }
+                    }
+                    if(mayor > 0)mayor1=mayor;
+                    if(cantidadMy <= mayor1){
                         
                     }else{
                         cantidadMy=cantidadTg;

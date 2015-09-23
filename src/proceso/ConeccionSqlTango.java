@@ -4,6 +4,7 @@
  */
 package proceso;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import config.Configuracion;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,24 +28,33 @@ public class ConeccionSqlTango {
     static String clave;
     public ConeccionSqlTango(int base) {
  		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-                switch (base){
+                driver="com.mysql.jdbc.Driver";
+        switch (base){
                     case 1:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=BU3";
+                        //url="jdbc:mysql://localhost/tango";
                         break;
                     case 2:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON";
+                        //url="jdbc:mysql://localhost/tango";
                         break;
                     case 3:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=SIDERCON_S_R_L";
+                        //url="jdbc:mysql://localhost/tango";
                         break;
                     default:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=BU3";
+                        //url="jdbc:mysql://localhost/tango";
                         break;
                 }
 		  //"jdbc:mysql://201.235.253.65:3306/maurodim_sidercon";
-		usuario="Axoft";  //"maurodim_mSider";
+        /*
+                  usuario="mauroS";
+                  clave="1";
+        */	
+        usuario="Axoft";  //"maurodim_mSider";
 		clave="Axoft";
-
+          
 		
 
     }
@@ -85,6 +95,7 @@ public static Connection ObtenerConeccion(int bb) throws ClassNotFoundException{
                         break;
                 }
         String cadenn=ConeccionSqlTango.url+";user="+ConeccionSqlTango.usuario+";password="+ConeccionSqlTango.clave+";";
+        //String cadenn=ConeccionSqlTango.url+";user="+ConeccionSqlTango.usuario+";password="+ConeccionSqlTango.clave+"";
         String cadenax="";
         Connection ccnn=null;
         try {
@@ -93,6 +104,22 @@ public static Connection ObtenerConeccion(int bb) throws ClassNotFoundException{
         } catch (SQLException ex) {
             SiderconCapaatos.falloConecion=1;
             JOptionPane.showMessageDialog(null,"SE HA DETECTADO UN ERROR EN LA CONEXION AL SERVERTANGO\n CERRAR EL PROCESO Y VOLVER A INTENTARLO","CONEXION A SERVERTANGO ",JOptionPane.ERROR_MESSAGE);
+            
+            MysqlDataSource dataSource=new MysqlDataSource();
+		
+			//Class.forName(driver1).newInstance();
+                    dataSource.setUser(ConeccionSqlTango.usuario);
+                    dataSource.setDatabaseName("tango");
+                    dataSource.setPassword(ConeccionSqlTango.clave);
+                    //dataSource.setServerName("192.168.0.111");
+                    dataSource.setServerName("localhost");
+                try {
+                    ccnn=dataSource.getConnection();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(ConeccionSqlTango.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+                
+            
             Logger.getLogger(ConeccionSqlTango.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ccnn;

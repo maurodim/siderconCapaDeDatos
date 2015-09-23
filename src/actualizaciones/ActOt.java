@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class ActOt extends Thread{
     @Override
     public void run(){
+        
         ActualizarOrdenesDeTrabajo aOt=new GestionarOrdenesDeTrabajo();
         ActualizarOrdenesDeTrabajo otMy=new OrdenesTrabajoMy();
         ArrayList list=new ArrayList();

@@ -24,8 +24,8 @@ public class Coneccion {
 	private static Connection cn=null;
         private String driver="com.mysql.jdbc.Driver";
         private String url="jdbc:mysql://192.168.0.111/siderpruebas";
-        private String usuario="hdr";//"hdr";
-        private String clave="daniel";//"daniel";
+        private String usuario="hdr";
+        private String clave="daniel";
 
     public  String getDriver() {
         return driver;
@@ -59,8 +59,8 @@ public class Coneccion {
 		String clave="2428WEBmauro";
 */
                 String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
-		String usuario1="hdr";//"hdr";
-		String clave1="daniel";//daniel";
+		String usuario1="hdr";
+		String clave1="daniel";
                 //Connection cn=null;
 		//Connection cn=null;
                 //BasicDataSource basicDataSource=new BasicDataSource();
@@ -71,6 +71,7 @@ public class Coneccion {
                     dataSource.setDatabaseName("sidercon");
                     dataSource.setPassword(clave1);
                     dataSource.setServerName("192.168.0.111");
+                    //dataSource.setServerName("localhost");
                     cn=dataSource.getConnection();
                  }catch(Exception ex){
                     GuardarMovimientos gArch=new Archivador();

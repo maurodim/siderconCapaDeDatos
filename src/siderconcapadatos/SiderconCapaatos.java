@@ -205,6 +205,7 @@ public class SiderconCapaatos {
         art.cargarListado(); 
         Procesos pro=new Procesos();
         if(falloConecion==0){
+            //esta bloqueado para pruebas
         saldoCliente=pro.cargarSaldosDeClientes();    
         }else{
         
