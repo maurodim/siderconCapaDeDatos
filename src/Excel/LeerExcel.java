@@ -107,7 +107,7 @@ private void printToConsole(List cellDataList)
                        case 0:
                            stringCellValue=stringCellValue.trim();
                            descrip=stringCellValue.trim();
-                           if(stringCellValue.length()==8)stringCellValue="0"+stringCellValue;
+                           //if(stringCellValue.length()==8)stringCellValue="0"+stringCellValue;
                            articulo.setCodigo(stringCellValue);
                            fila=i + 1;
                            System.out.println("codigo ingresado o leido "+articulo.getCodigo()+" fila "+fila);
