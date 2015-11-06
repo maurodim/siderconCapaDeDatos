@@ -603,7 +603,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
             tgC=(Checking)tg.get(i);
             codigoArticuloTg=tgC.codigoTango;
             cantidadTg=tgC.cantidadTango;
-            for(int aaa=0;aaa <cantidadItemsAComparar;aaa++){
+            for(int aaa=0;aaa < cantidadItemsAComparar;aaa++){
                 myC=(Checking)my.get(aaa);
                 codigoArticuloMy=myC.codigoMy.trim();
                 cantidadMy=myC.cantidadMysql;
@@ -624,12 +624,13 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                     }
                     }
                     if(mayor > 0)mayor1=mayor;
-                    if(cantidadMy <= mayor1){
+                    if(cantidadMy == mayor1){
                         
                     }else{
                         cantidadMy=cantidadTg;
                         myC.cantidadMysql=cantidadTg;
-                        modificarItems(myC);
+                        //vamos a ver aqui si solucionamos
+                        //modificarItems(myC);
                     }
                 }
                 

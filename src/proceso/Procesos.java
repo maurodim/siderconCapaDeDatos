@@ -700,16 +700,17 @@ public class Procesos {
                             //sh=cp.createStatement();
                             sh.executeUpdate(sql);
                             System.out.println(sql);
-                            flagP=1;
+                            flagP=0;
             }
-            System.out.println(" tamaño de la descripcion :"+ar.getDescripcionArticulo().length());
+            System.out.println(" tamaño de la descripcion :"+ar.getDescripcionArticulo().length()+" FLAGP "+flagP);
             
             if(flagP==0){
-                        sql="insert into ArticulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
+                        sql="insert into articulosDesc (CodArticulo,Descripcion,Sinonimo) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo()+"','"+ar.getSinonimoArticulo()+"')";
                         }else{
-                        sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo ='"+ar.getCodigo()+"'";    
-                        
+                        sql="update articulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo ='"+ar.getCodigo().trim()+"'";    
+                        System.out.println("Ingreso: "+sql);
                         }
+            
                         sh.executeUpdate(sql);
                         if(flagP==0){
                             sql="insert into datos (COD_ARTICULO,DESCRIPCION,SINONIMO,UMS,UMV) values ('"+ar.getCodigo()+"','"+ar.getDescripcionArticulo().trim()+"','"+ar.getSinonimoArticulo().trim()+"','KGS','"+medida+"')";
