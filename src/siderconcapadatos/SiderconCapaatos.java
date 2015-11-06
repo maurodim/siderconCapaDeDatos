@@ -19,6 +19,7 @@ import config.Formularios;
 import interfaces.Ideable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Connection;
@@ -130,6 +131,19 @@ public class SiderconCapaatos {
                 gArch.registrarErrores(cod1, "", "");
                 Logger.getLogger(SiderconCapaatos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        File archivo = new File (formularioConsolidado);
+        File bases=new File("listadosDePreparacion");
+         if(!bases.isDirectory()){
+            JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION ..... "+formularioConsolidado);
+            bases.mkdirs();
+            
+            
+        }
+         if(archivo.exists()){
+             
+         }else{
+             JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION Y CREACION DE LOS PARAMETROS TEMPORALES DE CONFIGURACION");
+         }
              ProcesoDeConversionDeFechasDeEntrega pcfe=new ProcesoDeConversionDeFechasDeEntrega();
         pcfe.start();
         Integer numerador = 0; 
