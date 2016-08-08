@@ -99,7 +99,7 @@ public class Articulos {
                 String cod1=String.valueOf(ex);
                 gArch.registrarErrores(cod1, "", "");
         String codig;
-        String sql="select * from PESOS";
+        String sql="select * from pesos";
         Statement st=cart.createStatement();
         st.execute(sql);
         ResultSet rs=st.getResultSet();

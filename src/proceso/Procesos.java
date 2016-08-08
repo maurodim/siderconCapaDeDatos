@@ -1219,7 +1219,9 @@ public class Procesos {
          * 
          */
           //      Connection cp=cn.ObtenerConeccion();
-		String sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 and zona="+zonaNumero+" group by NRO_PEDIDO order by RAZON_SOC";
+		String sql=null;
+                if(zonaNumero > 1)sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 and zona="+zonaNumero+" group by NRO_PEDIDO order by RAZON_SOC";
+                if(zonaNumero ==1)sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 and zona=0 group by NRO_PEDIDO order by RAZON_SOC";
 		System.out.println(sql);
                 
                 PreparedStatement st=cp.prepareStatement(sql);

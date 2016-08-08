@@ -20,7 +20,7 @@ public class ConeccionRemotaMyS {
     	public static Connection ObtenerConeccion(){
 		String driver1="com.mysql.jdbc.Driver";
                 
-		String url1="jdbc:mysql://201.235.253.65:3306/maurodim_sidercon";
+		String url1="jdbc:mysql://167.250.5.18:3306/maurodim_sidercon";
 		String usuario1="maurodim_mSider";
 		String clave1="2428WEBmauro";
 

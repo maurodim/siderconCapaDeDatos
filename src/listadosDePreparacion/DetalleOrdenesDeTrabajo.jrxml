@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleOrdenesDeTrabajo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleOrdenesDeTrabajo" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4b0b5e8a-543b-4222-83b3-e58a9ac0ef04">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -16,35 +16,35 @@
 	<columnHeader>
 		<band height="10" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="10"/>
+				<reportElement x="0" y="0" width="100" height="10" uuid="d7b6e965-e459-450d-86de-efe5b130c0b0"/>
 				<textElement>
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COD ARTICULO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="226" height="10"/>
+				<reportElement x="100" y="0" width="226" height="10" uuid="c029436f-79d8-431a-bb5a-a12d40322c64"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="326" y="0" width="67" height="10"/>
+				<reportElement x="326" y="0" width="67" height="10" uuid="93e573ca-a031-4488-9b69-20d476d28959"/>
 				<textElement>
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CANTIDAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="393" y="0" width="79" height="10"/>
+				<reportElement x="393" y="0" width="79" height="10" uuid="fd3cb1b6-f5c9-4404-82cb-1640ca2499df"/>
 				<textElement>
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OT NUMERO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="472" y="0" width="100" height="10"/>
+				<reportElement x="472" y="0" width="100" height="10" uuid="20672929-1058-4b1a-8463-b0c00a7ea23f"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -55,35 +55,35 @@
 	<detail>
 		<band height="10" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="10"/>
+				<reportElement x="0" y="0" width="100" height="10" uuid="2e693c2b-a6a6-42f0-a76f-85a00cf0db43"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COD_ARTIC}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="226" height="10"/>
+				<reportElement x="100" y="0" width="226" height="10" uuid="8e56a5d7-d7c1-479f-823e-8c51f49a7cdb"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="326" y="0" width="67" height="10"/>
+				<reportElement x="326" y="0" width="67" height="10" uuid="0e6a0839-855c-4ce8-89f9-abf80e8da963"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CANT_PEDID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="393" y="0" width="79" height="10"/>
+				<reportElement x="393" y="0" width="79" height="10" uuid="2438389c-a64e-4599-9ac5-bc4b47687279"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{orden_num}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
-				<reportElement x="472" y="0" width="100" height="10"/>
+				<reportElement x="472" y="0" width="100" height="10" uuid="732d3f49-1222-40e1-b25f-4985503107a8"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>

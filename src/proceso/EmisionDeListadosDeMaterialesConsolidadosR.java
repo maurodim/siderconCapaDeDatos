@@ -63,11 +63,17 @@ public class EmisionDeListadosDeMaterialesConsolidadosR extends Thread{
     
     public synchronized void run(){
         Map listConsolidado=new HashMap();
-         
+         System.out.println("OJOOOOOOOOO  lpm "+this.numeroListado+" / total "+total+" revision "+this.revision);
         cc1=Coneccion.ObtenerConeccion();
         listConsolidado.put("numListado",this.numeroListado);
+        if(total !=null){
+            
+        }else{
+            total=0.00;
+        }
         listConsolidado.put("totalKg",total);
         listConsolidado.put("revision",this.revision);
+        
         System.out.println(fechaEnvio+"uni "+numVehiculo+" desc "+descVehiculo+" kg "+total+"LISTADO NUM"+this.numeroListado+" rev "+this.revision);
         String master=SiderconCapaatos.formularioConsolidadoR.trim();
         String destino="////COLOSSUS//ventas//LPM//"+numeroListado+" R "+this.revision+" Listado consolidado General de materiales.pdf";
