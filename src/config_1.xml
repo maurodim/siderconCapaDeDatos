@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<base>
+	<nombre>coneccion server</nombre>
+	<string>192.168.0.111</string>
+	<bd>sidercon</bd>
+	<us>daniel</us>
+	<pas>mauro</pas>
+</base>
+<base>
+	<nombre>coneccion remota</nombre>
+	<string>192.168.0.111</string>
+	<bd>sidercon</bd>
+	<us>daniel</us>
+	<pas>mauro</pas>
+</base>
+<base>
+	<nombre>localhost</nombre>
+	<string>192.168.0.111</string>
+	<bd>sidercon</bd>
+	<us>daniel</us>
+	<pas>mauro</pas>
+</base>
+<base>
+	<nombre>coneccion tango</nombre>
+	<string>192.168.0.111</string>
+	<bd>sidercon</bd>
+	<us>daniel</us>
+	<pas>mauro</pas>
+</base>

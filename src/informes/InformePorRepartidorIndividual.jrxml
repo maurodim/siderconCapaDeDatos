@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformePorRepartidos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="166"/>
+	<parameter name="fechaDesde" class="java.util.Date"/>
+	<parameter name="fechaHasta" class="java.util.Date"/>
+	<parameter name="numeroFletero" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.N_REMITO,pedidos_carga1.hdr1,(select hdr.numeroFletero from hdr where hdr.numero=pedidos_carga1.hdr1)as fletero,(select fleteros.nombre from fleteros where fleteros.numero=fletero),pedidos_carga1.entrega,pedidos_carga1.TALON_PEDI as empresa,pedidos_carga1.RAZON_SOC as cliente,if(pedidos_carga1.CANT_FACT >0,"Entrega Parcial","Entregado")as Estado,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID)as peso from pedidos_carga1 where entregaConv between $P{fechaDesde} and $P{fechaHasta} and fletero = $P{numeroFletero} group by NRO_PEDIDO order by fletero,entregaConv asc]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="N_REMITO" class="java.lang.String"/>
+	<field name="hdr1" class="java.lang.Integer"/>
+	<field name="fletero" class="java.lang.Long"/>
+	<field name="(select fleteros.nombre from fleteros where fleteros.numero=fletero)" class="java.lang.String"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.String"/>
+	<field name="peso" class="java.lang.Double"/>
+	<variable name="totalKg" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{peso}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="595" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME POR REPARTIDOR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="19">
+			<staticText>
+				<reportElement x="200" y="0" width="64" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº RTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="17"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Repartidor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="0" width="80" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kg Entregados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="536" y="0" width="59" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="17"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="0" width="90" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="55" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="0" width="47" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="0" width="100" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="55" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="0" width="47" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="90" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="536" y="0" width="59" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="17"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{(select fleteros.nombre from fleteros where fleteros.numero=fletero)}]]></textFieldExpression>
+				<patternExpression><![CDATA[( $F{fletero}==$P{numeroFletero} ? " " : $F{(select fleteros.nombre from fleteros where fleteros.numero=fletero)} )]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="64" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{N_REMITO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="264" y="0" width="80" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="106">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="17" width="100" height="17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde Fecha :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="100" height="17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta Fecha :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="51" width="100" height="17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Entregas Realizadas :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="68" width="100" height="17"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kg Repartidos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="17" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechaDesde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="34" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechaHasta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="51" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="100" y="68" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totalKg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

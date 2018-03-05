@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetalleClientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ae5a69ab-fe94-47ae-8b22-dd8aeafc9ce7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\Administrador\\Mis documentos\\NetBeansProjects\\SiderconCapaDatos\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="revision" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{revision}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pedidos_carga1.NRO_PEDIDO,pedidos_carga1.RAZON_SOC,pedidos_carga1.COD_CLIENT,pedidos_carga1.orden_num from pedidos_carga1 where listado=$P{numeroListado} and revision=$P{revision} group by COD_CLIENT,orden_num]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="918af7d2-bc75-4263-93af-61894980306e"/>
+				<text><![CDATA[COD CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="185" height="20" uuid="ac745473-2b6d-48dd-a7c2-0e018a95075a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[RAZON SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="0" width="100" height="20" uuid="d247fed0-e1b1-47f5-a771-1264ecf9cfa4"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Numero de OT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="100" height="18" uuid="ed612639-569a-4d7e-b18f-ffca40d76d74"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_CLIENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="1" width="185" height="18" uuid="cab7d19a-bb13-4168-bf0d-cb7112bd3b87"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="393" y="1" width="100" height="18" uuid="7444d58f-6855-46dc-a09b-c7c11890e2ca"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{orden_num}==0 ? " " : $F{orden_num} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
