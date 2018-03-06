@@ -23,9 +23,9 @@ import seguimientos.GuardarMovimientos;
 public class Coneccion {
 	private static Connection cn=null;
         private String driver="com.mysql.jdbc.Driver";
-        private String url="jdbc:mysql://localhost/sidercon";//"jdbc:mysql://192.168.0.111/siderpruebas";
-        private String usuario="root";//"hdr";
-        private String clave="";//"daniel";
+        private String url="jdbc:mysql://192.168.0.111/sidercon";//"jdbc:mysql://192.168.0.111/siderpruebas";
+        private String usuario="hdr";//"hdr";
+        private String clave="daniel";//"daniel";
 
     public  String getDriver() {
         return driver;
@@ -58,9 +58,9 @@ public class Coneccion {
 		String usuario="maurodim_mSider";
 		String clave="2428WEBmauro";
 */
-                String url1="jdbc:mysql://localhost/sidercon";//"jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
-		String usuario1="root";//"hdr";
-		String clave1="";//"daniel";
+                String url1="jdbc:mysql://192.168.0.111/siderpruebas";//"sidercon";
+		String usuario1="hdr";
+		String clave1="daniel";
                 //Connection cn=null;
 		//Connection cn=null;
                 //BasicDataSource basicDataSource=new BasicDataSource();
@@ -72,7 +72,7 @@ public class Coneccion {
                     dataSource.setPassword(clave1);
                     //dataSource.setServerName("192.168.0.111");
                     
-                    dataSource.setServerName("localhost");
+                    dataSource.setServerName("192.168.0.111");
                     cn=dataSource.getConnection();
                  }catch(Exception ex){
                     GuardarMovimientos gArch=new Archivador();

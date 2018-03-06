@@ -28,7 +28,7 @@ public class ConeccionSqlTango {
     static String clave;
     public ConeccionSqlTango(int base) {
  		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-                driver="com.mysql.jdbc.Driver";
+                //driver="com.mysql.jdbc.Driver";
         switch (base){
                     case 1:
                         url="jdbc:sqlserver://SERVERTANGO;databaseName=BU3";
@@ -52,8 +52,8 @@ public class ConeccionSqlTango {
                   usuario="mauroS";
                   clave="1";
         */	
-        usuario="root";//"Axoft";  //"maurodim_mSider";
-		clave="";//"Axoft";
+        usuario="Axoft";  //"maurodim_mSider";
+		clave="Axoft";
           
 		
 
