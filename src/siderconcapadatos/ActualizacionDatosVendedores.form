@@ -105,6 +105,9 @@
                   <Connection code="tablaFleteros" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MiTablaFleteros tablaFleteros=new MiTablaFleteros();&#xa;Vendedores chofer=new Vendedores();&#xa;Procesos pro=new Procesos();&#xa;//ArrayList lista=new ArrayList();&#xa;try{&#xa;Vendedores.listar();&#xa;lista=Vendedores.getListado();&#xa;}catch(Exception ex){&#xa;System.err.println(&quot;NO SE CARGARON LOS FLETEROS &quot;+ex);&#xa;}"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablaFleteros.addColumn(&quot;Nombre&quot;);&#xa;tablaFleteros.addColumn(&quot;Numero&quot;);&#xa;Object[] fila=new Object[2];&#xa;while(iff.hasNext()){&#xa;//Fleteros chofer;&#xa;chofer=(Vendedores) iff.next();&#xa;fila[0]=chofer.getNombre();&#xa;fila[1]=chofer.getNumero();&#xa;tablaFleteros.addRow(fila);&#xa;}&#xa;this.jPanel3.setVisible(false);"/>
@@ -130,6 +133,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" pref="125" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" pref="139" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -138,7 +143,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="31" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -160,6 +168,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Eliminar Vendedor"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

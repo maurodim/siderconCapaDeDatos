@@ -69,7 +69,21 @@ public class Vendedores {
     public void guardarVendedor(Vendedores vend){
         Coneccion con=new Coneccion();
         Connection cnn=con.getCn();
-        String sql="insert into vendedores (numero,nombre) values ("+vend.getNumero()+",'"+vend.getNombre()+"')";
+        String sql="insert into vendedores (numero,nombre,id_tango) values ("+vend.getNumero()+",'"+vend.getNombre()+"',"+vend.getNumero()+")";
+        try {
+            Statement st=cnn.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            con.CerrarCn(cnn);
+        } catch (SQLException ex) {
+            Logger.getLogger(Vendedores.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public void eliminarVendedor(Vendedores vend){
+        Coneccion con=new Coneccion();
+        Connection cnn=con.getCn();
+        String sql="delete from vendedores where numero="+vend.getNumero();
         try {
             Statement st=cnn.createStatement();
             st.executeUpdate(sql);
