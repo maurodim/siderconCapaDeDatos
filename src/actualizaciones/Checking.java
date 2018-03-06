@@ -415,7 +415,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                               //tamaTg=tamaTg - 1;
                                sql = "delete from pedidos_carga1 where numero="+ccK.numeroIdMysql;
                                System.out.println(sql);
-                               st.executeUpdate(sql);
+                               //st.executeUpdate(sql);
                               //mys.remove(i);
 
                           } 
