@@ -4,6 +4,7 @@
  */
 package proceso;
 
+import Objetos.PdfHdr;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -138,11 +139,7 @@ public class EmisionHojaDeRuta extends Thread{
                 Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
-        try {
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         GuardarListados gl=new GuardarListados();
         gl.setList(this.listado);
         gl.start();
@@ -187,11 +184,7 @@ public class EmisionHojaDeRuta extends Thread{
                 System.out.println("EL CAMPO COMPROBANTE ES DEMASIADO LARGO - REDUZCALO. GRACIAS");
             }
         }
-        try {
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         Map listConsolidado=new HashMap();
         listConsolidado.put("numeroHdr",num);
         //System.out.println(fechaEnvio+" "+numVehiculo+" "+descVehiculo+" "+total);
@@ -199,6 +192,14 @@ public class EmisionHojaDeRuta extends Thread{
         System.out.println(SiderconCapaatos.formularioHdr);
         String destino="////COLOSSUS//logistica//Sist HDR//HDR//"+num+"hdr.pdf";
         String destino2="C://Hdr//"+num+"hdr.pdf";
+        
+        Connection ch1=Coneccion.ObtenerConeccion();
+        //System.out.println(ch1.toString());
+        
+        PdfHdr pdf=new PdfHdr(ch1,num,destino2,destino);
+        pdf.start();
+        
+        /*
         JasperReport reporte = null;
         try {
             reporte = (JasperReport)JRLoader.loadObject(master);
@@ -224,7 +225,7 @@ public class EmisionHojaDeRuta extends Thread{
         } catch (JRException ex) {
             Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
         }
-                 
+         */        
             File f=new File(destino2);
             if(f.exists()){
             try {

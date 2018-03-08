@@ -1178,7 +1178,7 @@ public class Procesos {
                 //sql="select GVA21.N_REMITO from GVA21 where NRO_PEDIDO like '%"+ped.getCodigoTangoDePedido()+"' and FECHA_INGRESO like '%"+fechaActual+"' group by N_REMITO";
                 String pedT=ped.getCodigoTangoDePedido().substring(2);
                 
-                        sql="select N_COMP from AR_ULTIMO_REMITO where NRO_PEDIDO like '%"+pedT+"' group by N_COMP";
+                        sql="select GVA21.N_REMITO from GVA21 where NRO_PEDIDO like '%"+pedT+"' group by N_REMITO";
                 xt.execute(sql);
                 System.out.println("COMPROBANTES QUE LEE EL SISTEMA "+sql);
                 ResultSet xs=xt.getResultSet();
