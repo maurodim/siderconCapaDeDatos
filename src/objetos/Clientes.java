@@ -127,6 +127,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         Double cli=0.00;
         try {
             if(SiderconCapaatos.falloConecion==0){
+                cli=0.00;
             String sql="select GVA14.SALDO_CC,GVA14.COD_CLIENT,GVA14.RAZON_SOCI from GVA14 where ID_GVA14 = "+idTangoCliente;
             Statement st=ccn.createStatement();
             st.execute(sql);

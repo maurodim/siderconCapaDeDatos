@@ -1200,6 +1200,7 @@ public class Procesos {
                 sql="select pedidos_carga1.listado,pedidos_carga1.TALON_PEDI,pedidos_carga1.orden_num,pedidos_carga1.COND_VENTA,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like pedidos_carga1.RAZON_SOC and saldosclientesact.COD_CLI like pedidos_carga1.COD_CLIENT)as saldo from pedidos_carga1 where numero="+ped.getiDPedido();
                 st.execute(sql);
                 ResultSet rr=st.getResultSet();
+                ChequearCantidadesPedidos chp=new Clientes();
                 while(rr.next()){
                     listado=rr.getInt(1);
                     ped.setEmpresa(rr.getString("TALON_PEDI"));
@@ -1235,11 +1236,15 @@ public class Procesos {
                     String trim = cli.trim();
                     Clientes cliente=new Clientes();
                     Actualizable actCli=new Clientes();
-                    saldo=(Double)actCli.actualizarDatosSaldos(sqlC, empresa1,cli,cliente.getIdTango());
+                    cliente.setCodigoCliente(ped.getCodigoCliente());
+                    cliente.setEmpresa(empresa1);
+                    cliente=(Clientes) chp.actualizar(cliente);
+                    saldo=cliente.getSaldo();
+                    //saldo=(Double)actCli.actualizarDatosSaldos(sqlC, empresa1,cli,cliente.getIdTango());
                     //Double sal=Math.ceil(saldo);
                     //saldo=sal;
                     ped.setSaldoCliente(saldo);
-                    System.err.println("SALDO DEL CLIENTE "+saldo+" cliente "+ped.getRazonSocial());
+                    System.err.println("SALDO DEL CLIENTE "+saldo+" cliente "+ped.getRazonSocial()+" id cliente "+cliente.getIdTango()+" cod cliente "+cliente.getCodigoCliente()+" empresa "+empresa1);
                     }
                     rr.close();
                     ped.setNumeroComprobante(comprobante);

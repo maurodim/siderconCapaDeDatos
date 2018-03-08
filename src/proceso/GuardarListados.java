@@ -53,18 +53,6 @@ public class GuardarListados extends Thread{
             
             
         }
-        try {
-            /*
-             * ACA DEBERÍA RECORRER LA TABLA PARA AGRUPAR LOS MATERIALES Y GENEERAR LA TABLA DE SOPORTE DE LA REVISION DE CONSOLIDADO,
-             * UTILIZANDO EL MISMO STATEMENT
-             * no, asi no sirve
-             * 
-             */
-            //sql="";
-            
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuardarListados.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     } 
 }
