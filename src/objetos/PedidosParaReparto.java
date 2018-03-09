@@ -4,15 +4,29 @@
  */
 package objetos;
 
+import actualizaciones.ChequearCantidadesPedidos;
+import interfaces.Actualizable;
+import interfaces.Editables;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import proceso.Coneccion;
+import siderconcapadatos.SiderconCapaatos;
+import siderconcapadatos.tablas.miTablaModificacion;
 
 /**
  *
  * @author USUARIO
  */
-public class PedidosParaReparto {
+public class PedidosParaReparto implements Editables{
 	/*
 	 * ACA SOLAMENTE GENERO EL OBJETO PEDIDO CON LOS DATOS ESENCIALES PARA TRABAJAR LAS 
 	 * PRIMERAS PANTALLAS SIN CARGA DE CALCULOS
@@ -458,5 +472,195 @@ public class PedidosParaReparto {
         this.empresa = "";
         this.saldoCliente=0.00;
     }
-	
+
+    @Override
+    public ArrayList ListarDetalleDePedidos(String codigoPedido) {
+            
+                Coneccion cn=new Coneccion();
+                Connection cp=cn.getCn();
+                ArrayList listaPed=new ArrayList();
+                try {
+                String sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like 'pedidos_carga1.RAZON_SOC%' and saldosclientesact.COD_CLI like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where NRO_PEDIDO like '%"+codigoPedido+"'and reparto=1";
+                System.out.println(sql);
+                
+                PreparedStatement st=cp.prepareStatement(sql);
+                //st.execute(sql);
+                ResultSet rs=st.executeQuery();
+                ChequearCantidadesPedidos chp=new Clientes();
+                //synchronized rs;
+                while(rs.next()){
+                    PedidosParaReparto pedidos=new PedidosParaReparto();
+                    Clientes clie=new Clientes();
+                    pedidos.setiDPedido(rs.getInt("numero"));
+                    pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
+                    pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
+                    pedidos.setVehiculoAsignado(rs.getInt("vehiculo"));
+                    //pedidos.setPesoTotal(rs.getDouble("total"));
+                    pedidos.setCodigoArticulo(rs.getString("COD_ARTIC"));
+                    pedidos.setDescripcionArticulo(rs.getString("DESC_ARTIC")+" "+rs.getString("DESC_ADIC"));
+                    pedidos.setPesoItems(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
+                    pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
+                    pedidos.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
+                    pedidos.setCodigoCliente(rs.getString("COD_CLIENT"));
+                    pedidos.setFechaEnvio(rs.getString("entrega"));
+                    pedidos.setFechaActualizacionSaldoCliente(rs.getDate("act"));
+                    pedidos.setNumeroDeListadoDeMateriales(rs.getInt("listado"));
+                    pedidos.setNumeroDeRevisionDeListado(rs.getInt("revision"));
+                    pedidos.setNumeroDeHojaDeRuta(rs.getInt("hdr1"));
+                    pedidos.setNumeroDeProceso(rs.getInt("orden_num"));
+                    pedidos.setNumeroDeFletero(rs.getInt("fletero"));
+                    pedidos.setNumeroComprobante(rs.getString("N_REMITO"));
+                    pedidos.setEmpresa(rs.getString("TALON_PEDI"));
+                    pedidos.setVerificadorRevision(rs.getInt("revisionado"));
+                    pedidos.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
+                    pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                    //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
+                    clie.setCodigoCliente(pedidos.getCodigoCliente());
+                    clie.setRazonSocial(pedidos.getRazonSocial());
+                    clie.setEmpresa(pedidos.getEmpresa());
+                    //ACA TENDRIA QUE HACER UNA INTERFAZ PAR QUE ME BUSQUE Y ACTUALICE LOS SALDOS
+                    
+                    //Iterator iSc=SiderconCapaatos.saldoCliente.listIterator();
+                    Double sald=0.00;
+                    //Clientes cli=new Clientes();
+                    Actualizable actCli=new Clientes();
+                    
+                    //while(iSc.hasNext()){
+                    //  cli=(Clientes)iSc.next();
+                    String empresa=pedidos.getEmpresa();
+                    int numeroConeccion=0;
+                    if(empresa.equals("BU")){
+                        numeroConeccion=1;
+                    }else{
+                        if(empresa.equals("SD")){
+                            numeroConeccion=2;
+                        }else{
+                            numeroConeccion=3;
+                        }
+                    }
+                    Connection sqlC=null;
+                    switch (numeroConeccion){
+                        case 1:
+                            sqlC=(Connection)SiderconCapaatos.sqlBu;
+                            break;
+                        case 2:
+                            sqlC=(Connection)SiderconCapaatos.sqlSd;
+                            break;
+                        case 3:
+                            sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
+                            break;
+                    }
+                    if(SiderconCapaatos.falloConecion==0){
+                        Clientes cliente=new Clientes();
+                        //Actualizable actCli=new Clientes();
+                        cliente.setCodigoCliente(pedidos.getCodigoCliente());
+                        cliente.setEmpresa(empresa);
+                        cliente=(Clientes) chp.actualizar(cliente);
+                        sald=cliente.getSaldo();
+                        //sald=(Double) actCli.actualizarDatosSaldos(sqlC, empresa, pedidos.getCodigoCliente());
+                        //sald=cli.getSaldo();
+                    }
+                    
+                    pedidos.setSaldoCliente(sald);
+                    sald=0.00;
+                    pedidos.setNumeroVendedor(rs.getInt("COD_VENDED"));
+                    pedidos.setNombreVendedor(rs.getString("vendedor"));
+                    System.err.println(" numero v"+pedidos.getNumeroVendedor()+" nombre v "+pedidos.getNombreVendedor()+" cliente "+pedidos.getRazonSocial()+" saldo "+pedidos.getSaldoCliente());
+                    String pendiente=String.valueOf(rs.getDouble("CANT_FACT"));
+                    
+                    Double articulosPendientes=0.00;
+                    if(pendiente==null){
+                        
+                    }else{
+                        articulosPendientes=Double.parseDouble(pendiente);
+                    }
+                    //pedidos.setCantidadArticulosEntregados(articulosPendientes);
+                    //articulosPendientes=pedidos.getCantidadArticulo()- pedidos.getCantidadArticulosEntregados();
+                    pedidos.setCantidadArticuloPendiente(articulosPendientes);
+                    pedidos.setZonaAsignada(rs.getInt("zona"));
+                    pedidos.setAlertaAsignada(rs.getInt("alerta"));
+                    if(pedidos.getZonaAsignada() <=1){
+                        pedidos.setZonaDescripcion("SANTA FE");
+                    }else{
+                        pedidos.setZonaDescripcion(rs.getString("zonasDescripcion"));
+                    }
+                    if(pedidos.getAlertaAsignada() > 0){
+                        pedidos.setAlertaDescripcion(rs.getString("alertasDescripcion"));
+                    }
+                    if(SiderconCapaatos.falloConecion==1){
+                        
+                    }else{
+                        ChequearCantidadesPedidos chCli=new Clientes();
+                        chCli.check(chCli.actualizar(clie));
+                    }
+                    listaPed.add(pedidos);
+                }
+                rs.close();
+                //ActualizarDatosPedidos act=new ActualizarDatosPedidos();
+                //act.setPedidos(listaPed);
+                //act.start();
+                //    cn.CerrarConneccion(cp);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return listaPed;
+    }
+
+    @Override
+    public ArrayList ListadoPedidosPorFecha(String fecha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean EliminarItems(Integer id) {
+        Coneccion cn=new Coneccion();
+        Boolean verif=false;
+                Connection cp=cn.getCn();
+        String sql="delete from pedidos_carga1 where numero="+id;
+        Statement st;
+            try {
+                st = cp.createStatement();
+                st.execute(sql);
+                verif=true;
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return verif;
+    }
+
+    @Override
+    public DefaultTableModel MostrarEnTabla(ArrayList listado) {
+        miTablaModificacion mod=new miTablaModificacion();
+        PedidosParaReparto pedid=new PedidosParaReparto();
+        //Procesos pro=new Procesos();
+        
+        Iterator ii=listado.listIterator();
+        //jTable1 = new javax.swing.JTable();
+
+        //jTable1.setModel(mod);
+        mod.addColumn("Nro Pedido");
+        mod.addColumn("Cod Articulo");
+        mod.addColumn("descrip Articulo");
+        mod.addColumn("cant a enviar");
+        mod.addColumn("cant s/fecha");
+        mod.addColumn("fecha de entrega");
+        mod.addColumn("eliminar Item");
+        mod.addColumn("Vendedor");
+        Object[] fila=new Object[8];
+        while(ii.hasNext()){
+        pedid=(PedidosParaReparto)ii.next();
+        fila[0]=pedid.getCodigoTangoDePedido();
+        fila[1]=pedid.getCodigoArticulo();
+        fila[2]=pedid.getDescripcionArticulo();
+        fila[3]=pedid.getCantidadArticulo();
+        fila[4]=pedid.getCantidadArticuloPendiente();
+        fila[5]=pedid.getFechaEnvio();
+        fila[6]=true;
+        fila[7]=pedid.getNombreVendedor();
+        mod.addRow(fila);
+        }
+        return mod;
+    }
+  	
 }
