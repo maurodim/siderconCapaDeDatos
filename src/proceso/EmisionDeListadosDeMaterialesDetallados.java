@@ -123,7 +123,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             pdfD.setNombreVendedor(pedi.getNombreVendedor());
             pdfD.setDomicilioCliente(cliente.getDomicilio());
             pdfD.setLocalidadCliente(cliente.getLocalidad());
-           // pdfD.setTelefonoCliente(cliente.getTelefono());
+            //pdfD.setTelefonoCliente(cliente.getTelefono());
             
             definitivo.add(pdfD);
         }
