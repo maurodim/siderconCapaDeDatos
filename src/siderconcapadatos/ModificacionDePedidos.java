@@ -197,6 +197,7 @@ public class ModificacionDePedidos extends javax.swing.JInternalFrame {
             }
             String fechha=(String) jTable1.getValueAt(i,5);
             ped.setFechaEnvio(fechha);
+            //ped.setIdPedidoEnTango(WIDTH);
         }
         try {
             pro.guardarDetallePedido(listadoDelPedido);
