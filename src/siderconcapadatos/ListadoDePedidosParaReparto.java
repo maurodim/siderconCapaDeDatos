@@ -783,7 +783,9 @@ pedidosSeleccionados.add(fila);
         ArrayList seleccionados=new ArrayList();
         PedidosParaReparto pd=new PedidosParaReparto();
         Procesos pro=new Procesos();
-        seleccionados=pro.ListarPedidosPorVehiculo(unidad);
+        
+            seleccionados=pro.ListarPedidosPorVehiculo(unidad);
+        
         Iterator yy=seleccionados.listIterator();
         ChequearCantidadesPedidos ch=new Checking();
         while(yy.hasNext()){

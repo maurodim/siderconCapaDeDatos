@@ -147,11 +147,11 @@ public class Procesos {
 			pedidos.setRazonSocial(rs.getString("RAZON_SOC"));
 			pedidos.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
 			pedidos.setVehiculoAsignado(rs.getInt("vehiculo"));
-			//pedidos.setPesoTotal(rs.getDouble("total"));
+			pedidos.setPesoTotal(rs.getDouble("total"));
                         pedidos.setCodigoArticulo(rs.getString("COD_ARTIC"));
                         pedidos.setDescripcionArticulo(rs.getString("DESC_ARTIC")+" "+rs.getString("DESC_ADIC"));
                         pedidos.setPesoItems(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
-                        pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
+                        //pedidos.setPesoTotal(rs.getDouble("peso")* rs.getDouble("CANT_PEDID"));
                         pedidos.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
 			pedidos.setCodigoCliente(rs.getString("COD_CLIENT"));
                         pedidos.setFechaEnvio(rs.getString("entrega"));
@@ -166,6 +166,9 @@ public class Procesos {
                         pedidos.setVerificadorRevision(rs.getInt("revisionado"));
                         pedidos.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
                         pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                        pedidos.setObservaciones(rs.getString("LEYENDA_1"));
+                        pedidos.setObservaciones1(rs.getString("LEYENDA_2"));
+                        pedidos.setObservaciones2(rs.getString("LEYENDA_3"));
                         //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
                         clie.setCodigoCliente(pedidos.getCodigoCliente());
                         clie.setRazonSocial(pedidos.getRazonSocial());
@@ -258,7 +261,8 @@ public class Procesos {
 		
 	}	
 	public ArrayList ListarPedidosPorVehiculo(Integer vehiculo){
-		ArrayList<PedidosParaReparto> listaUnidad=new ArrayList();
+	
+            ArrayList<PedidosParaReparto> listaUnidad=new ArrayList();
 		//listaUnidad=pedido;
 		Iterator iterador=listaPed.iterator();
                 String sql;
@@ -290,7 +294,7 @@ public class Procesos {
                                 Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             */
-                            
+                            System.out.println(ped.getObservaciones()+"-"+ped.getObservaciones1());
 				listaUnidad.add(ped);
 			}
 		}
@@ -446,6 +450,9 @@ public class Procesos {
                 pedido.setVehiculoAnterior(rs.getInt("vehiculoAnterior"));
                 pedido.setPesoTotal(rs.getDouble("peso"));
                 pedido.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                pedido.setObservaciones(rs.getString("LEYENDA_1"));
+                pedido.setObservaciones1(rs.getString("LEYENDA_2"));
+                pedido.setObservaciones2(rs.getString("LEYENDA_3"));
                 System.out.println("pedido :"+numeroPedido+" fecha"+fecha+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
             }
