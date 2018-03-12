@@ -84,14 +84,15 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
         System.out.println("DIRECCION DE DESTINO //////////////////////////////////// "+master);
         String destino="////COLOSSUS//logistica//Sist HDR//LPM//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
         String destino2="C://listadosHdr//"+this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf";
-        String kg=String.valueOf(totalKg);
+        
+        String kg=String.valueOf(Math.round(totalKg * 100.0) / 100.0);
         Iterator it=this.listado.listIterator();
         ArrayList definitivo=new ArrayList();
         PdfListado pdfD=new PdfListado();
         PedidosParaReparto pedi;
         Clientes cliente;
         ChequearCantidadesPedidos cheq=new Clientes();
-        
+        String kk;
         while(it.hasNext()){
             pedi= (PedidosParaReparto) it.next();
             pdfD=new PdfListado();
@@ -102,8 +103,10 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             pdfD.setIdListado(pedi.getNumeroDeListadoDeMateriales());
             pdfD.setIdRevision(pedi.getNumeroDeRevisionDeListado());
             pdfD.setVehiculo(String.valueOf(pedi.getVehiculoAsignado()));
-            pdfD.setKilos(String.valueOf(pedi.getPesoTotal()));
+            kk=String.valueOf(Math.round(pedi.getPesoTotal() * 100.0) / 100.0);
+            pdfD.setKilos(kk);
             pdfD.setFechaEntrega(pedi.getFechaEnvio());
+            this.fechaEntrega=pedi.getFechaEnvio();
             pdfD.setNumeroPedido(pedi.getCodigoTangoDePedido());
             pdfD.setNombreCliente(pedi.getRazonSocial());
             pdfD.setLeyenda1(pedi.getObservaciones());
@@ -123,8 +126,8 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             pdfD.setNombreVendedor(pedi.getNombreVendedor());
             pdfD.setDomicilioCliente(cliente.getDomicilio());
             pdfD.setLocalidadCliente(cliente.getLocalidad());
-            //pdfD.setTelefonoCliente(cliente.getTelefono());
-            
+            pdfD.setTelefonoCliente(cliente.getTelefono());
+            System.out.println(pdfD.getLocalidadCliente()+" - "+pdfD.getTelefonoCliente()+" - "+pdfD.getLeyenda2());
             definitivo.add(pdfD);
         }
         

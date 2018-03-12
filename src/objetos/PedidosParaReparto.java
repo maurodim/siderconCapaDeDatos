@@ -621,7 +621,7 @@ public class PedidosParaReparto implements Editables{
         Statement st;
             try {
                 st = cp.createStatement();
-                st.execute(sql);
+                //st.execute(sql);
                 verif=true;
             } catch (SQLException ex) {
                 Logger.getLogger(PedidosParaReparto.class.getName()).log(Level.SEVERE, null, ex);
