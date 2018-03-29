@@ -1,0 +1,197 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Documentacion y detalle de las bases Tango</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <style type="text/css">
+        a{
+            text-decoration:none;
+            
+        }  
+        .titulo{
+            text-decoration-color: #F2F2F2;
+            font-family: arial;
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .detalle{
+            
+        }
+        A{
+            text-decoration-color: #F2F2F2;
+            font-family: arial;
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            
+        }
+        .detalle a{
+            color: #F2F2F2;
+            font-weight: bold;
+        }
+        p{
+            padding-top: 5px;
+        }
+    </style>
+    <body>
+        <div>
+            <div style="height: 300px;background-color: #F5F6CE;margin-left: 20px;text-decoration: none;font-family: arial;font-size: 12px"><p>Indice:<br>
+                <a href="#1">GVA01:FORMAS DE PAGO</a><br>
+                <a href="#2">GVA02:DOCUMENTOS PENDIENTES</a><br>
+                <a href="#3">GVA03:ACA ES DONDE SE ALMACENA LAS CANTIDADES PENDIENTES POR ARTICULO</a><br>
+                <a href="#4">GVA05:ACA ESTAN LOS CODIGOS DE ZONAS</a><br>
+                <a href="#5">GVA07:IMPUTACION O RELACION FACTURA - RECIBO</a><br>
+                <a href="#6">GVA08:ENCABEZADO DE COTIZACIONES</a><BR>
+                <a href="#7">GVA08TY:DIBUJO DE LAS COTIZACIONES</a><BR>
+                <a href="#8">GVA09:DETALLE DE LAS COTIZACIONES</a><BR>
+                <a href="#9">GVA10+:PARAMETROS DE LISTAS DE PRECIOS</a><BR>
+                <a href="#10">GVA105:IMPUTACION O RELACION PEDIDO -FACTURA</a><BR>
+                <a href="#11">GVA111:COMENTARIOS DE LA BASE DE CLIENTES ( LOS COMENTARIOS AGREGADOS EN LOS DATOS DEL MISMO)</a><br>
+                <a href="#12">GVA119:IMPUTACION DE COTIZACIONES A PEDIDOS</a><br>
+                <a href="#13">GVA12:IMPUTACION PEDIDO - FACTURA O RECIBO ( CON DATO QUE USUARIO IMPRIMIO LA FC)</a><BR>
+                <a href="#14">GVA120:USUARIOS LISTADO</a><BR>
+                <a href="#15">GVA125:LISTADO DE RUBROS</a><br>
+                <a href="#16">GVA12TY:RECIBOS DIBUJOS Y NUMERO</a><br>
+                <a href="#17">GVA133:PARAMETROS PAISES / COD PAIS</a><br>
+                <a href="#18">GVA14:CLIENTES, PARAMETROS, LIMITES DE CREDITOS Y SALDOS  </a><BR>
+                <a href="#19">GVA147:PARAMETROS DE FACTURACION</a><br>
+                <a href="#20">GVA148:PARAMETROS DE IMPRESION ( ALMACENA LOS VALORES DE LAS VARIABLES)</a><br>
+                <A href="#21">GVA14FLD:CLASIFICACION DE MODULOS?</A><BR>
+                <A href="#22">GVA15:PARAMETROS TIPOS DE COMPROBANTES</A><BR>
+                <A href="#23">GVA151:DETALLE DE RUBROS</A><br>
+                <a href="#24">GVA16:PARAMETROS GENERALES</a><br>
+                <a href="#25">GVA17+:RELACION PRECIOS - ARTICULOS ???</a><BR>
+                <a href="#26">GVA18:PARAMETROS CODIGOS PROVINCIAS</a><br>
+                <a href="#27">GVA21:IMPUTACION O RELACION NUMERO DE PEDIDO - REMITO( Aca encuentro la relacion para la exportacion de comprobantes)</a><br>
+                <a href="#28">GVA22:PARAMETROS CODIGOS DE ACTIVIDAD</a><br>
+                <a href="#29">GVA23:PARAMETROS VENDEDORES</a><BR>
+                <a href="#30">GVA24:PARAMETROS TRANSPORTE</a><BR>
+                <a href="#31">GVA25:PARAMETROS ASIENTOS CONTABLES</a><BR>
+                <a href="#32">GVA28:PARAMETROS CODIGO DE CLIENTES</a><br>
+                <a href="#33">GVA30:PARAMETROS CODIGO DE VENDEDORES</a><br>
+                <a href="#34">GVA36:PARAMETROS CODIGO DE PERFIL</a><br>
+                <a href="#35">GVA37:COTIZACIONES EXPORTADAS A PEDIDOS</a><BR>
+                <a href="#36">GVA39:COTIZACIONES - SE ALMACENAN LAS DESCRIPCIONES EDITADAS</a><br>
+                <a href="#37">GVA41:PARAMETROS ALICUOTAS Y RETENCIONES</a><BR>
+                <a href="#38">GVA42:IVA VENTAS</a><br>
+                <a href="#39">GVA43:PARAMETROS FORMULARIOS</a><br>
+                <a href="#40">GVA44:PARAMETROS DE DIBUJOS Y DEFINICIONES DE DIBUJOS</a><br>
+                <a href="#41">GVA45:RENGLONES EDITADOS EN REMITOS</a><br>
+                <a href="#42">GVA46:TOTAL COMPROBANTES</a><br>
+                <a href="#43">GVA51:PARAMETROS DE PERFILES DE USUARIOS</a><br>
+                <a href="#44">GVA52:PARAMETROS CODIGOS DE PERFILES</a><BR>
+                <a href="#45">GVA53:DETALLES DE COMPROBANTES</a><br>
+                <a href="#46">GVA54:IMPUTACION O RELACION FACTURA - REMITO ( NUMERO ID DE TABLAS REMITOS)</a><br>
+                <a href="#47">GVA55:IMPUTACION O RELACION FACTURA - PEDIDO - REMITO - CODIGO DE CLIENTE</a><br>
+                <a href="#48">GVA63:LISTADO DE COMPROBANTES (FACTURA - CREDITOS)</a><br>
+                <a href="#49">GVA69:IMPUTACION O RELACION CREDITO - FACTURA</a><br>
+                <a href="#50">GVA70:PARAMETROS DIBUJO DEL COMPROBANTE</a><br>
+                <a href="#51">GVA86/87/88:ANULACION DE COMPROBANTES ( DETALLE DE COMPROBANTES ANULADOS)</a><br>
+                </p>    
+            </div>
+            <div style="background-color: #BDBDBD;font-family: arial;font-size: 12px;margin-left: 20px;height: 300px;text-decoration-color: #F2F2F2;" class="detalle">
+                <p>
+                    <a name="#1" class="titulo">GVA01:FORMAS DE PAGO</a><br>
+                        Detalle de las distintas formas de pago aceptadas por el negocio.<br>
+                        Parametros generales de formas de pago
+                    
+                </p>
+                <p>
+                    <a name="#2" class="titulo">GVA02:DOCUMENTOS PENDIENTES</a><br>
+                        Documentos pendientes viejos, aparentemente una prueba que ha quedado sin efecto.<br>
+                        No ha generado nuevos documentos hasta el momento, lo que indica que no esta en uso actualmente
+                   
+                </p>
+                <p>
+                    <a name="#3" class="titulo">GVA03:ACA ES DONDE SE ALMACENA LAS CANTIDADES PENDIENTES POR ARTICULO</a><br>
+                        Aqui se almacenan las cantidades pendientes por articulo de los pedidos (el  numero de pedido es el id para la identificacion).<br>
+                        Se detallan las cantidades a facturar y remitir.<br>
+                        
+                   
+                    <br>
+                        Detalle de campos:<br>
+                <ul style="margin-left: 10px">
+                    <li>CAN_EQUI_V:DOUBLE (LAS CANTIDADES ESTAN EXPRESADAS EN KG, AQUI SE ENCUENTRA LA UNIDAD DE EQUIVALENCIA PARA REALIZAR LA DIVISION)</li>
+                    <li>CANT_A_DES:DOUBLE( LAS CANTIDADES ESTAN EXPRESADAS EN KG, ESTA CANTIDAD HAY QUE DIVIDIRLA CON LA EQUIVALENCIA PARA SACAR CUAL ES LA CANTIDAD A DESCONTAR)</li>
+                    <li>CANT_A_FAC:DOUBLE(IDEM ANTERIORES)</li>
+                    <li>CANT_PEDID:DOUBLE(IDEM ANTERIORES)</li>
+                    <li>CANT_PEN_D:DOUBLE</li>
+                    <li>CANT_PEN_F:DOUBLE</li>
+                    <li>COD_ARTICU:VARCHAR 15</li>
+                    <li>DESCUENTO:DOUBLE</li>
+                    <li>N_RENGLON:INT</li>
+                    <li>NRO_PEDIDO:VARCHAR 13</li>
+                    <li>PEN_REM_FC:DOUBLE</li>
+                    <li>PEN_FAC_RE:DOUBLE</li>
+                    <li>PRECIO:DOUBLE</li>
+                    <li>TALON_PED:INTEGER</li>
+                    <li>COD_CLASIF:INTEGER</li>
+                    <li>CANT_A_DES_2:DOUBLE</li>
+                    <li>CANT_A_FAC_2:DOUBLE</li>
+                    <li>CANT_PEDID_2:DOUBLE</li>
+                    <li>CANT_PEND_D_2:DOUBLE</li>
+                    <li>CANT_PEND_F_2:DOUBLE</li>
+                    <li>PEN_REM_FC_2:DOUBLE</li>
+                    <li>PEN_FAC_RE_2:DOUBLE</li>
+                    <li>UNIDAD_MEDIDA_SELECCIONADA:CHAR 1 VER V O P </li>
+                    <li>CANTIDAD_ENTREGADA:DOUBLE</li>
+                    <li>CANTIDAD_ENTREGADA_2:DOUBLE</li>
+                    <li>CANTIDAD_FACTURADA:DOUBLE</li>
+                    <li>CANTIDAD_FACTURADA_2:DOUBLE</li>
+                </ul><BR>
+                EN ESTA TABLA HAY QUE RESCATAR EL VALOR DE LA CANTIDAD PENDIENTE, DIVIDIRLA POR LA EQUIVALENCIA Y EL RESULTADO COMPARARLO CON LOS VALORES PASADOS
+                A REPARTO SI ESTA CANTIDAD ES = O < SE PROCEDE CON EL PROCESO, SINO SE MODIFICA A LA CANTIDAD PENDIENTE.<BR>
+                </p>
+                <p>
+                    <a name="#4" class="titulo">GVA05:ACA ESTAN LOS CODIGOS DE ZONAS</a><br>
+                    CONTIENE LOS CODIGOS DE ZONA PARA LA CARGA DE FORMULARIOS, NO SE UTILIZA EN LA ACTUALIDAD ESTA EN ZONA UNICA, NO DISTINGUE EL SISTEMA
+                </p>
+                <p>
+                    <a name="#5" class="titulo">GVA07:IMPUTACION O RELACION FACTURA - RECIBO</a><br>
+                    AQUI SE LISTAN LOS RECIBOS DE PAGO, TOMA LOS VALORES DE FECHA DE PAGO Y FACTURA A LA CUAL SE IMPUTA EL PAGO, MONTO Y LOS NUMEROS DE LOS COMPROBANTES QUE FORMAN PARTE DE LA IMPUTACION<BR>
+                    
+                </p>
+                <p>
+                    <a name="#6" class="titulo">GVA08:ENCABEZADO DE COTIZACIONES</a><br>
+                    AQUI ESTAN LOS VALORES DE LOS ENCABEZADOS DE LAS COTIZACIONES
+                </p>
+                <p>
+                    <a name="#7"><div class="titulo">GVA08TY:DIBUJO DE LAS COTIZACIONES</div></a><br>
+                    VALORES QUE SE DESPRENDEN DEL DIBUJO QUE SE GENERO PARA TAL FIN
+                </p>
+                <p>
+                    <a name="#8" class="titulo">GVA09:DETALLE DE LAS COTIZACIONES</a><br>
+                    DESCRIPCION Y DETALLE DE LAS COTIZACIONES, CUERPO DEL DETALLE, NO CONTIENE LAS DESCRIPCIONES QUE SE CARGAN APARTE
+                </p>
+                <p>
+                    <a name="#9" class="titulo">GVA10+:PARAMETROS DE LISTAS DE PRECIOS</a><br>
+                    PORCENTAJES SOBRE PRECIO BASE, DESCRIPCION, CODIGO, NUMERO INTERNO, HABILITADO O NO, ETC (TODO LO QUE SEA PARAMETROS)
+                </p>
+                <p>
+                    <div name="#10" class="titulo">GVA105:IMPUTACION O RELACION PEDIDO -FACTURA</div><br>
+                    DATOS QUE CORRESPONDEN A LA RELACION PEDIDO - FACTURA, FECHAS DE LOS COMPROBANTES
+                </p>
+                <p>
+                    <a name="#11">GVA111:COMENTARIOS DE LA BASE DE CLIENTES ( LOS COMENTARIOS AGREGADOS EN LOS DATOS DEL MISMO)</a><br>
+                    SON LOS COMENTARIOS QUE APARECEN EN LA PESTAÑA DE CLIENTES COMO COMENTARIOS ADJUNTOS AL MISMO<BR>
+                    
+                </p>
+                <p>
+                    <a name="#12">GVA119:IMPUTACION DE COTIZACIONES A PEDIDOS</a><br>
+                    CORRESPONDEN A LAS IMPUTACIONES DE LAS COTIZACIONES PASADAS A PEDIDOS DESDE EL SISTEMA
+                </p>
+                <p>
+                    <a name="#13">GVA12:IMPUTACION PEDIDO - FACTURA O RECIBO ( CON DATO QUE USUARIO IMPRIMIO LA FC)</a><br>
+                    
+                </p>
+                
+            </div>
+        </div>
+    </body>
+</html>

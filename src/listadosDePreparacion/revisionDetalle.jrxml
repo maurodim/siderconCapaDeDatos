@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="revisionDetalle" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="20" uuid="a2cc982a-85aa-4096-b225-adefda5682d3">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="206"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroDePedido" class="java.lang.String"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="numeroRevision" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select COD_ARTIC,TALON_PEDI,RAZON_SOC,BONIFIC,COND_VENTA,COD_VENDED,COD_CLIENT,DESC_ARTIC,FEC_PEDIDO,TALON_FACT,orden_num,round(CANT_PEDID,2)as CANT_PEDID,ROUND(CANT_FACT,2)AS CANT_FACT,ROUND(CANT_DESC,2)AS CANT_DESC,NRO_PEDIDO,listado,(round((select pesos.peso from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC limit 0,1),2)* CANT_PEDID)as pesoIndividual,(if(pedidos_carga1.COD_ARTIC ="30030011",'',if(pedidos_carga1.COD_ARTIC="30030010",'',(select sum(pedidoscantidadtotales.total) from pedidoscantidadtotales where pedidoscantidadtotales.NRO_PEDIDO like pedidos_carga1.NRO_PEDIDO and pedidoscantidadtotales.COD_ARTIC like pedidos_carga1.COD_ARTIC group by COD_ARTIC limit 0,1)-pedidos_carga1.CANT_PEDID)))as cantidadAntigua,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidos,(select datos.UMV from datos where datos.COD_ARTICULO = pedidos_carga1.COD_ARTIC limit 0,1)AS medida from pedidos_carga1 where NRO_PEDIDO =$P{numeroDePedido} and listado=$P{numeroListado}]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="TALON_PEDI" class="java.lang.String"/>
+	<field name="TALON_FACT" class="java.lang.Double"/>
+	<field name="FEC_PEDIDO" class="java.sql.Timestamp"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="BONIFIC" class="java.lang.Double"/>
+	<field name="COND_VENTA" class="java.lang.Double"/>
+	<field name="COD_VENDED" class="java.lang.String"/>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="CANT_PEDID" class="java.lang.Double"/>
+	<field name="CANT_FACT" class="java.lang.Double"/>
+	<field name="CANT_DESC" class="java.lang.Double"/>
+	<field name="pesoIndividual" class="java.lang.Double"/>
+	<field name="cantidadAntigua" class="java.lang.String"/>
+	<field name="repetidos" class="java.lang.String"/>
+	<field name="medida" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement x="56" y="0" width="144" height="12" uuid="71475e6c-57dd-4295-9b3b-4163a853f8c8"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="0" width="65" height="12" uuid="41080ae0-84f4-47d1-93ab-062940c948a4"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="56" height="12" uuid="737b9bcf-6690-4b01-abb0-1bea5c09cb07"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD ARTICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="0" width="57" height="12" uuid="d73d5739-7e5d-4fef-9b01-6abcff41c46d"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="0" width="59" height="12" uuid="65beb68c-c3d1-4d8f-987c-7c5856ee6191"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de Orden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="40" height="12" uuid="b0404742-b009-42ea-8d61-5598f911dbd7"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mat repetido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="56" y="0" width="144" height="12" uuid="da7c80c3-de4a-4584-82ca-348d4928978f"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="200" y="0" width="81" height="12" uuid="2e45ccc0-11bc-41a9-a99f-76a31c26dff9"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANT_PEDID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="56" height="12" uuid="eae2eaa9-f073-41da-b107-84a58bbbb6d5"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="57" height="12" uuid="7deb0a89-a607-4007-a135-5347cb1fe7cf"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pesoIndividual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="0" width="59" height="12" uuid="3e24aa47-4447-458f-926f-d805608b28c6"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{orden_num}==0 ? " " : $F{orden_num} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="40" height="12" uuid="8bcfe5bd-a68e-417b-b0ce-d289bdb5db4a"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{repetidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="23" height="12" uuid="189e390f-8a7a-4f60-8759-649226111fac"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

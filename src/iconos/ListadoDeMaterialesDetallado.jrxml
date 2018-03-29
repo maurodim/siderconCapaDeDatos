@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListadoDeMaterialesDetallado" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="371"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\Administrador\\Mis documentos\\NetBeansProjects\\SiderconCapaDatos\\src\\listadosDePreparacion\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from pedidos_carga1 where listado=$P{numeroListado}]]>
+	</queryString>
+	<field name="NRO_PEDIDO" class="java.lang.String"/>
+	<field name="TALON_PEDI" class="java.lang.Double"/>
+	<field name="TALON_FACT" class="java.lang.Double"/>
+	<field name="FEC_PEDIDO" class="java.sql.Timestamp"/>
+	<field name="COD_CLIENT" class="java.lang.String"/>
+	<field name="RAZON_SOC" class="java.lang.String"/>
+	<field name="BONIFIC" class="java.lang.Double"/>
+	<field name="COND_VENTA" class="java.lang.Double"/>
+	<field name="COD_VENDED" class="java.lang.String"/>
+	<field name="COD_DEPóSI" class="java.lang.String"/>
+	<field name="LISTA_PREC" class="java.lang.Double"/>
+	<field name="COD_TRANSP" class="java.lang.String"/>
+	<field name="TIPO_ASIEN" class="java.lang.String"/>
+	<field name="FEC_ENTREG" class="java.sql.Timestamp"/>
+	<field name="COTIZ" class="java.lang.String"/>
+	<field name="MONEDA" class="java.lang.String"/>
+	<field name="EXPORTADO" class="java.lang.String"/>
+	<field name="N_REMITO" class="java.lang.String"/>
+	<field name="NRO_SUCUR" class="java.lang.Double"/>
+	<field name="LEYENDA_1" class="java.lang.String"/>
+	<field name="LEYENDA_2" class="java.lang.String"/>
+	<field name="LEYENDA_3" class="java.lang.String"/>
+	<field name="LEYENDA_4" class="java.lang.String"/>
+	<field name="LEYENDA_5" class="java.lang.String"/>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ADIC" class="java.lang.String"/>
+	<field name="CANT_PEDID" class="java.lang.Double"/>
+	<field name="CANT_FACT" class="java.lang.Double"/>
+	<field name="CANT_DESC" class="java.lang.Double"/>
+	<field name="PRECIO" class="java.lang.Double"/>
+	<field name="BONIFRENGL" class="java.lang.Double"/>
+	<field name="IMPORTE" class="java.lang.Double"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="condicion" class="java.lang.Integer"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<field name="terminado" class="java.sql.Timestamp"/>
+	<field name="entrega" class="java.lang.String"/>
+	<field name="reparto" class="java.lang.Integer"/>
+	<field name="proceso" class="java.lang.Integer"/>
+	<field name="pago" class="java.lang.String"/>
+	<field name="enviar" class="java.lang.Integer"/>
+	<field name="listado" class="java.lang.Integer"/>
+	<field name="hdr1" class="java.lang.Integer"/>
+	<field name="motivo_anulacion" class="java.lang.String"/>
+	<field name="vehiculo" class="java.lang.Integer"/>
+	<field name="peso" class="java.lang.Double"/>
+	<field name="archivoListado" class="java.lang.String"/>
+	<field name="archivoHdr" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="188" y="0" width="248" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIDERCON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="20" width="248" height="20"/>
+				<textElement/>
+				<text><![CDATA[Hierros - Caños - Chapas - Perfiles]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="188" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total Kg. :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="188" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha y Hora de Impresion :]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="316" y="0" width="239" height="60"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="326" y="10" width="218" height="20"/>
+				<textElement/>
+				<text><![CDATA[VEHICULO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="30" width="218" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA DE REPARTO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="294" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["LISTADO DE PREPARACION DE CARGA Nº "+$P{numeroListado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº DE PEDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_PEDIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RAZON_SOC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="344" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LEYENDA_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="20" width="344" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LEYENDA_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="40" width="344" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LEYENDA_3}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="60" width="544" height="65"/>
+				<subreportParameter name="numeroPedido">
+					<subreportParameterExpression><![CDATA[$F{NRO_PEDIDO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="numeroListado">
+					<subreportParameterExpression><![CDATA[$F{listado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="leyenda1"/>
+				<subreportParameter name="leyenda2"/>
+				<subreportParameter name="leyenda3"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DetalladoDePedidos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

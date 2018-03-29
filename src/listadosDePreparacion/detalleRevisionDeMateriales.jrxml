@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleRevisionDeMateriales" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numeroListado" class="java.lang.Integer"/>
+	<parameter name="numeroRevision" class="java.lang.Integer"/>
+	<parameter name="pedidoNumero" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select pedidos_carga1.COD_ARTIC,pedidos_carga1.DESC_ARTIC,pedidos_carga1.DESC_ADIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.orden_num,(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso)as peso,if(pedidos_carga1.repetidoEnListado = 1,'X',' ')as repetidoEnListado FROM pedidos_carga1 where NRO_PEDIDO = $P{pedidoNumero} and listado=$P{numeroListado} and revision=$P{numeroRevision}]]>
+	</queryString>
+	<field name="COD_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ARTIC" class="java.lang.String"/>
+	<field name="DESC_ADIC" class="java.lang.String"/>
+	<field name="CANT_PEDID" class="java.lang.Double"/>
+	<field name="orden_num" class="java.lang.Integer"/>
+	<field name="peso" class="java.lang.Double"/>
+	<field name="repetidoEnListado" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD ARTICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="205" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="0" width="47" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="59" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT NUEVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="0" width="70" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUM ORDEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="0" width="51" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="0" width="61" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAT REP]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="122" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_ARTIC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="222" y="0" width="83" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_ADIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0;-###0.0">
+				<reportElement x="305" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANT_PEDID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="0" width="70" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orden_num}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="481" y="0" width="51" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="61" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{repetidoEnListado}]]></textFieldExpression>
+				<patternExpression><![CDATA[( $F{repetidoEnListado}=="1" ? "X" : " " )]]></patternExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="34" width="595" height="1"/>
+			</line>
+			<line>
+				<reportElement x="457" y="1" width="100" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

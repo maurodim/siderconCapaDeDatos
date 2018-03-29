@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<CONFIGURACION>
+    <coneccion id="1">
+        <nombre>Coneccion Server</nombre>
+        <url>jdbc:mysql://localhost/sidercon</url>
+        
+        <driver>com.mysql.jdbc.Driver</driver>
+        <usuario>root</usuario>
+        <clave></clave>
+    </coneccion>
+    <coneccion id="2">
+<nombre>Coneccion Server</nombre>
+        <url>jdbc:mysql://localhost/sidercon</url>
+        
+        <driver>com.mysql.jdbc.Driver</driver>
+        <usuario>root</usuario>
+        <clave></clave>
+    </coneccion>
+    <coneccion id="3">
+<nombre>Coneccion Server</nombre>
+        <url>jdbc:mysql://localhost/sidercon</url>
+        
+        <driver>com.mysql.jdbc.Driver</driver>
+        <usuario>root</usuario>
+        <clave></clave>
+    </coneccion>
+    <coneccion id="4">
+<nombre>Coneccion Server</nombre>
+        <url>jdbc:mysql://localhost/sidercon</url>
+        
+        <driver>com.mysql.jdbc.Driver</driver>
+        <usuario>root</usuario>
+        <clave></clave>
+    </coneccion>
+</CONFIGURACION>

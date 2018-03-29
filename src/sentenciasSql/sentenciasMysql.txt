@@ -1,0 +1,8 @@
+pesolistadoPed vista codigo:
+
+SELECT pesopedidoslistados.NRO_PEDIDO,pesopedidoslistados.listado,(sum(totalItem))as suma from pesopedidoslistados group by NRO_PEDIDO,listado
+
+
+pesopedidoslistados
+
+SELECT NRO_PEDIDO,listado,peso,COD_ARTIC,CANT_PEDID,(peso * CANT_PEDID)as totalItem from pedidos_carga1

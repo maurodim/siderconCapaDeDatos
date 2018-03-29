@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <NonVisualComponents>
+    <Container class="javax.swing.JInternalFrame" name="jInternalFrame1">
+      <Properties>
+        <Property name="visible" type="boolean" value="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Container class="javax.swing.JDialog" name="mod">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Modificacion de Datos del Pedido"/>
+      </Properties>
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="modComponentResized"/>
+        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="modComponentShown"/>
+      </Events>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Component id="jScrollPane3" min="-2" pref="692" max="-2" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="jTable3">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="modelo" type="code"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jTable3ComponentShown"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="miTablaModificacion modelo=new miTablaModificacion();&#xa;PedidosParaReparto pedid=new PedidosParaReparto();&#xa;Procesos pro=new Procesos();&#xa;ArrayList listado=new ArrayList();&#xa;String nPedido=numeroDePedido;&#xa;String fcPedido=fechaPedido;&#xa;System.out.println(&quot; ped &quot;+nPedido+&quot; fecha &quot;+fcPedido);&#xa;try{&#xa;listado=pro.detallePedidoParaCorreccion(nPedido,fcPedido);&#xa;}catch(Exception ex){&#xa;System.out.println(&quot;no se cargo el detalle &quot;+ex);&#xa;}&#xa;Iterator ii=listado.listIterator();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="modelo.addColumn(&quot;Nro Pedido&quot;);&#xa;modelo.addColumn(&quot;Cod Articulo&quot;);&#xa;modelo.addColumn(&quot;descrip Articulo&quot;);&#xa;modelo.addColumn(&quot;cant pedida&quot;);&#xa;modelo.addColumn(&quot;cant a entregar&quot;);&#xa;modelo.addColumn(&quot;fecha de entrega&quot;);&#xa;Object[] fila4=new Object[6];&#xa;while(ii.hasNext()){&#xa;pedid=(PedidosParaReparto)ii.next();&#xa;fila4[0]=pedid.getCodigoTangoDePedido();&#xa;fila4[1]=pedid.getCodigoArticulo();&#xa;fila4[2]=pedid.getDescripcionArticulo();&#xa;fila4[3]=pedid.getCantidadArticulo();&#xa;fila4[4]=pedid.getCantidadArticuloPendiente();&#xa;fila4[5]=pedid.getFechaEnvio();&#xa;}&#xa;modelo.addRow(fila4);"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+    <Property name="maximizable" type="boolean" value="true"/>
+    <Property name="title" type="java.lang.String" value="Listados de Pedidos para Reparto"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="internalFrameClosed" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosed"/>
+    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formFocusGained"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel1" min="-2" pref="204" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="dateChooserCombo1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel2" min="-2" pref="183" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                              <Component id="jTextField1" min="-2" pref="116" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel3" min="-2" pref="183" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                              <Component id="jTextField2" min="-2" pref="116" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel4" min="-2" pref="183" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                              <Component id="jTextField3" min="-2" pref="116" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane2" min="-2" pref="364" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jComboBox1" min="-2" pref="243" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButton5" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButton7" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButton4" alignment="0" pref="165" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jButton3" min="-2" pref="156" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButton2" min="-2" pref="142" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButton1" min="-2" pref="159" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButton6" min="-2" pref="139" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jButton8" min="-2" pref="156" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="366" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane2" min="-2" pref="366" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="192" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="jTable2">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="tab.addColumn(&quot;Seleccion&quot;);&#xa;tab.addColumn(&quot;Vehiculo&quot;);&#xa;tab.addColumn(&quot;Cap. de Carga Actual&quot;);&#xa;tab.addColumn(&quot;HDR&quot;);&#xa;tab.addColumn(&quot;N&#xba; Listado&quot;);&#xa;Object []fila2=new Object[5];&#xa;while(ix.hasNext()){&#xa;unidad=(Vehiculos) ix.next();&#xa;numeroUnidad=unidad.getNumero();&#xa;fila2[0]=false;&#xa;fila2[1]=numeroUnidad+&quot; &quot;+unidad.getDescripcion();&#xa;Double pesoNexo=0.00;&#xa;//System.out.println(renglon);&#xa;//pesoNexo=(Double) nexo.get(renglon);&#xa;if(pesoNexo==0.00){&#xa;fila2[2]=unidad.getCapacidadDeCarga();&#xa;}else{&#xa;//Double pesoNexo=(Double)nexo.get(renglon);&#xa;fila2[2]=unidad.getCapacidadDeCarga()-pesoNexo;&#xa;}&#xa;fila2[3]=unidad.getNumeroHdr();&#xa;&#xa;//renglon++;&#xa;tab.addRow(fila2);&#xa;}">
+              <Connection code="tab" type="code"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="listado de vehiculos disponibles para HDR"/>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable2MouseClicked"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MiTablaVehiculos tab=new MiTablaVehiculos();&#xa;//ArrayList vehiculos=new ArrayList();&#xa;Integer renglon=0;&#xa;Vehiculos unidad=new Vehiculos();&#xa;Procesos pr=new Procesos();&#xa;try{&#xa;vehiculos=pr.ListarVehiculos();&#xa;vehiculos=pr.cargarHdrVehiculo(vehiculos, fechaPedido);&#xa;}catch(Exception ex){&#xa;System.out.println(&quot;no se pudo listar los vehiculos &quot;+ex);&#xa;}&#xa;Iterator ix=vehiculos.listIterator();"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Guardar Seleccion"/>
+        <Property name="toolTipText" type="java.lang.String" value="Almacena los pedidos se&#xf1;alado para el vehiculo marcado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="jTable1">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="miModelo.addColumn(&quot;Nro de Pedido&quot;);&#xa;miModelo.addColumn(&quot;Razon Social&quot;);&#xa;miModelo.addColumn(&quot;Peso Pedido&quot;);&#xa;miModelo.addColumn(&quot;Vehiculo&quot;);&#xa;miModelo.addColumn(&quot;Seleccion&quot;);&#xa;miModelo.addColumn(&quot;Nueva Asignac de Vehiculo&quot;);&#xa;miModelo.addColumn(&quot;Zona&quot;);&#xa;miModelo.addColumn(&quot;Alerta&quot;);&#xa;Object []fila=new Object[8];&#xa;Integer renglones=null;&#xa;int vehi=0;&#xa;while(it.hasNext()){&#xa;    ped=(PedidosParaReparto) it.next();&#xa;    fila[0]=ped.getCodigoTangoDePedido().substring(7);&#xa;fila[1]=ped.getRazonSocial();&#xa;//peso=formato.format(ped.getPesoTotal());&#xa;//pesoParcial=Double.valueOf(peso).doubleValue();&#xa;//fila[2]=pesoParcial;&#xa;fila[2]=ped.getPesoTotal();&#xa;pesoTotal+=ped.getPesoTotal();&#xa;fila[3]=ped.getVehiculoAsignado();&#xa;vehi=ped.getVehiculoAsignado() -1;&#xa;if(vehi &lt; 0){&#xa;vehi=0;&#xa;}&#xa;jTable2.setValueAt(true,vehi,0);&#xa;if(vehi==0){&#xa;fila[4]=false;&#xa;}else{&#xa;//aca modifique&#xa;fila[4]=false;&#xa;int hilo=ped.getVehiculoAsignado();&#xa;hilo=hilo-1;&#xa;System.out.println(hilo);&#xa;jTable2.setValueAt(true,hilo ,0);&#xa;Double pesoVehiculo=(Double)jTable2.getValueAt(hilo,2);&#xa;pesoVehiculo=pesoVehiculo - ped.getPesoTotal();&#xa;jTable2.setValueAt(pesoVehiculo,hilo,2);&#xa;asignado+=ped.getPesoTotal();&#xa;//Double peso=(Double)nexo.get(ped.getVehiculoAsignado());&#xa;//peso=peso + ped.getPesoTotal();&#xa;//nexo.set(ped.getVehiculoAsignado(),peso);&#xa;}&#xa;&#xa;fila[6]=ped.getZonaDescripcion();&#xa;if(ped.getAlertaAsignada()&gt; 0){&#xa;fila[7]=ped.getAlertaDescripcion();&#xa;}else{&#xa;fila[7]=&quot;&quot;;&#xa;}&#xa;miModelo.addRow(fila);&#xa;}&#xa;peso=formato.format(pesoTotal);&#xa;//peso=String.valueOf(pesoParcial);&#xa;jTextField1.setText(peso);&#xa;String asig=formato.format(asignado);&#xa;jTextField2.setText(asig);&#xa;Double resultado=0.00;&#xa;resultado=pesoTotal - asignado;&#xa;String res=formato.format(resultado);&#xa;&#xa;jTextField3.setText(res);">
+              <Connection code="miModelo" type="code"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Listado de pedidos correspondientes a la fecha seleccionada"/>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="MiModeloTabla miModelo=new MiModeloTabla();&#xa;DecimalFormat formato=new DecimalFormat(&quot;####.#&quot;);&#xa;pesoTotal=0.0;&#xa;Double asignado=0.00;&#xa;Double pesoParcial=0.0;&#xa;String peso=null;&#xa;//ArrayListlistaPedidos=new ArrayList();&#xa;PedidosParaReparto ped=new PedidosParaReparto();&#xa;Procesos proced=new Procesos();&#xa;Iterator it=SiderconCapaatos.listaPedidos.listIterator();"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Ver Carga"/>
+        <Property name="toolTipText" type="java.lang.String" value="Muestra la carga asignada al vehiculo se&#xf1;alado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton3">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Modificar Pedido"/>
+        <Property name="toolTipText" type="java.lang.String" value="Permite modificar el pedido se&#xf1;alado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton4">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Consultar Saldo "/>
+        <Property name="toolTipText" type="java.lang.String" value="Muestra el Saldo actual (seg&#xfa;n base Tango) del cliente marcado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo1">
+      <Events>
+        <EventHandler event="onSelectionChange" listener="datechooser.events.SelectionChangedListener" parameters="datechooser.events.SelectionChangedEvent" handler="dateChooserCombo1OnSelectionChange"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha de Entrega :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="cantidad total de Kg. resultante del total de los pedidos para esta fecha"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Kg :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Kg Asignados :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Kg Pendientes de Asignar:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField2">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Total Kg. asignados a los vehiculos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextField3">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Total Kg. pendientes de asignaci&#xf3;n"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Listado de Zonas establecidas en los recorridos"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBox1.addItem(&quot;TODOS&quot;);&#xa;try{&#xa;&#xa;String sql=&quot;select zonas.descripcion from zonas order by numero&quot;;&#xa;Statement st=cone.createStatement();&#xa;st.execute(sql);&#xa;ResultSet rs=st.getResultSet();&#xa;while(rs.next()){&#xa;    jComboBox1.addItem(rs.getString(&quot;descripcion&quot;));&#xa;}&#xa;&#xa;}catch(Exception ex){&#xa;System.err.println(&quot;error &quot;+ex);&#xa;}"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton5">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Filtrar P/Zona"/>
+        <Property name="toolTipText" type="java.lang.String" value="muestra el listado de pedidos correspondientes a la zona seleccionada"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Verificador"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton7">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Anular LPM&#xb4;S"/>
+        <Property name="toolTipText" type="java.lang.String" value="Lista y permite la anulaci&#xf3;n de los LPM emitidos en la fecha"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton8">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.ImageIcon(getClass().getResource(&quot;/iconos/logo.png&quot;))" type="code"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Eliminar Pedido"/>
+        <Property name="toolTipText" type="java.lang.String" value="Permite modificar el pedido se&#xf1;alado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

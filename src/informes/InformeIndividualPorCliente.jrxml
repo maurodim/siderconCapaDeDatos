@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformeIndividualPorCliente" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="97"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nombreCliente" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select detalle_hdr.numero,(select hdr.fechaEntrega from hdr where hdr.numero=detalle_hdr.hdr),detalle_hdr.hdr,detalle_hdr.cliente,detalle_hdr.numero_cli,if(detalle_hdr.entregado=1,"ENTREGADO","NO ENTREGADO"),(select pedidos_carga1.NRO_PEDIDO from pedidos_carga1 where pedidos_carga1.hdr1=detalle_hdr.hdr and pedidos_carga1.COD_CLIENT=detalle_hdr.numero_cli and pedidos_carga1.RAZON_SOC=detalle_hdr.cliente limit 1,1) from detalle_hdr where detalle_hdr.cliente LIKE $P{nombreCliente}]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="(select hdr.fechaEntrega from hdr where hdr.numero=detalle_hdr.hdr)" class="java.lang.String"/>
+	<field name="hdr" class="java.lang.Integer"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="numero_cli" class="java.lang.String"/>
+	<field name="if(detalle_hdr.entregado=1,&quot;ENTREGADO&quot;,&quot;NO ENTREGADO&quot;)" class="java.lang.String"/>
+	<field name="(select pedidos_carga1.NRO_PEDIDO from pedidos_carga1 where pedidos_carga1.hdr1=detalle_hdr.hdr and pedidos_carga1.COD_CLIENT=detalle_hdr.numero_cli and pedidos_carga1.RAZON_SOC=detalle_hdr.cliente limit 1,1)" class="java.lang.String"/>
+	<title>
+		<band height="21" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="48" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hdr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="0" width="65" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="0" width="47" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_cli}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="52" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{if(detalle_hdr.entregado=1,"ENTREGADO","NO ENTREGADO")}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="212" y="0" width="48" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{(select pedidos_carga1.NRO_PEDIDO from pedidos_carga1 where pedidos_carga1.hdr1=detalle_hdr.hdr and pedidos_carga1.COD_CLIENT=detalle_hdr.numero_cli and pedidos_carga1.RAZON_SOC=detalle_hdr.cliente limit 1,1)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="43" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{(select hdr.fechaEntrega from hdr where hdr.numero=detalle_hdr.hdr)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
