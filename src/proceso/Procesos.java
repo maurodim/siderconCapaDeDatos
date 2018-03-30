@@ -169,6 +169,7 @@ public class Procesos {
                         pedidos.setObservaciones(rs.getString("LEYENDA_1"));
                         pedidos.setObservaciones1(rs.getString("LEYENDA_2"));
                         pedidos.setObservaciones2(rs.getString("LEYENDA_3"));
+                        pedidos.setFechaPedidosTango(rs.getString("FEC_PEDIDO"));
                         //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
                         clie.setCodigoCliente(pedidos.getCodigoCliente());
                         clie.setRazonSocial(pedidos.getRazonSocial());
