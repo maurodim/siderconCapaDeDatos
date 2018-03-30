@@ -910,6 +910,7 @@ public class Procesos {
                 pedi.setCodigoArticulo(rs.getString("COD_ARTIC"));
                 pedi.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 pedi.setVehiculoAsignado(rs.getInt("vehiculo"));
+                pedi.setFechaPedidosTango(rs.getString("FEC_PEDIDO"));
                 pedi=(PedidosParaReparto)ch.check(pedi);
                 if(pedi.getCantidadArticuloPendiente()> 0){
                     detalle.add(pedi);
@@ -1420,6 +1421,7 @@ public class Procesos {
             String sql="select * from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPedido+"%' and reparto=1";
             PreparedStatement st=cp.prepareStatement(sql);
             ResultSet rs=st.executeQuery();
+            String fechaT;
             while(rs.next()){
                 PedidosParaReparto pedido=new PedidosParaReparto();
                 pedido.setCodigoTangoDePedido(numeroPedido);
@@ -1433,6 +1435,8 @@ public class Procesos {
                 pedido.setFechaEnvio(rs.getString("entrega"));
                 pedido.setiDPedido(rs.getInt("numero"));
                 pedido.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
+                fechaT=rs.getString("FEC_PEDIDO").substring(0, 10);
+                pedido.setFechaPedidosTango(fechaT);
                 System.out.println("pedido :"+numeroPedido+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
             }
