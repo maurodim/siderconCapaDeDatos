@@ -170,25 +170,22 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             System.err.println("ERROR EN LA CREACION DEL ARCHIVO PDF :"+ex+" "+destino);
         }
         */
+        //sleep(1000);
                 PrintWriter print = new PrintWriter(System.out, true);
                  File f=new File(destino2);
                  if(f.exists()){
-            try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
-                
-                System.out.println("DESTINO :::"+destino2+"---");
-                Mail mail=new Mail();
-                mail.setDireccionFile(destino2);
-                mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
-                mail.setAsunto("LPM DETALLADA GENERADA N° "+this.numeroListado);
-                         try {
-                             mail.enviarMailRepartoCargaCompleta();
-                         } catch (MessagingException ex) {
-                             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
-                         }
-            } catch (IOException ex) {
-                Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                     //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
+                     
+                     System.out.println("DESTINO :::"+destino2+"---");
+                     Mail mail=new Mail();
+                     mail.setDireccionFile(destino2);
+                     mail.setDetalleListado(this.numeroListado+"-Rev 0 - listado detallado de materiales.pdf");
+                     mail.setAsunto("LPM DETALLADA GENERADA N° "+this.numeroListado);
+                     try {
+                         mail.enviarMailRepartoCargaCompleta();
+                     } catch (MessagingException ex) {
+                         Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+                     }
 }
                  
                  /*
