@@ -636,21 +636,22 @@ pedidosSeleccionados.add(fila);
             PedidosParaReparto pedi=new PedidosParaReparto();
             Procesos proceder=new Procesos();
             Vehiculos unid=new Vehiculos();
+            
+            
             filas=vehiculos.size();
             for(int i=0;i<filas;i++){
-                if(i==0){
-                 jTable2.setValueAt(jTextField1.getText(), i, 2);   
-                }else{
-                numeroVehiculo=i;
                 
                 
-                unid=(Vehiculos)vehiculos.get(numeroVehiculo);
+                
+                unid=(Vehiculos)vehiculos.get(i);
                 int pos=i;
                 jTable2.setValueAt(unid.getCapacidadDeCarga(), pos,2);
                 System.err.println(" VEHICULO SELECCIONADO "+numeroVehiculo+" POSICION"+pos);
                 unid.setCapacidadDeCarga(0.00);
-                }
+                
             }
+            
+            
             Iterator zz=SiderconCapaatos.listaPedidos.listIterator();
             while(zz.hasNext()){
                 pedi=(PedidosParaReparto) zz.next();
