@@ -746,10 +746,12 @@ pedidosSeleccionados.add(fila);
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
             int uniSeleccionada=jTable2.rowAtPoint(evt.getPoint());
-            String descripcionUni=(String) jTable2.getValueAt(uniSeleccionada,1);
+            Vehiculos unidad=(Vehiculos) vehiculos.get(uniSeleccionada);
+            
+            String descripcionUni=unidad.getDescripcion();//(String) jTable2.getValueAt(uniSeleccionada,1);
             Boolean sel=(Boolean) jTable2.getValueAt(uniSeleccionada,0);
             //Boolean sec=(Boolean) jTable2.getValueAt(uniSeleccionada,3);
-            uniSeleccionada=uniSeleccionada+1;
+            uniSeleccionada=unidad.getNumero();
             if(sel){
             PedidosParaReparto ped=new PedidosParaReparto();
             Iterator xx=pedidosSeleccionados.listIterator();
