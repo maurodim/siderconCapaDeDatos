@@ -112,7 +112,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         TablaArticulos.addColumn("Peso Cargado");
         TablaArticulos.addColumn("Eliminar Articulo");
         TablaArticulos.addColumn("Unid. De Medida");
-        Object[] fila=new Object[6];
+        TablaArticulos.addColumn("ES");
+        Object[] fila=new Object[7];
         Iterator ia=articulos.listIterator();
         while(ia.hasNext()){
             Articulos art=null;
@@ -123,6 +124,11 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             fila[3]=art.getPesoUnitario();
             fila[4]=false;
             fila[5]=art.getUnidadDeMedida();
+            if(art.getEstructura()==0){
+                fila[6]="no";
+            }else{
+                fila[6]="si";
+            }
             TablaArticulos.addRow(fila);
         }
         jPanel3.setVisible(false);
@@ -385,7 +391,8 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
         tablaA.addColumn("Peso Cargado");
         tablaA.addColumn("Eliminar Articulo");
         tablaA.addColumn("Unid. De Medida");
-        Object[] fila=new Object[6];
+        tablaA.addColumn("ES");
+        Object[] fila=new Object[7];
         Iterator it=tablaCodigo.listIterator();
         while(it.hasNext()){
             seleccionado=(Articulos)it.next();
@@ -399,6 +406,11 @@ public class ActualizacionDeArticulos extends javax.swing.JInternalFrame {
             fila[3]=peso;
             fila[4]=false;
             fila[5]=seleccionado.getUnidadDeMedida();
+            if(seleccionado.getEstructura()==0){
+                fila[6]="no";
+            }else{
+                fila[6]="si";
+            }
             tablaA.addRow(fila);
         }
         jTable1.setModel(tablaA);

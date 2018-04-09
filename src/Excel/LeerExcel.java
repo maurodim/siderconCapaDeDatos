@@ -89,6 +89,7 @@ private void printToConsole(List cellDataList)
            Boolean verif=false;
            ArrayList lstArt=new ArrayList();
            String unidadDeMedida="";
+           String estructura="";
            Double peso=0.00;
            
            System.out.println("cantidad de celdas "+cellDataList.size()+" cantidad map "+listadoArticulos.size());
@@ -156,6 +157,17 @@ private void printToConsole(List cellDataList)
                            unidadDeMedida=stringCellValue;
                            }
                            articulo.setUnidadDeMedida(unidadDeMedida);
+                           break;
+                       case 5:
+                           System.out.println("el tamaño del campo es "+stringCellValue.length());
+                           System.out.println(stringCellValue+" - 5");
+                           if(stringCellValue.length()== 0){
+                               articulo.setEstructura(0);
+                              // unidadDeMedida="UND";
+                           }else{
+                                estructura=stringCellValue;
+                           }
+                           articulo.setEstructura(Integer.parseInt(estructura));
                            break;
                    }
                    

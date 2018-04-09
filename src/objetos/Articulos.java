@@ -29,6 +29,16 @@ public class Articulos {
     private String sinonimoArticulo;
     private int estado;
     private String unidadDeMedida;
+    private int estructura;
+
+    public int getEstructura() {
+        return estructura;
+    }
+
+    public void setEstructura(int estructura) {
+        this.estructura = estructura;
+    }
+    
 
     public String getUnidadDeMedida() {
         return unidadDeMedida;

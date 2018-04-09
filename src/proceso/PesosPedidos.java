@@ -49,7 +49,7 @@ public class PesosPedidos extends Thread{
                 } catch (SQLException ex) {
                     Logger.getLogger(PesosPedidos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            String sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as peso from pedidos_carga1 where actualizacionPesos=0";
+            String sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as peso,(select pesos.estruc from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as estructura from pedidos_carga1 where actualizacionPesos=0";
                 Statement st=cp.createStatement();
                 st.execute(sql);
                 ResultSet rs=st.getResultSet();
@@ -62,6 +62,7 @@ public class PesosPedidos extends Thread{
                     codigo.trim();
                     //ACA DEBERIA LLAMAR A UNA INTERFACE QUE DEVUELVA UN DOUBLE Y TOMO EL PESO
                     pesoIt=rs.getDouble("peso");
+                    pesDet.setEstructura(rs.getInt("estructura"));
                     //pesoIt=(Double)art.get(codigo);
                     if(pesoIt==null){
                         pesoIt=0.00;
@@ -82,7 +83,7 @@ public class PesosPedidos extends Thread{
                         
                        //JOptionPane.showMessageDialog(null," numero id "+pesDet.getNumero()+" peso "+pesDet.getPesoUnitario()+" descr "+pesDet.getDescripcionArticulo()+" cod "+pesDet.getCodigoArticulo());
                     }
-                    sql="update pedidos_carga1 set peso="+pesDet.getPesoUnitario()+",actualizacionPesos=1 where numero="+pesDet.getNumero();
+                    sql="update pedidos_carga1 set peso="+pesDet.getPesoUnitario()+",es="+pesDet.getEstructura()+",actualizacionPesos=1 where numero="+pesDet.getNumero();
                     System.out.println("UPDATE "+sql);
                     ht.executeUpdate(sql);
                 }

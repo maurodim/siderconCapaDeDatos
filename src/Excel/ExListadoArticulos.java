@@ -80,6 +80,9 @@ public class ExListadoArticulos {
             celda4=fila.createCell(4);
             celda4.setCellStyle(titulo);
             celda4.setCellValue("UN. MED");
+            celda4=fila.createCell(5);
+            celda4.setCellStyle(titulo);
+            celda4.setCellValue("ES. SUP.");
             }
             Iterator rs=art.listIterator();
             Articulos articulo=null;
@@ -118,7 +121,9 @@ public class ExListadoArticulos {
             celda4=fila.createCell(4);
             celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
             celda4.setCellValue(articulo.getUnidadDeMedida());
-
+            celda4=fila.createCell(5);
+            celda4.setCellType(HSSFCell.CELL_TYPE_STRING);
+            celda4.setCellValue(articulo.getEstructura());
         }
             
             /*

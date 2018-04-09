@@ -526,7 +526,7 @@ public class Procesos {
         public ArrayList ListadoDeArticulos() throws SQLException{
         //    Connection cp=cn.ObtenerConeccion();
             ArrayList articulos = new ArrayList();
-            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),(select datos.UMV from datos where datos.COD_ARTICULO=PESOS.codigo limit 0,1)as unidad from PESOS order by codigo";
+            String sql="select PESOS.codigo,(select ArticulosDesc.Descripcion from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),PESOS.peso,(select ArticulosDesc.Sinonimo from ArticulosDesc where CodArticulo=PESOS.codigo limit 0,1),(select datos.UMV from datos where datos.COD_ARTICULO=PESOS.codigo limit 0,1)as unidad,pesos.estruc from PESOS order by codigo";
             int cantidad=0;
         Statement st=cp.createStatement();
         st.execute(sql);
@@ -538,6 +538,7 @@ public class Procesos {
             art.setPesoUnitario(rs.getDouble(3));
             art.setSinonimoArticulo(rs.getString(4));
             art.setUnidadDeMedida(rs.getString("unidad"));
+            art.setEstructura(rs.getInt("estruc"));
             //System.out.println(art.getCodigo());
             //pesoUnitario=String.valueOf(art.getPesoUnitario());
             String pesoUnitario=art.getCodigo();
@@ -671,14 +672,14 @@ public class Procesos {
                         st.close();
                         break;
                     case 3:
-                        sql="insert into PESOS (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
+                        sql="insert into PESOS (codigo,peso,estruc) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+","+ar.getEstructura()+")";
                         Statement sh;
                         try{
                             sh=cp.createStatement();
                             sh.executeUpdate(sql);
                         }catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exxxx){
                             System.err.println(" error en pesos "+exxxx);
-                            sql="update PESOS set peso="+ar.getPesoUnitario()+" where codigo='"+ar.getCodigo()+"'";
+                            sql="update PESOS set peso="+ar.getPesoUnitario()+",estruc="+ar.getEstructura()+" where codigo='"+ar.getCodigo()+"'";
                             sh=cp.createStatement();
                             sh.executeUpdate(sql);
                             flagP=1;
@@ -702,7 +703,7 @@ public class Procesos {
                         sh.close();
                         break;
                     default:
-                        sql="update PESOS set peso="+ar.getPesoUnitario()+" where PESOS.codigo='"+ar.getCodigo()+"'";
+                        sql="update PESOS set peso="+ar.getPesoUnitario()+",estruc="+ar.getEstructura()+" where PESOS.codigo='"+ar.getCodigo()+"'";
                         Statement sp=cp.createStatement();
                         int hech=sp.executeUpdate(sql);
                         sql="update ArticulosDesc set Descripcion='"+ar.getDescripcionArticulo()+"',Sinonimo='"+ar.getSinonimoArticulo()+"' where CodArticulo='"+ar.getCodigo()+"'";
@@ -736,7 +737,7 @@ public class Procesos {
         public void GuardarNuevoArticulo(Articulos ar,String medida){
         try {
             //   Connection cp=cn.ObtenerConeccion();
-            String sql="insert into pesos (codigo,peso) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+")";
+            String sql="insert into pesos (codigo,peso,estruc) values('"+ar.getCodigo()+"',"+ar.getPesoUnitario()+","+ar.getEstructura()+")";
             System.out.println(sql);
             Statement sh=cp.createStatement();
             int flagP=0;
@@ -745,7 +746,7 @@ public class Procesos {
             sh.executeUpdate(sql);
             }catch(com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exxxx){
                             System.err.println(" error en pesos "+exxxx);
-                            sql="update PESOS set peso="+ar.getPesoUnitario()+" where codigo='"+ar.getCodigo()+"'";
+                            sql="update PESOS set peso="+ar.getPesoUnitario()+",estruc="+ar.getEstructura()+" where codigo='"+ar.getCodigo()+"'";
                             //sh=cp.createStatement();
                             sh.executeUpdate(sql);
                             System.out.println(sql);

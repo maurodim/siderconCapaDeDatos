@@ -15,6 +15,16 @@ public class DetallePesosPedido {
     private Double pesoUnitario;
     private Double pesoTotal;
     private Integer numero;
+    private int estructura;
+
+    public int getEstructura() {
+        return estructura;
+    }
+
+    public void setEstructura(int estructura) {
+        this.estructura = estructura;
+    }
+    
 
     public Integer getNumero() {
         return numero;
