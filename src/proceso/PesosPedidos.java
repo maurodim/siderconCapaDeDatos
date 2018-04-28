@@ -39,8 +39,10 @@ public class PesosPedidos extends Thread{
             Map art=new HashMap();
             ArrayList pesosArt=new ArrayList();
             DetallePesosPedido pesDet=new DetallePesosPedido();
-             
-            
+            String sql="update pedidos_carga1 inner join pesos ON pesos.codigo= pedidos_carga1.COD_ARTIC set pedidos_carga1.es=pesos.estruc";
+            Statement st=cp.createStatement();
+                st.executeUpdate(sql);
+                System.out.println("UPDATE de ESTRUCTURA SUPERIOR "+sql);
             String codigo=null;
                 Double pesoIt=0.00;
             Procesos pr = new Procesos();
@@ -49,8 +51,8 @@ public class PesosPedidos extends Thread{
                 } catch (SQLException ex) {
                     Logger.getLogger(PesosPedidos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            String sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as peso,(select pesos.estruc from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as estructura from pedidos_carga1 where actualizacionPesos=0";
-                Statement st=cp.createStatement();
+            sql="select pedidos_carga1.COD_ARTIC,pedidos_carga1.CANT_PEDID,pedidos_carga1.numero,(select pesos.peso from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as peso,(select pesos.estruc from pesos where pesos.codigo=pedidos_carga1.COD_ARTIC)as estructura from pedidos_carga1 where actualizacionPesos=0";
+                //Statement st=cp.createStatement();
                 st.execute(sql);
                 ResultSet rs=st.getResultSet();
                 while(rs.next()){
@@ -87,6 +89,7 @@ public class PesosPedidos extends Thread{
                     System.out.println("UPDATE "+sql);
                     ht.executeUpdate(sql);
                 }
+                
                 ht.close();
                 //Coneccion.CerrarConneccion(cp);    
         } catch (SQLException ex) {

@@ -236,6 +236,7 @@ public class Procesos {
                         pedidos.setCantidadArticuloPendiente(articulosPendientes);
                         pedidos.setZonaAsignada(rs.getInt("zona"));
                         pedidos.setAlertaAsignada(rs.getInt("alerta"));
+                        pedidos.setNotificado(rs.getInt("notificado"));
                         if(pedidos.getZonaAsignada() <=1){
                             pedidos.setZonaDescripcion("SANTA FE");
                         }else{
@@ -456,6 +457,7 @@ public class Procesos {
                 pedido.setObservaciones1(rs.getString("LEYENDA_2"));
                 pedido.setObservaciones2(rs.getString("LEYENDA_3"));
                 fechaT=rs.getString("FEC_PEDIDO").substring(0,10);
+                pedido.setNotificado(rs.getInt("notificado"));
                 pedido.setFechaPedidosTango(fechaT);
                 System.out.println("pedido :"+numeroPedido+" fecha"+fecha+" articulo: "+pedido.getDescripcionArticulo());
                 detalles.add(pedido);
@@ -506,6 +508,7 @@ public class Procesos {
                         pedidos.setNumeroDeRevisionDeListado(rs.getInt("revision"));
                         pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
                         pedidos.setEmpresa(rs.getString("TALON_PEDI"));
+                        pedidos.setNotificado(rs.getInt("notificado"));
                         fechaT=rs.getString("FEC_PEDIDO").substring(0,10);
                         pedidos.setFechaPedidosTango(fechaT);
                         Double articulosPendientes=0.00;

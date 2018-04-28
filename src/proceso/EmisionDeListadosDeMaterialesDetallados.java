@@ -128,7 +128,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
             pdfD.setLocalidadCliente(cliente.getLocalidad());
             pdfD.setTelefonoCliente(cliente.getTelefono());
             pdfD.setCodigoCliente(cliente.getCodigoCliente());
-            
+            pdfD.setNotificado(pedi.getNotificado());
             System.out.println(pdfD.getLocalidadCliente()+" - "+pdfD.getTelefonoCliente()+" - "+pdfD.getLeyenda2());
             definitivo.add(pdfD);
         }

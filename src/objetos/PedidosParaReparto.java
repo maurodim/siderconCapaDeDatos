@@ -84,6 +84,17 @@ public class PedidosParaReparto implements Editables{
         private int verificadorRevision;
         private int vehiculoAnterior;
         private Integer idPedidoEnTango;
+        private int notificado;
+
+    public int getNotificado() {
+        return notificado;
+    }
+
+    public void setNotificado(int notificado) {
+        this.notificado = notificado;
+    }
+        
+        
 
     public Integer getIdPedidoEnTango() {
         return idPedidoEnTango;

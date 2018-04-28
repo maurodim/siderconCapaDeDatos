@@ -46,11 +46,11 @@ public class Mail {
     }
     
     private void init(){
-        propiedades.put("mail.smtp.host","smtp.office365.com");
+        propiedades.put("mail.smtp.host","mail.sidercon.com.ar");
         propiedades.put("mail.smtp.starttls.enable","true");
         propiedades.put("mail.smtp.port",587);
-        propiedades.put("mail.smtp.mail.sender","logistica@sidercon.com");
-        propiedades.put("mail.smtp.user","logistica@sidercon.com");
+        propiedades.put("mail.smtp.mail.sender","no_responder@sidercon.com.ar");
+        propiedades.put("mail.smtp.user","no_responder@sidercon.com.ar");
         propiedades.put("mail.smtp.auth","true");
         sesion=Session.getDefaultInstance(propiedades);
         
@@ -61,7 +61,7 @@ public class Mail {
             MimeMessage mensaje=new MimeMessage(sesion);
             mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
             mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
-            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("comercial@sidercon.com"));
+            mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("comercial@sidercon.com"));
             mensaje.setSubject(asunto);
             BodyPart texto=new MimeBodyPart();
             texto.setText("LPM GENERADA, LA MISMA SE ENCUENTRA GUARDADA EN LA CARPETA Server/Ventas/LPM   \n Saludos");
@@ -104,7 +104,7 @@ public class Mail {
             MimeMessage mensaje=new MimeMessage(sesion);
             mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
             //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("mauro@bambusoft.com.ar"));
-            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("logistica@sidercon.com"));
+            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("no_responder@sidercon.com.ar"));
             //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
             //mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("rgonzalez@sidercon.com"));
             // aca envalúo el texto y el asunto recorriendo el pedido o los items eliminados
@@ -172,7 +172,7 @@ public class Mail {
             MimeMessage mensaje=new MimeMessage(sesion);
             mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
             //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("mauro@bambusoft.com.ar"));
-            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("logistica@sidercon.com"));
+            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("no_responder@sidercon.com.ar"));
             //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
             //mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("rgonzalez@sidercon.com"));
             // aca envalúo el texto y el asunto recorriendo el pedido o los items eliminados

@@ -161,13 +161,11 @@ private void printToConsole(List cellDataList)
                        case 5:
                            System.out.println("el tamaño del campo es "+stringCellValue.length());
                            System.out.println(stringCellValue+" - 5");
-                           if(stringCellValue.length()== 0){
-                               articulo.setEstructura(0);
-                              // unidadDeMedida="UND";
-                           }else{
+                           
                                 estructura=stringCellValue;
-                           }
-                           articulo.setEstructura(Integer.parseInt(estructura));
+                                int si=0;
+                          if(estructura.equals("1.0")|| estructura.equals("1"))si=1;
+                           articulo.setEstructura(si);
                            break;
                    }
                    

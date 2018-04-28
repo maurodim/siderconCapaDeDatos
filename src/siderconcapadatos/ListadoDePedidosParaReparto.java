@@ -234,7 +234,7 @@ public class ListadoDePedidosParaReparto extends javax.swing.JInternalFrame {
         jTable2.setModel(tab);
         tab.addColumn("Seleccion");
         tab.addColumn("Vehiculo");
-        tab.addColumn("Cap. de Carga Actual");
+        tab.addColumn("Kg Carga");
         tab.addColumn("HDR");
         tab.addColumn("Nº Listado");
         Object []fila2=new Object[5];
@@ -779,24 +779,27 @@ pedidosSeleccionados.add(fila);
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int unidad=jTable2.getSelectedRow();
-        unidad=unidad + 1;
-        String descripcionVehiculo=(String) jTable2.getValueAt(unidad,1);
-        int largo=descripcionVehiculo.length();
-        descripcionVehiculo=descripcionVehiculo.substring(1, largo);
+        //unidad=unidad + 1;
+        System.out.println("unidad seleccionada "+unidad);
+        Vehiculos vehi=(Vehiculos) vehiculos.get(unidad);
+        int idUnidad=vehi.getNumero();
+        String descripcionVehiculo=vehi.getDescripcion();//(String) jTable2.getValueAt(unidad,1);
+        int largo=descripcionVehiculo.length() - 2;
+        descripcionVehiculo=descripcionVehiculo.substring(0, largo);
         ArrayList seleccionados=new ArrayList();
         PedidosParaReparto pd=new PedidosParaReparto();
         Procesos pro=new Procesos();
         
-            seleccionados=pro.ListarPedidosPorVehiculo(unidad);
+            seleccionados=pro.ListarPedidosPorVehiculo(idUnidad);
         
         Iterator yy=seleccionados.listIterator();
         ChequearCantidadesPedidos ch=new Checking();
         while(yy.hasNext()){
             pd=(PedidosParaReparto)yy.next();
-            System.out.println("RAZON SOCIAL "+pd.getRazonSocial()+" UNIDAD "+unidad);
+            System.out.println("RAZON SOCIAL "+pd.getRazonSocial()+" UNIDAD "+idUnidad);
             pd=(PedidosParaReparto)ch.check(pd);
         }
-        ListadoDeCargaPorVehiculo lst=new ListadoDeCargaPorVehiculo(unidad,fechaPedido,descripcionVehiculo);
+        ListadoDeCargaPorVehiculo lst=new ListadoDeCargaPorVehiculo(idUnidad,fechaPedido,descripcionVehiculo);
         InicioSiderconHdr.jDesktopPane1.add(lst);
         lst.toFront();
         lst.setVisible(true);
