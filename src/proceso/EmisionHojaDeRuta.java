@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
 import objetos.Mail;
 import objetos.PedidosParaReparto;
 import objetos.Vehiculos;
@@ -228,7 +229,8 @@ public class EmisionHojaDeRuta extends Thread{
                              mail.enviarMailRepartoCargaCompleta();
                          } catch (MessagingException ex) {
                              Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
-                             System.err.println(ex);
+                             //System.err.println(ex);
+                             JOptionPane.showMessageDialog(null,"El mail no ha podido ser enviado, informe del error: "+ex);
                          }
             } catch (IOException ex) {
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
