@@ -221,13 +221,14 @@ public class EmisionHojaDeRuta extends Thread{
             try {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                  Mail mail=new Mail();
-                mail.setDireccionFile(destino2);
+                mail.setDireccionFile(destino);
                 mail.setDetalleListado(num+"hdr.pdf");
                 mail.setAsunto("HDR GENERADA N° "+num);
                          try {
                              mail.enviarMailRepartoCargaCompleta();
                          } catch (MessagingException ex) {
                              Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+                             System.err.println(ex);
                          }
             } catch (IOException ex) {
                 Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
