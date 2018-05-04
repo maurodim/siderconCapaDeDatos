@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class lpmModel extends DefaultTableModel{
     public Class getColumnClass(int colum){
         if(colum==0){
-            System.out.println("SE MARCO COMO VERDADERO");
+            //System.out.println("SE MARCO COMO VERDADERO");
             return Boolean.class;
         }
         if(colum==2)return Integer.class;

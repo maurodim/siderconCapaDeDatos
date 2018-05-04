@@ -509,7 +509,12 @@ public class Procesos {
                         pedidos.setIdPedidoEnTango(rs.getInt("ID_GVA03"));
                         pedidos.setEmpresa(rs.getString("TALON_PEDI"));
                         pedidos.setNotificado(rs.getInt("notificado"));
-                        fechaT=rs.getString("FEC_PEDIDO").substring(0,10);
+                        fechaT=rs.getString("FEC_PEDIDO");
+                                if(fechaT!=null){
+                                    fechaT=fechaT.substring(0,10);
+                                }else{
+                                    fechaT=pedidos.getFechaEnvio();
+                                }
                         pedidos.setFechaPedidosTango(fechaT);
                         Double articulosPendientes=0.00;
                         if(pendiente==null){

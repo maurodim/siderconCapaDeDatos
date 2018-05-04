@@ -53,6 +53,7 @@ public class Mail {
         propiedades.put("mail.smtp.user","no_responder@sidercon.com.ar");
         propiedades.put("mail.smtp.auth","true");
         sesion=Session.getDefaultInstance(propiedades);
+        System.out.println("mail en envio "+asunto);
         
     }
     public void enviarMailRepartoCargaCompleta() throws MessagingException{
@@ -63,6 +64,7 @@ public class Mail {
             mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
             mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("comercial@sidercon.com"));
             mensaje.setSubject(asunto);
+            //System.out.println("mail en envio "+asunto);
             BodyPart texto=new MimeBodyPart();
             texto.setText("LPM GENERADA, LA MISMA SE ENCUENTRA GUARDADA EN LA CARPETA Server/Ventas/LPM   \n Saludos");
             BodyPart adjunto=new MimeBodyPart();

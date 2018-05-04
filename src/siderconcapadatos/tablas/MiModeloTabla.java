@@ -18,10 +18,10 @@ import javax.swing.table.TableCellRenderer;
 public class MiModeloTabla extends DefaultTableModel {
     public Class getColumnClass(int colum){
         if(colum==4){
-            System.out.println("SE MARCO COMO VERDADERO");
+            //System.out.println("SE MARCO COMO VERDADERO");
             return Boolean.class;
         }else{
-            System.out.println("se marco como falso");
+            //System.out.println("se marco como falso");
         }
         if(colum==3)return Integer.class;
         if(colum==2)return Double.class;

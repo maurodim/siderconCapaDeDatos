@@ -190,37 +190,12 @@ public class EmisionHojaDeRuta extends Thread{
         PdfHdr pdf=new PdfHdr(ch1,num,destino2,destino);
         pdf.start();
         
-        /*
-        JasperReport reporte = null;
-        try {
-            reporte = (JasperReport)JRLoader.loadObject(master);
-        } catch (JRException ex) {
-            Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JasperPrint jasperPrint = null;
-        try {
-            jasperPrint = JasperFillManager.fillReport(reporte, listConsolidado,ch);
-        } catch (JRException ex) {
-            Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        JRExporter exporter=new JRPdfExporter();
-        JRExporter exporter1=new JRPdfExporter();
-        exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
-        exporter1.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
-        exporter1.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino));
-        exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File(destino2));
-        try {
-            exporter.exportReport();
-            exporter1.exportReport();
-                     //cnn.close();
-        } catch (JRException ex) {
-            Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         */        
-            File f=new File(destino2);
-            if(f.exists()){
-            try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
+               
+            File f=new File(destino);
+            System.out.println("destino2 hdr: "+destino);
+            //if(f.exists()){
+           
+                //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                  Mail mail=new Mail();
                 mail.setDireccionFile(destino);
                 mail.setDetalleListado(num+"hdr.pdf");
@@ -232,10 +207,8 @@ public class EmisionHojaDeRuta extends Thread{
                              //System.err.println(ex);
                              JOptionPane.showMessageDialog(null,"El mail no ha podido ser enviado, informe del error: "+ex);
                          }
-            } catch (IOException ex) {
-                Logger.getLogger(EmisionDeListadosDeMaterialesConsolidados.class.getName()).log(Level.SEVERE, null, ex);
-            }
-}
+            
+//}
         
  
     }
