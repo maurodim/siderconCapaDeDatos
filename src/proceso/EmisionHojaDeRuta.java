@@ -191,24 +191,24 @@ public class EmisionHojaDeRuta extends Thread{
         pdf.start();
         
                
-            File f=new File(destino);
-            System.out.println("destino2 hdr: "+destino);
-            //if(f.exists()){
+            File f=new File(destino2);
+            System.out.println("destino2 hdr: "+destino2);
+            if(f.exists()){
            
                 //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                  Mail mail=new Mail();
-                mail.setDireccionFile(destino);
+                mail.setDireccionFile(destino2);
                 mail.setDetalleListado(num+"hdr.pdf");
                 mail.setAsunto("HDR GENERADA N° "+num);
                          try {
                              mail.enviarMailRepartoCargaCompleta();
                          } catch (MessagingException ex) {
-                             Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
+                             Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex);
                              //System.err.println(ex);
                              JOptionPane.showMessageDialog(null,"El mail no ha podido ser enviado, informe del error: "+ex);
                          }
             
-//}
+            }
         
  
     }

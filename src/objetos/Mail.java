@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Mail {
     private final Properties propiedades=new Properties();
-    private String password="Sider002";
+    private String password;
     private Session sesion;
     private String direccionFile;
     private String detalleListado;
@@ -46,6 +46,7 @@ public class Mail {
     }
     
     private void init(){
+        password="Sider002";
         propiedades.put("mail.smtp.host","mail.sidercon.com.ar");
         propiedades.put("mail.smtp.starttls.enable","true");
         propiedades.put("mail.smtp.port",587);
@@ -64,7 +65,7 @@ public class Mail {
             mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
             mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("comercial@sidercon.com"));
             mensaje.setSubject(asunto);
-            //System.out.println("mail en envio "+asunto);
+            System.out.println("mail en envio "+asunto+" clave: "+password);
             BodyPart texto=new MimeBodyPart();
             texto.setText("LPM GENERADA, LA MISMA SE ENCUENTRA GUARDADA EN LA CARPETA Server/Ventas/LPM   \n Saludos");
             BodyPart adjunto=new MimeBodyPart();
