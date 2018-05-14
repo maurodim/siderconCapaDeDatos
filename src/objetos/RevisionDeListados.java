@@ -184,6 +184,8 @@ public class RevisionDeListados implements Revisionar{
                 ped=(PedidosParaReparto)ic.next();
                 sql="insert into movimientosLpm (numeroListado,revision,codigoArticulo,cantidadNueva) values ("+ped.getNumeroDeListadoDeMateriales()+","+ped.getNumeroDeRevisionDeListado()+",'"+ped.getCodigoArticulo()+"',"+ped.getCantidadArticulo()+")";
                 st.executeUpdate(sql);
+                sql="update pedidos_carga1 set listado=0 where numero ="+ped.getiDPedido()+" and listado="+ped.getNumeroDeListadoDeMateriales();
+                st.executeUpdate(sql);
                 sql="update pedidos_carga1 set revisionado=1,listado="+ped.getNumeroDeListadoDeMateriales()+",revision="+ped.getNumeroDeRevisionDeListado()+" where numero ="+ped.getiDPedido();
                 st.executeUpdate(sql);
                 ped.setVerificadorRevision(1);

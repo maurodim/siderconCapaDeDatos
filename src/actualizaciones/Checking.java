@@ -113,7 +113,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             while(rs.next()){
                                 Checking tgCh=new Checking();
                                 cantidadT=rs.getDouble("cantidad_descargada");
-                                cantidadTPendiente=rs.getDouble("CANT_PEDID");
+                                cantidadTPendiente=rs.getDouble("cantidad_facturada");
                                 cantidadEq=rs.getDouble("equiva");
                                 //cantidadEq=1.00;
                                 //idTT=rs.getInt("ID_GVA03");
@@ -121,13 +121,18 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                                 cantidadesItemsTango++;
                                cantidadT=cantidadT/cantidadEq;
                                 cantidadTPendiente=cantidadTPendiente / cantidadEq;
+                                cantidadTotal=cantidadTPendiente - cantidadT;
                                 tgCh.cantidadTango=cantidadT;
                                 tgCh.idNumeroTango=idTT;
                                 tgCh.codigoTango=rs.getString("COD_ARTICU");
                                 //cantidadesTango.add(tgCh);
                                 //idTango.add(idTT);
                             }
-                            ped.setCantidadArticulo(cantidadTotal);
+                           if(cantidadTotal == ped.getCantidadArticulo()){
+                            }else{
+                                ped.setCantidadArticulo(cantidadTotal);
+                                modificarPedidos(ped);
+                            }
                             
                             
                             rs.close();
@@ -137,8 +142,8 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             /*
                              * TENGO QUE BUSCAR DE DONDE VIENE EL LLAMADO AL CHECKING - PARA PODER RENOVAR LOS DATOS DEL PEDIDO/PEDIDOS PARA MODIFICARLOS
                              */
-                            ArrayList pdMy=revisarMyPedidos(ped);
-                            System.out.println("RESULTADO DEL CHEQUEO :"+verificarMatrices(pdMy,cantidadesTango,ped));
+                            //ArrayList pdMy=revisarMyPedidos(ped);
+                            //System.out.println("RESULTADO DEL CHEQUEO :"+verificarMatrices(pdMy,cantidadesTango,ped));
                                 
                             
                            // if(verif(pedido,xt,cantidadesItemsTango,cantidadT,idTango)){
@@ -296,8 +301,8 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         Double cantidadTotal=(Double)ped.getCantidadArticulosTotales();
         String codigoArticulo=ped.getCodigoArticulo();
         
-        String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO,AR_SALDOS.SALDO_CC AS SALDO from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango()+" INNER JOIN AR_SALDOS ON AR_SALDOS.COD_CLIENT='"+ped.getCodigoCliente()+"'";
-        
+        //String sql="select GVA03.CAN_EQUI_V,GVA03.CANT_A_DES,GVA03.CANT_PEDID,GVA03.COD_ARTICU,GVA03.NRO_PEDIDO,AR_SALDOS.SALDO_CC AS SALDO from GVA03 where ID_GVA03="+ped.getIdPedidoEnTango()+" INNER JOIN AR_SALDOS ON AR_SALDOS.COD_CLIENT='"+ped.getCodigoCliente()+"'";
+        String sql="select AR_PEDIDOS.equiva,AR_PEDIDOS.cantidad_descargada,AR_PEDIDOS.cantidad_facturada,AR_PEDIDOS.COD_ARTICU,AR_PEDIDOS.NRO_PEDIDO,AR_SALDOS.SALDO_CC AS SALDO from AR_PEDIDOS where ID_GVA03="+ped.getIdPedidoEnTango()+" INNER JOIN AR_SALDOS ON AR_SALDOS.COD_CLIENT=AR_PEDIDOS.COD_CLIENT";
         Statement xt=null;
         
         int numeroConeccion=0;
@@ -343,11 +348,12 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             Double cantidadT=0.00;
                             Double cantidadTPendiente=0.00;
                             Double cantidadEq=0.00;
+                            Double cantt=0.00;
                             Double saldo=0.00;
                             while(rs.next()){
-                                cantidadT=rs.getDouble("CANT_A_DES");
-                                cantidadTPendiente=rs.getDouble("CANT_PEDID");
-                                cantidadEq=rs.getDouble("CAN_EQUI_V");
+                                cantidadT=rs.getDouble("cantidad_descargada");
+                                cantidadTPendiente=rs.getDouble("cantidad_facturada");
+                                cantidadEq=rs.getDouble("equiva");
                                 saldo=rs.getDouble("saldo");
                                 System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU")+" pedido "+rs.getString("NRO_PEDIDO"));
                                 
@@ -356,16 +362,19 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             xt.close();
                             cantidadT=cantidadT/cantidadEq;
                             cantidadTPendiente=cantidadTPendiente / cantidadEq;
+                            
                             System.err.println(" CANTIDADES PEDIDOS pedido "+ped.getRazonSocial()+" cant pend "+cantidadT+" articulo "+ped.getDescripcionArticulo()+" cod pedido "+ped.getCodigoTangoDePedido());
-                            if(cantidad > cantidadT){
-                                cantidad=cantidadT;
+                            cantt=cantidadTPendiente - cantidadT;
+                            
+                            if(cantidad > cantt){
+                                cantidad=cantt;
                             }else{
                                 if(cantidad==0.00){
-                                    cantidad=cantidadT;
+                                    //cantidad=cantidadT;
                                 }
                             }
-                            if(cantidadPendiente > cantidadT){
-                                cantidadPendiente=cantidadT;
+                            if(cantidadPendiente > cantt){
+                                cantidadPendiente=cantt;
                             }
                             if(cantidadTotal == cantidadTPendiente){
                             }else{
@@ -656,7 +665,17 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         }
         
     }
-
+private void modificarPedidos(PedidosParaReparto cch){
+        try {
+            Statement st=cnMy.createStatement();
+            String sql="update pedidos_carga1 set CANT_PEDID ="+cch.getCantidadArticulo()+" where ID_GVA03 = "+cch.getIdPedidoEnTango();
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Checking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     @Override
     public Integer leerId(ArrayList lst, String empresa) {
         Statement xt=null;

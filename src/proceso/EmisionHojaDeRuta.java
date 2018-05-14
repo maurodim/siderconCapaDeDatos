@@ -193,13 +193,13 @@ public class EmisionHojaDeRuta extends Thread{
                
             File f=new File(destino2);
             System.out.println("destino2 hdr: "+destino2);
-            if(f.exists()){
+           // if(f.exists()){
            
                 //Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+destino2);
                  Mail mail=new Mail();
                 mail.setDireccionFile(destino2);
                 mail.setDetalleListado(num+"hdr.pdf");
-                mail.setAsunto("HDR GENERADA N° "+num);
+                mail.setAsunto("HDR GENERADA NÂ° "+num);
                          try {
                              mail.enviarMailRepartoCargaCompleta();
                          } catch (MessagingException ex) {
@@ -208,7 +208,7 @@ public class EmisionHojaDeRuta extends Thread{
                              JOptionPane.showMessageDialog(null,"El mail no ha podido ser enviado, informe del error: "+ex);
                          }
             
-            }
+           // }
         
  
     }
