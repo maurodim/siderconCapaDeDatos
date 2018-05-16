@@ -112,7 +112,7 @@ public class EmisionHojaDeRuta extends Thread{
             uni=(Vehiculos)unidades.get(ped.getVehiculoAsignado());
             System.out.println("pedidos "+ped.getCodigoTangoDePedido()+" listado "+ped.getNumeroDeListadoDeMateriales());
         }
-        sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select sum(pedidos_carga1.CANT_PEDID * pedidos_carga1.peso) from pedidos_carga1 where pedidos_carga1.listado="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+        sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select pesoTotal from listadosdematriales where listadosdemateriales.numero="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
         System.out.println("sentencia hdr "+sql);
         Statement st = null;
         try {
@@ -123,7 +123,7 @@ public class EmisionHojaDeRuta extends Thread{
         try {
             st.executeUpdate(sql);
         } catch (SQLException ex) {
-            sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values(0.00,"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+            sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select pesoTotal from listadosdematriales where listadosdemateriales.numero="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
             try {
                 st.executeUpdate(sql);
             } catch (SQLException ex1) {
