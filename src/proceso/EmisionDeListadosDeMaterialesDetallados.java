@@ -187,7 +187,27 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                          Logger.getLogger(EmisionDeListadosDeMaterialesDetallados.class.getName()).log(Level.SEVERE, null, ex);
                      }
 }
-                 
+                    //listadoNum=ped.getNumeroDeListadoDeMateriales();
+                    String sql1="select COD_ARTIC,CANT_PEDID,((select round(pesos.peso,2) from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC limit 0,1) * CANT_PEDID) as pesoIndividual from pedidos_carga1 where listado="+this.numeroListado;
+                    Double estr=0.00;
+                    
+                    try {
+                    Statement st=cc.createStatement();
+                    ResultSet rs=st.executeQuery(sql1);
+
+
+                        while(rs.next()){
+                            estr=estr + rs.getDouble("pesoIndividual");
+                        }
+                        estr=Math.round(estr * 100.0) / 100.0;
+                        sql1="update listadosdemateriales set pesoTotal="+estr+" where numero="+this.numeroListado;
+                        System.out.println(sql1);
+                        st.executeUpdate(sql1);
+                    } catch (SQLException ex1) {
+                        Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                    
+                    
                  /*
         try {
             //Coneccion.CerrarConneccion(cc);

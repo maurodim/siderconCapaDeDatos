@@ -99,12 +99,9 @@ public class EmisionHojaDeRuta extends Thread{
             ped=(PedidosParaReparto)il.next();
             ped.setNumeroDeHojaDeRuta(num);
             pesoTotal+=ped.getPesoTotal();
-            listadoNum=ped.getNumeroDeListadoDeMateriales();
+            
             System.out.println("listado numero "+listadoNum);
-            if(listadoNum==null){
-                listadoNum=5;
-                
-            }
+            if(ped.getNumeroDeListadoDeMateriales() > 0)listadoNum=ped.getNumeroDeListadoDeMateriales();
             System.out.println("listado numero2 "+listadoNum+" "+ped.getFechaEnvio()+" "+ped.getVehiculoAsignado());
             fechaEntrega=ped.getFechaEnvio();
             fechaEntrega=fechaEntrega.substring(0,10);
@@ -112,7 +109,7 @@ public class EmisionHojaDeRuta extends Thread{
             uni=(Vehiculos)unidades.get(ped.getVehiculoAsignado());
             System.out.println("pedidos "+ped.getCodigoTangoDePedido()+" listado "+ped.getNumeroDeListadoDeMateriales());
         }
-        sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select pesoTotal from listadosdematriales where listadosdemateriales.numero="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+        sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select listadosdemateriales.pesoTotal from listadosdemateriales where listadosdemateriales.numero="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
         System.out.println("sentencia hdr "+sql);
         Statement st = null;
         try {
@@ -123,7 +120,22 @@ public class EmisionHojaDeRuta extends Thread{
         try {
             st.executeUpdate(sql);
         } catch (SQLException ex) {
-            sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values((select pesoTotal from listadosdematriales where listadosdemateriales.numero="+listadoNum+"),"+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+            System.err.println(ex);
+            String sql1="select COD_ARTIC,CANT_PEDID,((select round(pesos.peso,2) from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC limit 0,1) * CANT_PEDID) as pesoIndividual from pedidos_carga1 where listado="+listadoNum;
+            Double estr=0.00;
+            try {
+            ResultSet rs=st.executeQuery(sql1);
+           
+            
+                while(rs.next()){
+                    estr=estr + rs.getDouble("pesoIndividual");
+                }
+            } catch (SQLException ex1) {
+                Logger.getLogger(EmisionHojaDeRuta.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            estr=Math.round(estr * 100.0) / 100.0;
+            sql="insert into hdr (pesoCarga,listadoNumero,fechaEntrega,numeroFletero,numeroVehiculo,kmInicio,totalMonto,totalVuelto) values("+estr+","+listadoNum+",'"+fechaEntrega+"',"+this.numeroFletero+","+this.numeroVehiculo+","+uni.getKilometrosActuales()+","+this.totalMonto+","+this.totalVuelto+")";
+            System.out.println(sql);
             try {
                 st.executeUpdate(sql);
             } catch (SQLException ex1) {
