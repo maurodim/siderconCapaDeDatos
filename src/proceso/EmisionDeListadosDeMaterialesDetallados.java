@@ -188,7 +188,7 @@ public class EmisionDeListadosDeMaterialesDetallados extends Thread{
                      }
 }
                     //listadoNum=ped.getNumeroDeListadoDeMateriales();
-                    String sql1="select COD_ARTIC,CANT_PEDID,((select round(pesos.peso,2) from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC limit 0,1) * CANT_PEDID) as pesoIndividual from pedidos_carga1 where listado="+this.numeroListado;
+                    String sql1="select COD_ARTIC,CANT_PEDID,((select round(pesos.peso,2) from pesos where pesos.codigo = pedidos_carga1.COD_ARTIC limit 0,1) * CANT_PEDID) as pesoIndividual from pedidos_carga1 where listado="+this.numeroListado+" GROUP BY ID_GVA03";
                     Double estr=0.00;
                     
                     try {

@@ -1467,4 +1467,36 @@ public class Procesos {
             rs.close();
             return flag;
     }
+    public ArrayList RecalcularPesosTotalesPedidos(ArrayList listado){
+        ArrayList <PedidosParaReparto> lst=new ArrayList();
+        Iterator it=listado.listIterator();
+        PedidosParaReparto pedi;
+        String sql;
+        PreparedStatement st;
+        ResultSet rs;
+        Double kk=0.00;
+        while(it.hasNext()){
+            pedi=(PedidosParaReparto) it.next();
+            //select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like 'pedidos_carga1.RAZON_SOC%' and saldosclientesact.COD_CLI like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 group by NRO_PEDIDO order by RAZON_SOC";
+            sql="select cod_artic,cant_pedid,peso,(peso * cant_pedid) as pesoI from pedidos_carga1 where nro_pedido like '%"+pedi.getCodigoTangoDePedido()+"%' group by ID_GVA03";
+            
+            kk=0.00;
+            try {
+                st=cp.prepareStatement(sql);
+                //st.execute(sql);
+		rs=st.executeQuery();
+                //synchronized rs;
+                while(rs.next()){
+                    kk=kk + rs.getDouble("pesoI");
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            kk=Math.round(kk * 100.0) / 100.0;
+            pedi.setPesoTotal(kk);
+            lst.add(pedi);
+        }
+        return lst;
+    }
 }

@@ -715,7 +715,8 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
        EmisionDeListados emision=new EmisionDeListados();
-        
+        Procesos pro=new Procesos();
+        carga=pro.RecalcularPesosTotalesPedidos(carga);
             try {
                 
                 
