@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetos.PedidosParaReparto;
 import proceso.Coneccion;
 import siderconcapadatos.SiderconCapaatos;
@@ -128,10 +129,15 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                                 //cantidadesTango.add(tgCh);
                                 //idTango.add(idTT);
                             }
-                           if(cantidadTotal == ped.getCantidadArticulo()){
+                           if(cantidadTotal == ped.getCantidadArticulo() || cantidadTotal > ped.getCantidadArticulo()){
                             }else{
-                                ped.setCantidadArticulo(cantidadTotal);
-                                modificarPedidos(ped);
+                               if(ped.getCantidadArticulo() != null){
+                                   
+                               } else{
+                                    JOptionPane.showMessageDialog(null,"CUIDADO!!! SE ESTAN AJUSTANDO LAS CANTIDADES A TANGO, DADO QUE LAS CANTIDADES RECIBIDAS ESTABAN EN VALOR NULO.");
+                               }
+                               ped.setCantidadArticulo(cantidadTotal);
+                                    modificarPedidos(ped);
                             }
                             
                             
