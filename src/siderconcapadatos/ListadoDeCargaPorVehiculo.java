@@ -11,6 +11,7 @@
 package siderconcapadatos;
 
 import actualizaciones.Checking;
+import actualizaciones.ChequearCantidadesPedidos;
 import interfaces.ActualizableTango;
 import interfaces.Revisionar;
 import java.io.IOException;
@@ -391,7 +392,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
         ArrayList descarga=new ArrayList();
         //ver por el chequeo de las cantidades de los pedidos
         
-        //ChequearCantidadesPedidos ch=new Checking();
+        ChequearCantidadesPedidos ch=new Checking();
         Integer revisionNum=0;
         int senal=0;
         while(ic.hasNext()){
@@ -431,8 +432,10 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Iterator id=detall.listIterator();
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
+                    pedi=(PedidosParaReparto) ch.check(pedi);
                     pedi.setNumeroDeRevisionDeListado(revisionNum);
                     pedi.setNumeroDeListadoDeMateriales(numeroListado);
+                    
                     //System.out.println("DETALLE CARGA "+pedi);
                     cargaDetallada.add(pedi);
                     cargaDetallada1.add(pedi);
@@ -483,6 +486,7 @@ public class ListadoDeCargaPorVehiculo extends javax.swing.JInternalFrame {
                 Iterator id=detall.listIterator();
                 while(id.hasNext()){
                     pedi=(PedidosParaReparto)id.next();
+                    pedi=(PedidosParaReparto) ch.check(pedi);
                         if(pedi.getNumeroDeListadoDeMateriales() > 0){
                         /*
                          * SOLUCION MAS SIMPLE:
