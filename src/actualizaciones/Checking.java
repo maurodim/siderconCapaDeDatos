@@ -133,6 +133,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             }else{
                                if(ped.getCantidadArticulo() != null){
                                    
+                                   //aca no deberia pasar nada
                                } else{
                                     JOptionPane.showMessageDialog(null,"CUIDADO!!! SE ESTAN AJUSTANDO LAS CANTIDADES A TANGO, DADO QUE LAS CANTIDADES RECIBIDAS ESTABAN EN VALOR NULO.");
                                }
