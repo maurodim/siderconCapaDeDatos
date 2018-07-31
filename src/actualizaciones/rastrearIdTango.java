@@ -29,7 +29,7 @@ public class rastrearIdTango {
         
         try {
             //ArrayList listadoPedidos=new ArrayList();
-            String sql="select * from pedidos_carga1 where id_gva03=0 and TALON_PEDI like '"+empresa+"' order by numero desc";
+            String sql="select * from pedidos_carga1 where CANT_DESC is null and TALON_PEDI like '"+empresa+"' order by numero desc";
             PedidosParaReparto ped=null;
             Connection cp=Coneccion.ObtenerConeccion();
             stat=cp.createStatement();
@@ -44,7 +44,7 @@ public class rastrearIdTango {
                 ped.setDescripcionArticulo(rs.getString("DESC_ARTIC"));
                 ped.setiDPedido(rs.getInt("numero"));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
-                ped.setCantidadArticulo(0.00);
+                ped.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
                 listado.add(ped);
                 //System.out.println("DATOS RASTREABLES :"+ped.getCodigoTangoDePedido()+" "+ped.getCodigoArticulo()+" "+ped.getCantidadArticulo()+" "+ped.getDescripcionArticulo()+" "+ped.getEmpresa());
                
