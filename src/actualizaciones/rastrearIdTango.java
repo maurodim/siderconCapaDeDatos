@@ -29,7 +29,7 @@ public class rastrearIdTango {
         
         try {
             //ArrayList listadoPedidos=new ArrayList();
-            String sql="select * from pedidos_carga1 where CANT_DESC is null and TALON_PEDI like '"+empresa+"' order by numero desc";
+            String sql="select * from pedidos_carga1 where ID_GVA03=0 or CANT_DESC is null and TALON_PEDI like '"+empresa+"' order by numero desc";
             PedidosParaReparto ped=null;
             Connection cp=Coneccion.ObtenerConeccion();
             stat=cp.createStatement();
