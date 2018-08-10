@@ -491,7 +491,7 @@ public class PedidosParaReparto implements Editables{
                 Connection cp=cn.getCn();
                 ArrayList listaPed=new ArrayList();
                 try {
-                String sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like 'pedidos_carga1.RAZON_SOC%' and saldosclientesact.COD_CLI like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where NRO_PEDIDO like '%"+codigoPedido+"'and reparto=1";
+                String sql="select *,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like 'pedidos_carga1.RAZON_SOC%' and saldosclientesact.COD_CLI like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where NRO_PEDIDO like '%"+codigoPedido+"'and reparto=1";
                 System.out.println(sql);
                 
                 PreparedStatement st=cp.prepareStatement(sql);
@@ -514,7 +514,7 @@ public class PedidosParaReparto implements Editables{
                     pedidos.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
                     pedidos.setCodigoCliente(rs.getString("COD_CLIENT"));
                     pedidos.setFechaEnvio(rs.getString("entrega"));
-                    pedidos.setFechaActualizacionSaldoCliente(rs.getDate("act"));
+                    //pedidos.setFechaActualizacionSaldoCliente(rs.getDate("act"));
                     pedidos.setNumeroDeListadoDeMateriales(rs.getInt("listado"));
                     pedidos.setNumeroDeRevisionDeListado(rs.getInt("revision"));
                     pedidos.setNumeroDeHojaDeRuta(rs.getInt("hdr1"));
