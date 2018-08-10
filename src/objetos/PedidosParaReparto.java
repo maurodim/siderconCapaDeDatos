@@ -601,8 +601,8 @@ public class PedidosParaReparto implements Editables{
                     if(SiderconCapaatos.falloConecion==1){
                         
                     }else{
-                        ChequearCantidadesPedidos chCli=new Clientes();
-                        chCli.check(chCli.actualizar(clie));
+                        //ChequearCantidadesPedidos chCli=new Clientes();
+                        //chCli.check(chCli.actualizar(clie));
                     }
                     listaPed.add(pedidos);
                 }
@@ -629,6 +629,7 @@ public class PedidosParaReparto implements Editables{
         Boolean verif=false;
                 Connection cp=cn.getCn();
         String sql="delete from pedidos_carga1 where numero="+id;
+        System.out.println(sql);
         Statement st;
             try {
                 st = cp.createStatement();

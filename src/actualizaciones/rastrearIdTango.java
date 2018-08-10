@@ -45,6 +45,7 @@ public class rastrearIdTango {
                 ped.setiDPedido(rs.getInt("numero"));
                 ped.setEmpresa(rs.getString("TALON_PEDI"));
                 ped.setCantidadArticulo(rs.getDouble("CANT_PEDID"));
+                
                 listado.add(ped);
                 //System.out.println("DATOS RASTREABLES :"+ped.getCodigoTangoDePedido()+" "+ped.getCodigoArticulo()+" "+ped.getCantidadArticulo()+" "+ped.getDescripcionArticulo()+" "+ped.getEmpresa());
                
@@ -70,5 +71,19 @@ public class rastrearIdTango {
         }
         return verificado;
     }
-    
+    public Integer ExtraerIdPedidoTango(String empresa,Object pedido){
+        Integer verificado=0;
+        PedidosParaReparto pedi=(PedidosParaReparto) pedido;
+        ArrayList lst=new ArrayList();
+        lst.add(pedido);
+        Ideable chk=new Checking();
+        if(lst.size() > 0){
+            verificado=chk.leerId(lst,empresa);
+            chk.guardarIdEnMysql(verificado, pedi.getiDPedido());
+        }
+           
+            
+        
+        return verificado;
+    }
 }

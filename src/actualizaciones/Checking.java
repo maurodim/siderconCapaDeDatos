@@ -61,7 +61,7 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
         ArrayList cantidadesTango=new ArrayList();
         Integer idTT=0;
         String sql="select * from ar_pedidos where ID_GVA03 ="+ped.getIdPedidoEnTango();
-        
+        //System.out.println(sql+"  -- sentencia en tango");
         Statement xt=null;
         if(SiderconCapaatos.falloConecion==0){
         int numeroConeccion=0;
@@ -111,11 +111,13 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                             Double cantidadTPendiente=0.00;
                             Double cantidadEq=0.00;
                             int cantidadesItemsTango=0;
+                            System.out.println("CONEXION "+numeroConeccion+" empresa "+empresa);
                             while(rs.next()){
                                 Checking tgCh=new Checking();
                                 cantidadT=rs.getDouble("cantidad_descargada");
                                 cantidadTPendiente=rs.getDouble("cantidad_facturada");
                                 cantidadEq=rs.getDouble("equiva");
+                                System.out.println("descargada "+cantidadT+" facturada "+cantidadTPendiente+" equivalencia "+cantidadEq+" CONEXION "+numeroConeccion);
                                 //cantidadEq=1.00;
                                 //idTT=rs.getInt("ID_GVA03");
                                 System.out.println("CANT A DES "+cantidadT+" articulo "+rs.getString("COD_ARTICU"));
@@ -129,18 +131,29 @@ public class Checking implements ChequearCantidadesPedidos,Ideable,ActualizableT
                                 //cantidadesTango.add(tgCh);
                                 //idTango.add(idTT);
                             }
-                           if(cantidadTotal == ped.getCantidadArticulo() || cantidadTotal > ped.getCantidadArticulo()){
-                            }else{
-                               if(ped.getCantidadArticulo() != null){
-                                   
-                                   //aca no deberia pasar nada
-                               } else{
-                                    JOptionPane.showMessageDialog(null,"CUIDADO!!! SE ESTAN AJUSTANDO LAS CANTIDADES A TANGO, DADO QUE LAS CANTIDADES RECIBIDAS ESTABAN EN VALOR NULO.");
-                               }
-                               ped.setCantidadArticulo(cantidadTotal);
-                                    modificarPedidos(ped);
+                            try{
+                                System.out.println("cantidad Total "+cantidadTotal+"cantidad pedido "+ped.getCantidadArticulo()+" id pedido "+ped.getIdPedidoEnTango());
+                                if(cantidadTotal != null){
+
+                                }else{
+                                    JOptionPane.showMessageDialog(null,"HA HABIDO UN PROBLEMA DE CONEXION CON TANGO, INFORMELO POR FAVOR");
+                                }
+                                if(cantidadTotal == ped.getCantidadArticulo() || cantidadTotal > ped.getCantidadArticulo()){
+                                }else{
+                                   if(ped.getCantidadArticulo() != null){
+
+                                       //aca no deberia pasar nada
+                                   } else{
+                                        JOptionPane.showMessageDialog(null,"CUIDADO!!! SE ESTAN AJUSTANDO LAS CANTIDADES A TANGO, DADO QUE LAS CANTIDADES RECIBIDAS ESTABAN EN VALOR NULO.");
+                                   }
+                                   ped.setCantidadArticulo(cantidadTotal);
+                                        modificarPedidos(ped);
+                                }
+                            }catch(java.lang.NullPointerException ex){
+                                rastrearIdTango ras=new rastrearIdTango();
+                                System.out.println("ID TANGO RE ACONDICIONADO: "+ras.ExtraerIdPedidoTango(empresa, ped));
+                                JOptionPane.showMessageDialog(null,"HA HABIDO UN PROBLEMA DE CON EL PEDIDO "+ped.getCodigoTangoDePedido()+" DEL CLIENTE "+ped.getRazonSocial()+" POR FAVOR CAMBIE DE DIA E INTENTE NUEVAMENTE VER LA CARGA. GRACIAS");
                             }
-                            
                             
                             rs.close();
                             //xt.close();
@@ -739,15 +752,18 @@ private void modificarPedidos(PedidosParaReparto cch){
                            
                            while(it.hasNext()){
                             pedido=(PedidosParaReparto) it.next();
-                            String numPed=pedido.getCodigoTangoDePedido().substring(1);
-                            sql="select ID_GVA03,(cant_pedid / equiva) as cantidad from ar_pedidos where COD_ARTICU = '"+pedido.getCodigoArticulo()+"' and NRO_PEDIDO like '%"+numPed+"'";
+                            int cantid=pedido.getCodigoTangoDePedido().length();
+                            cantid=cantid -8;
+                            String numPed=pedido.getCodigoTangoDePedido().substring(cantid);
+                            sql="select ID_GVA03,(cant_pedid - cantidad_descargada / equiva) as cantidad from ar_pedidos where COD_ARTICU = '"+pedido.getCodigoArticulo()+"' and NRO_PEDIDO like '%"+numPed+"'";
                             xt.execute(sql);
                             System.out.println("SQL TANGO "+sql);
                             rs=xt.getResultSet();
                             while(rs.next()){
                                 id=rs.getInt("ID_GVA03");
                                 cannt=Math.round(rs.getDouble("cantidad") *100.0) / 100.0;
-                                sqlM="update pedidos_carga1 set ID_GVA03="+id+" where numero="+pedido.getiDPedido();
+                                sqlM="update pedidos_carga1 set ID_GVA03="+id+",cant_desc=0,cant_pedid="+cannt+" where numero="+pedido.getiDPedido();
+                                System.out.println(sqlM);
                                 sta.executeUpdate(sqlM);
                                 //System.out.println("SQL TANGO "+sql);
                             }
