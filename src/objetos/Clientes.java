@@ -7,6 +7,7 @@ package objetos;
 import actualizaciones.ChequearCantidadesPedidos;
 import interfaces.Actualizable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -121,7 +122,37 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
         this.saldo=0.00;
 
     }
-
+    private void RegistrarActualizacion(Clientes cli){
+        Coneccion cn=new Coneccion();
+                Connection cp=cn.getCn();
+                String sql="select saldosclientes.monto,saldosclientes.id from saldosclientes where codigoCliente='"+cli.codigoCliente+"' and empresa='"+cli.empresa+"'";
+                
+            try {
+                PreparedStatement st=cp.prepareStatement(sql);
+                //st.execute(sql);
+                ResultSet rs=st.executeQuery();
+                Double saldo=0.00;
+                Integer id=0;
+                while(rs.next()){
+                    saldo=rs.getDouble("monto");
+                    id=rs.getInt("id");
+                }
+                rs.close();
+                if(cli.getSaldo()==saldo){
+                    sql="update saldosclientes set fechaRelevada=now() where id="+id;
+                }else{
+                    if(id==0){
+                        sql="insert into saldosclientes (codigoCliente,monto,empresa) values ('"+cli.codigoCliente+"',"+cli.saldo+",'"+cli.empresa+"')";
+                    }else{
+                        sql="update saldosclientes set monto="+cli.saldo+",fechaRelevada=now() where id="+id;
+                    }
+                }
+                st=cp.prepareStatement(sql);
+                st.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
     @Override
     public Double actualizarDatosSaldos(Connection ccn, String empresa, String codigo,Integer idTangoCliente) {
         Double cli=0.00;
@@ -207,21 +238,26 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
                                 sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
                                 break;
                         }
-                        String sql="select GVA14.ID_GVA14,GVA14.DOMICILIO,GVA14.LOCALIDAD,GVA14.TELEFONO_1,GVA14.SALDO_CC from GVA14 where COD_CLIENT ='"+cli.getCodigoCliente()+"'";
+                        String sql="select AR_SALDOS.ID_GVA14,AR_SALDOS-FECHA_MODI,AR_SALDOS.SALDO_CC from AR_SALDOS where COD_CLIENT ='"+cli.getCodigoCliente()+"'";
         try {
             Statement st=sqlC.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
             while(rs.next()){
+                cli.setFechaActualizacion(rs.getDate("FECHA_MODI"));
+                cli.setEmpresa(empresa);
+                /*
                 cli.setDomicilio(rs.getString("DOMICILIO"));
                 cli.setLocalidad(rs.getString("LOCALIDAD"));
                 cli.setTelefono(rs.getString("TELEFONO_1"));
+                */
                 cli.setIdTango(rs.getInt("ID_GVA14"));
                 cli.setSaldo(rs.getDouble("SALDO_CC"));
             }
+            
             rs.close();
             st.close();
-            
+            this.RegistrarActualizacion(cli);
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }

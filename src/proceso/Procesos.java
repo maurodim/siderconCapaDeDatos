@@ -133,7 +133,7 @@ public class Procesos {
          * 
          */
           //      Connection cp=cn.ObtenerConeccion();
-		String sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientesact.saldo from saldosclientesact where saldosclientesact.RAZON_SOC like 'pedidos_carga1.RAZON_SOC%' and saldosclientesact.COD_CLI like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 group by NRO_PEDIDO order by RAZON_SOC";
+		String sql="select *,(select TABLA1.actualizacion from TABLA1 where TABLA1.COD_CLI=pedidos_carga1.COD_CLIENT group by TABLA1.COD_CLI)as act,sum(pedidos_carga1.peso * pedidos_carga1.CANT_PEDID) as total,(select zonas.descripcion from zonas where zonas.numero=pedidos_carga1.zona)as zonasDescripcion,(select alertas.descripcion from alertas where alertas.numero=pedidos_carga1.alerta)as alertasDescripcion,(select saldosclientes.monto from saldosclientes where saldosclientes.empresa ='pedidos_carga1.TALON_PEDI' and saldosclientes.codigoCliente like 'pedidos_carga1.COD_CLIENT%')as saldo,(select vendedores.nombre from vendedores where vendedores.numero=pedidos_carga1.COD_VENDED)as vendedor from pedidos_carga1 where entrega like '"+fechEnt+"%'and reparto=1 group by NRO_PEDIDO order by RAZON_SOC";
 		System.out.println(sql);
                 
                 PreparedStatement st=cp.prepareStatement(sql);
@@ -170,6 +170,7 @@ public class Procesos {
                         pedidos.setObservaciones1(rs.getString("LEYENDA_2"));
                         pedidos.setObservaciones2(rs.getString("LEYENDA_3"));
                         pedidos.setFechaPedidosTango(rs.getString("FEC_PEDIDO"));
+                        pedidos.setSaldoCliente(rs.getDouble("saldo"));
                         //pedidos.setSaldoACobrar(rs.getDouble("saldo"));
                         clie.setCodigoCliente(pedidos.getCodigoCliente());
                         clie.setRazonSocial(pedidos.getRazonSocial());
@@ -356,7 +357,7 @@ public class Procesos {
             }           
             // Connection cp=cn.ObtenerConeccion();
             //String sql="select saldosclientesact.saldo,saldosclientesact.COD_CLI,saldosclientesact.RAZON_SOC,saldosclientesact.actualizacion from saldosclientesact order by RAZON_SOC";
-            String sql="select GVA14.SALDO_CC,GVA14.COD_CLIENT,GVA14.RAZON_SOCI,GVA14.FECHA_MODI from GVA14 where SALDO_CC > 0 order by RAZON_SOCI";
+            String sql="select AR_SALDOS.SALDO_CC,AR_SALDOS.COD_CLIENT,AR_SALDOS.RAZON_SOCI,AR_SALDOS.FECHA_MODI from AR_SALDOS where SALDO_CC > 0 order by RAZON_SOCI";
             for(int a=1;a < 4;a++){
                 try {
                     cT=ConeccionSqlTango.ObtenerConeccion(a);
