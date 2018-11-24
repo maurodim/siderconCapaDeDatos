@@ -238,7 +238,7 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
                                 sqlC=(Connection)SiderconCapaatos.sqlSdSrl;
                                 break;
                         }
-                        String sql="select AR_SALDOS.ID_GVA14,AR_SALDOS-FECHA_MODI,AR_SALDOS.SALDO_CC from AR_SALDOS where COD_CLIENT ='"+cli.getCodigoCliente()+"'";
+                        String sql="select AR_SALDOS.ID_GVA14,AR_SALDOS.FECHA_MODI,AR_SALDOS.SALDO_CC,GVA14.TELEFONO_1,GVA14.DOMICILIO,GVA14.LOCALIDAD from AR_SALDOS LEFT JOIN GVA14 ON GVA14.ID_GVA14=AR_SALDOS.ID_GVA14 where AR_SALDOS.COD_CLIENT ='"+cli.getCodigoCliente()+"'";
         try {
             Statement st=sqlC.createStatement();
             st.execute(sql);
@@ -246,11 +246,11 @@ public class Clientes implements Actualizable,ChequearCantidadesPedidos{
             while(rs.next()){
                 cli.setFechaActualizacion(rs.getDate("FECHA_MODI"));
                 cli.setEmpresa(empresa);
-                /*
+                
                 cli.setDomicilio(rs.getString("DOMICILIO"));
                 cli.setLocalidad(rs.getString("LOCALIDAD"));
                 cli.setTelefono(rs.getString("TELEFONO_1"));
-                */
+                
                 cli.setIdTango(rs.getInt("ID_GVA14"));
                 cli.setSaldo(rs.getDouble("SALDO_CC"));
             }
